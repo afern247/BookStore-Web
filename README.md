@@ -1,1 +1,3 @@
-# softwareEngineering_Group2
+# Spring 1
+
+Getting the setup going...
