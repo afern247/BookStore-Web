@@ -2,6 +2,6 @@
 
 Challenge: Use Scrum to deliver a fully funcional website using sprints for development.
 
-### Spring 1
+### Sprint 1:
 
 Getting the setup going...
