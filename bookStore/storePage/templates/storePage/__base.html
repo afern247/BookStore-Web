@@ -40,15 +40,32 @@
       </li>
     </ul>
 
-    <form class="form-inline my-2 my-lg-0">
-      <a class="nav-link" href="/">Login</a>
-      <a class="nav-link" href="/">Sign Up</a>
+    <form class="form-inline">
+      <input class="form-control mr-sm-2" type="search" placeholder="" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
+
+    <a class="nav-link" href="/">Shopping Cart</a>
+    <a class="nav-link" href="/login">Login</a>
+
   </div>
 </nav>
 
+  <!-- <main role="main" class="container">
+    <div class="row">
+      <div class="col-md-12"> -->
+        {% if messages %}
+          {% for messages in messages %}
+            <div class="alert alert-{{ messages.tags }}">
+              {{ messages }}
+            </div>
+          {% endfor %}
+        {% endif%}
+        {% block body %} {% endblock %}
+      <!-- </div>
+    </div>
+  </main> -->
 
-  {% block body %} {% endblock %}
 
 
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>

@@ -1,0 +1,37 @@
+<!-- This is saying: inherit everything from __base.html -->
+{% extends "storePage/__base.html" %}
+{% load crispy_forms_tags %}
+<!-- To beautify the form at signup -->
+{% block body %}
+
+<p><br>
+<main role="main" class="container">
+    <div class="content-section" style="margin-left: 25%; margin-right: 25%;">
+        <form method="POST">
+            <!-- added security that Django requires -->
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Join Today</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Sign Up</button>
+            </div>
+        </form>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Already have an account? <a class="ml-2" href="/login/">Sign in</a>
+            </small>
+        </div>
+    </div>
+</main>
+
+
+
+
+
+
+
+
+
+{% endblock %}

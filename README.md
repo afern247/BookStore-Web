@@ -7,8 +7,6 @@ Challenge: Use Scrum to deliver a fully funcional website using sprints for deve
 Getting the setup going...
 
 
-
-
 Feature Checklist
 -----------------
 
