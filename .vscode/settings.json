@@ -1,7 +1,0 @@
-{
-    "python.pythonPath": "vEnv/bin/python",
-    "git.ignoreLimitWarning": true,
-    "python.linting.pylintEnabled": true,
-    "python.linting.enabled": true,
-    "python.formatting.provider": "black"
-}
