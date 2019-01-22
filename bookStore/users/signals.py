@@ -1,0 +1,1 @@
+# signals are for when a user modifies something in the db, example, creates a post  

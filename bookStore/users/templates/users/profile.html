@@ -7,8 +7,21 @@
 <p><br>
     <main role="main" class="container">
         <div class="content-section" style="margin-left: 25%; margin-right: 25%;">
-           <h1>{{ user.username }}</h1>
+            <div class="content-section">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="media">
+                            <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
+                            <div class="media-body" style="padding-left: 40px;">
+                                <h2 class="account-heading">Name: {{ user.username }}</h2>
+                                <p class="text-secondary">Email: {{ user.email }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- FORM HERE -->
+            </div>
         </div>
     </main>
 
-{% endblock %}
+    {% endblock %}
