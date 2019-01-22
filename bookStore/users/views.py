@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages # to display alert messages when the form data is valid
 from .forms import UserSignUpForm
+from django.contrib.auth.decorators import login_required
 
 def signup(request):
     # If the request is a post, then proceed w/ the form
@@ -17,3 +18,8 @@ def signup(request):
         # to use the form at signup we create an instance of the form we imported on top:
         form = UserSignUpForm()
     return render(request, 'users/signup.html', {'form': form})
+
+# the @ is a decorator, it adds functionality to the function
+@login_required
+def profile(request):
+    return render(request, 'users/profile.html')
