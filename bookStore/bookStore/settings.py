@@ -124,3 +124,6 @@ STATIC_URL = '/static/'
 
 # To beautify the form at signup
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# Where to redirect user once they log-in
+LOGIN_REDIRECT_URL = 'store-home-page'
