@@ -1,0 +1,14 @@
+<!-- This is saying: inherit everything from __base.html -->
+{% extends "storePage/__base.html" %}
+{% load crispy_forms_tags %}
+<!-- To beautify the form at signup -->
+{% block body %}
+
+<p><br>
+    <main role="main" class="container">
+        <div class="content-section" style="margin-left: 25%; margin-right: 25%;">
+           <h1>{{ user.username }}</h1>
+        </div>
+    </main>
+
+{% endblock %}
