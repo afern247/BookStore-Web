@@ -52,27 +52,30 @@
       <!-- NavBar right side -->
       <a class="nav-link" href="/">Shopping Cart</a>
       {% if user.is_authenticated %}
-        <a class="nav-link" href="{% url 'profile' %}">Profile</a>
-        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+      <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+      <a class="nav-link" href="{% url 'logout' %}">Logout</a>
       {% else %}
-        <a class="nav-link" href="{% url 'login' %}">Login</a>
-        <a class="nav-link" href="{% url 'signup' %}">Register</a>
+      <a class="nav-link" href="{% url 'login' %}">Login</a>
+      <a class="nav-link" href="{% url 'signup' %}">Register</a>
       {% endif %}
     </div>
   </nav>
 
-  <!-- <main role="main" class="container">
-    <div class="row">
-      <div class="col-md-12"> -->
-  {% if messages %}
-    {% for messages in messages %}
-      <div class="alert alert-{{ messages.tags }}">
-        {{ messages }}
-      </div>
-    {% endfor %}
-  {% endif%}
 
-  {% block body %} {% endblock %}
+  <main role="main" class="container" style="margin-top: 30px;">
+    <div class="row">
+
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+      {% block body %} {% endblock %}
+
+    </div>
+  </main>
 
 
 

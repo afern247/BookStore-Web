@@ -4,25 +4,35 @@
 <!-- To beautify the form at signup -->
 {% block body %}
 
-<p><br>
-    <main role="main" class="container">
-        <div class="content-section" style="margin-left: 25%; margin-right: 25%;">
-            <div class="content-section">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="media">
-                            <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
-                            <div class="media-body" style="padding-left: 40px;">
-                                <b>Name: </b>{{ user.username }}
-                                <br>
-                                <b>Email: </b>{{ user.email }}
-                            </div>
+
+<main role="main" class="container">
+    <div class="content-section" style="margin-left: 25%; margin-right: 25%;">
+        <div class="content-section">
+            <div class="media">
+                <!-- <img class="rounded-circle account-img" src="{{ user.profile.image.url }}"> -->
+                <div class="media-body">
+                    <!-- <h2 class="account-heading">{{ user.username }}</h2> -->
+                    <!-- <p class="text-secondary">{{ user.email }}</p> -->
+                </div>
+            </div>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <div class="card text-center">
+                        <div class="card-header">
+                            Profile Info
                         </div>
                     </div>
+                    <p></p>
+                    {{ u_form|crispy }}
+                    {{ p_form|crispy }}
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-outline-info" type="submit">Update</button>
                 </div>
-                <!-- FORM HERE -->
-            </div>
+            </form>
         </div>
-    </main>
+    </div>
+</main>
 
-    {% endblock %}
+{% endblock %}
