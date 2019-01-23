@@ -18,7 +18,7 @@ Feature Checklist
 - [ ] Sort by book title, author, price, rating and date.
 
 **Profile Management**
-- [ ] Users can create and manage their login credentials (ID, password)
+- [x] Users can create and manage their login credentials (ID, password)
 - [ ] Can manage personal information (name, email address, home address) and nickname
 - [ ] Can manage multiple credit card info
 - [ ] Can manage multiple shipping addresses
