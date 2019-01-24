@@ -2,6 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib import messages # to display alert messages when the form data is valid
 from .forms import UserSignUpForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
+
+
+from django.contrib.auth.forms import PasswordChangeForm
+
+
 
 def signup(request):
     # If the request is a post, then proceed w/ the form
@@ -19,25 +25,31 @@ def signup(request):
         form = UserSignUpForm()
     return render(request, 'users/signup.html', {'form': form})
 
+
 # the @ is a decorator, it adds functionality to the function
 @login_required
 def profile(request):
     if request.method == 'POST':
+        u_Passform = PasswordChangeForm(request.user, request.POST)
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST,
                                    request.FILES,
                                    instance=request.user.profile)
-        if u_form.is_valid() and p_form.is_valid():
+        if u_form.is_valid() and p_form.is_valid() and u_Passform.is_valid():
+            u_Passform.save()
             u_form.save()
             p_form.save()
+            update_session_auth_hash(request, u_Passform)
             messages.success(request, f'Your account has been updated!')
             return redirect('profile')
 
     else:
+        u_Passform = PasswordChangeForm(request.user)
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
 
     context = {
+        'u_Passform': u_Passform,
         'u_form': u_form,
         'p_form': p_form
     }
