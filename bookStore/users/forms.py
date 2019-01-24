@@ -29,3 +29,17 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['image']
+
+
+class AddressForm(forms.Form):
+    address_1 = forms.CharField(
+        label='Address',
+        widget=forms.TextInput(attrs={'placeholder': '1234 Main St'})
+    )
+    address_2 = forms.CharField(
+        widget=forms.TextInput(attrs={'placeholder': 'Apartment, studio, or floor'})
+    )
+    city = forms.CharField()
+    state = forms.ChoiceField(choices=states)
+    zip_code = forms.CharField(label='Zip')
+
