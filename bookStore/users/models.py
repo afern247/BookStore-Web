@@ -6,6 +6,11 @@ from PIL import Image
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> ae83879e738484691234f62d2e0753ed338115e1
     #Image feature upload
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
