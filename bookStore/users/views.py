@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages # to display alert messages when the form data is valid
-from .forms import UserSignUpForm, UserUpdateForm, ProfileUpdateForm, AddressForm
+from .forms import UserSignUpForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 
@@ -42,7 +42,7 @@ def profile(request):
             p_form.save()
             update_session_auth_hash(request, u_Passform)
             messages.success(request, f'Your account has been updated!')
-            
+
             return redirect('profile')
 
     else:
@@ -51,7 +51,6 @@ def profile(request):
         p_form = ProfileUpdateForm(instance=request.user.profile)
 
     context = {
-        'user_AddressForm': AddressForm,
         'u_Passform': u_Passform,
         'u_form': u_form,
         'p_form': p_form
