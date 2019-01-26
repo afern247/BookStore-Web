@@ -16,48 +16,64 @@
   <title>CEN4010 Group2</title>
   {% endif %}
 
-  <!-- Style sheets -->
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-    crossorigin="anonymous">
 
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
 
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
-    crossorigin="anonymous">
+  <!-- Custom styles -->
   <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 
 </head>
 
 <body>
 
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <a class="navbar-brand text-white" href="{% url 'store-home-page' %}">Book Store</a>
-    {% comment %} <form class="form-inline">
-      <input class="form-control mr-sm-2" type="search" placeholder="" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form> {% endcomment %}
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item ">
-          <a class="nav-link " href="#"><i class="fa fa-th-list "></i> Wish List</a>
+
+<!--Navbar -->
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <a class="navbar-brand" href="{% url 'store-home-page' %}">Book Store</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
+    aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+    <!-- <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#">Pricing</a>
+      </li>
+    </ul> -->
+    <ul class="navbar-nav ml-auto nav-flex-icons">
+      <li class="nav-item">
+        <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i></a>
+      </li>
+      {% if user.is_authenticated %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            <i class="fas fa-user"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
+            <a class="dropdown-item" href="#">Wish list</a>
+            <a class="dropdown-item" href="{% url 'profile-settings' %}">Profile</a>
+            <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+          </div>
         </li>
-        <li class="nav-item">
-          <a class="nav-link " href="{% url 'account-settings' %}"> <i class="fa fa-briefcase"></i> Account</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="{% url 'billing-settings' %}"><i class="fa fa-book"></i> Billing</a>
-        </li>
-        {% if user.is_authenticated %}
-          <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-          <li class="nav-item">
-            <a class="nav-link " href="{% url 'profile-settings' %}"><i class="fa fa-user"></i></a>
-          </li>
-        {% else %}
-          <a class="nav-link" href="{% url 'login' %}">Login</a>
-          <a class="nav-link" href="{% url 'signup' %}">Register</a>
-        {% endif %}
-      </ul>
-    </div>
-  </nav>
+      {% else %}
+        <a class="nav-link" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <a class="nav-link" href="{% url 'signup' %}"><i class="fas fa-user-plus"></i> Register</a>
+      {% endif %}
+    </ul>
+  </div>
+</nav>
+<!--/.Navbar -->
+
+
+
+
+
+
+
 
 
   <main role="main" class="container">
@@ -69,19 +85,19 @@
         </div>
       {% endfor %}
     {% endif %}
-    
+
     {% block body %} {% endblock %}
 
   </main>
 
 
 
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
-    crossorigin="anonymous"></script>
+<!-- JQuery -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.min.js"></script>
 
 </body>
 
