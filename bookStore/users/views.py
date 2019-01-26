@@ -4,7 +4,7 @@ from .forms import UserSignUpForm, UserUpdateForm, ProfileUpdateForm, UserForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 
-
+from django.shortcuts import HttpResponse
 from django.contrib.auth.forms import PasswordChangeForm
 
 
@@ -65,3 +65,16 @@ def profile(request):
     }
 
     return render(request, 'users/profile.html', context)
+
+
+def settingsHome(request):
+    return redirect('profile-settings')
+
+def billingSettings(request):
+    return HttpResponse('<h1>Billing page</h1>')
+
+def accountSettings(request):
+    return HttpResponse('<h1>Account page</h1>')
+
+def emailSettings(request):
+    return HttpResponse('<h1>Email page</h1>')
