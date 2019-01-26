@@ -27,7 +27,8 @@
                     {{ u_form|crispy }} <!-- Public profile: Username, email, website url  -->
                     {{ p_form|crispy }}  <!-- Image form -->
                     {{ u_Passform|crispy }} <!-- Password reset form -->
-                    {{ user_AddressForm|crispy }} <!-- Password reset form -->
+{{ user_form.as_p }}
+{{ profile_form.as_p }}
                 </fieldset>
                 <div class="form-group">
                     <button class="btn btn-outline-info" type="submit">Update</button>
