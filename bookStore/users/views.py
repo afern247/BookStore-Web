@@ -71,10 +71,10 @@ def settingsHome(request):
     return redirect('profile-settings')
 
 def billingSettings(request):
-    return HttpResponse('<h1>Billing page</h1>')
+    return render(request, 'users/billing.html')
 
 def accountSettings(request):
-    return HttpResponse('<h1>Account page</h1>')
+    return render(request, 'users/account.html')
 
 def emailSettings(request):
     return HttpResponse('<h1>Email page</h1>')
