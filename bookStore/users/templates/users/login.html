@@ -6,31 +6,50 @@
 
 
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 offset-md-4">
-                <div class="card text-center card  bg-default mb-3">
-                    <form method="POST">
+<div class="container">
+    <div class="row">
+        <div class="col-md-5 mx-auto">
+            <div id="first">
+                <div class="myform form ">
+                    <div class="logo mb-3">
+                        <div class="col-md-12 text-center">
+                            <h1>Login</h1>
+                        </div>
+                    </div>
+                    <form method="POST" name="login">
                         {% csrf_token %}
-                        <fieldset class="form-group">
-                            <div class="card-header">
-                                LOGIN
-                            </div>
+                        <div class="form-group">
                             {{ form|crispy }}
-                        </fieldset>
-                        <div class="card-footer text-muted">
-
-                            <button class="btn btn-secondary" type="submit">Login</button>
+                        </div>
+                        <div class="form-group">
+                            <p class="text-center">By signing up you accept our <a href="#">Terms Of Use</a></p>
+                        </div>
+                        <div class="col-md-12 text-center ">
+                            <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Login</button>
+                        </div>
+                        <div class="col-md-12 ">
+                            <div class="login-or" style="text-align: center;">
+                                <hr class="hr-or">
+                                <span class="span-or">or</span>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <p class="text-center">
+                                Login using <a href="#"><i class="fab fa-google"></i></a>
+                            </p>
+                        </div>
+                        <div class="form-group">
+                            <p class="text-center">Don't have account? <a href="{% url 'signup' %}" id="signup">Sign up here</a></p>
                         </div>
                     </form>
-                    <div class="border-top pt-3">
-                        <small class="text-muted">
-                            Need An Account? <a class="ml-2" href="{% url 'signup' %}">Sign Up Now</a>
-                        </small>
-                    </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+
+
 
 
 {% endblock %}
