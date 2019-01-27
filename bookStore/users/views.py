@@ -3,7 +3,7 @@ from django.contrib import messages # to display alert messages when the form da
 from .forms import UserSignUpForm, UserUpdateForm, ProfileUpdateForm, UserForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
-
+from django.http import HttpResponseRedirect
 from django.shortcuts import HttpResponse
 from django.contrib.auth.forms import PasswordChangeForm
 
@@ -45,7 +45,7 @@ def profile(request):
             p_form.save()
             update_session_auth_hash(request, u_Passform)
             messages.success(request, f'Your account has been updated!')
-            return redirect('profile')
+            return HttpResponseRedirect(request.path_info)
         else:
             messages.error(request, _('Please correct the error below.'))
 
