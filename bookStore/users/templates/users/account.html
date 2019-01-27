@@ -1,317 +1,129 @@
-{% extends "users/_base.html" %}
+{% extends "users/partials/_base.html" %}
 {% block settingsPageInfo %}
 
-<div class="page-content container clearfix">
-
-    <div class="col-3 float-left pr-4">
-        <nav class="menu" aria-label="Personal settings" data-pjax="">
-            <h3 class="menu-heading">
-                Personal settings
-            </h3>
-
-            <a class="js-selected-navigation-item selected menu-item" aria-current="page" data-selected-links="avatar_settings /settings/profile"
-                href="/settings/profile">Profile</a>
-            <a class="js-selected-navigation-item menu-item" data-selected-links=" /settings/admin" href="/settings/admin">Account</a>
-
-            <a class="js-selected-navigation-item menu-item" data-selected-links=" /settings/emails" href="/settings/emails">
-                Emails
-            </a>
-            <a class="js-selected-navigation-item menu-item" data-selected-links=" /settings/notifications" href="/settings/notifications">Notifications</a>
-
-            <a class="js-selected-navigation-item menu-item" data-selected-links="user_billing_settings /settings/billing"
-                href="/settings/billing">Billing</a>
-
-            <a class="js-selected-navigation-item menu-item" data-selected-links=" /settings/keys" href="/settings/keys">SSH
-                and GPG keys</a>
-
-            <a class="js-selected-navigation-item menu-item" data-selected-links=" /settings/security" href="/settings/security">Security</a>
-
-            <a class="js-selected-navigation-item menu-item" data-selected-links=" /settings/sessions" href="/settings/sessions">Sessions</a>
-
-            <a class="js-selected-navigation-item menu-item" data-selected-links=" /settings/blocked_users" href="/settings/blocked_users">Blocked
-                users</a>
-
-            <a class="js-selected-navigation-item menu-item" data-selected-links=" /settings/repositories" href="/settings/repositories">Repositories</a>
-            <a class="js-selected-navigation-item menu-item" data-selected-links=" /settings/organizations" href="/settings/organizations">Organizations</a>
-            <a class="js-selected-navigation-item menu-item" data-selected-links="edit_saved_reply /settings/replies"
-                href="/settings/replies">Saved replies</a>
-
-            <a class="js-selected-navigation-item menu-item" data-selected-links="applications_settings /settings/installations"
-                href="/settings/installations">Applications</a>
-
-        </nav>
-
-        <nav class="menu" aria-label="Developer settings">
-            <a class="menu-item" href="/settings/developers">
-                Developer settings
-            </a> </nav>
-
-    </div>
 
 
-    <div class="col-9 float-left">
 
-        <!-- Public Profile -->
-        <div class="Subhead mt-0 mb-0">
-            <h2 class="Subhead-heading">Public profile</h2>
-        </div>
-        <div class="clearfix gutter d-flex flex-shrink-0">
-            <div class="col-8">
-                <form class="edit_user" id="edit_user_34192856" action="/users/afern247" accept-charset="UTF-8" method="post"><input
-                        name="utf8" type="hidden" value="✓"><input type="hidden" name="_method" value="put"><input type="hidden"
-                        name="authenticity_token" value="c+RNNARmZ0MMIr3KyET8A24T2/RjS5zLKJ1hzyQFnprdKPGzVjHXvhNBRHk23bGgNTmgzvwatb4c7K2mIqRZbw==">
-                    <div>
-                        <dl class="form-group">
-                            <dt><label for="user_profile_name">Name</label></dt>
-                            <dd><input class="form-control" type="text" value="Arturo" name="user[profile_name]" id="user_profile_name"></dd>
-                        </dl>
-                        <dl class="form-group">
-                            <dt><label for="user_profile_email">Public email</label></dt>
-                            <dd class="d-inline-block">
-                                <div>
-                                    <select class="form-select select text-gray-light" disabled="disabled" name="user[profile_email]"
-                                        id="user_profile_email">
-                                        <option value="">Select a verified email to display</option>
-                                    </select>
-                                    <p class="note">
-                                        You have set your email address to private. To toggle email privacy,
-                                        go to <a href="/settings/emails">email settings</a>
-                                        and uncheck "Keep my email address private."
-                                    </p>
-                                </div>
-                            </dd>
-                        </dl>
-                        <dl class="form-group">
-                            <dt><label for="user_profile_bio">Bio</label></dt>
-                            <dd class="user-profile-bio-field-container js-suggester-container js-length-limited-input-container">
-                                <textarea class="form-control user-profile-bio-field js-suggester-field js-length-limited-input"
-                                    placeholder="Tell us a little bit about yourself" data-input-max-length="160"
-                                    data-warning-text="{{remaining}} remaining" name="user[profile_bio]" id="user_profile_bio"></textarea>
-                                <p class="note">
-                                    You can <strong>@mention</strong> other users and
-                                    organizations to link to them.
-                                </p>
-                                <p class="js-length-limited-input-warning user-profile-bio-message d-none"></p>
-                                <div class="suggester-container">
-                                    <div class="suggester js-suggester js-navigation-container" data-url="/autocomplete/user-suggestions"
-                                        hidden="">
-                                    </div>
-                                </div>
-                            </dd>
-                        </dl>
-
-                        <dl class="form-group">
-                            <dt><label for="user_profile_blog">URL</label></dt>
-                            <dd><input type="url" class="form-control" value="" name="user[profile_blog]" id="user_profile_blog"></dd>
-                        </dl>
-
-                        <dl class="form-group">
-                            <dt><label for="user_profile_company">Company</label></dt>
-                            <dd class="user-profile-company-field-container js-suggester-container">
-                                <input class="form-control js-suggester-field" autocomplete="off" type="text" value=""
-                                    name="user[profile_company]" id="user_profile_company">
-                                <p class="note">
-                                    You can <strong>@mention</strong> your company’s GitHub
-                                    organization to link it.
-                                </p>
-                                <div class="suggester-container">
-                                    <div class="suggester js-suggester js-navigation-container" data-url="/autocomplete/organizations"
-                                        hidden="">
-                                    </div>
-                                </div>
-                            </dd>
-                        </dl>
-                        <hr>
-                        <dl class="form-group">
-                            <dt><label for="user_profile_location">Location</label></dt>
-                            <dd><input class="form-control" type="text" name="user[profile_location]" id="user_profile_location"></dd>
-                        </dl>
-
-                        <input type="text" name="required_field_0240" id="required_field_0240" class="form-control"
-                            hidden="hidden">
-                        <input type="hidden" name="timestamp" value="1548535024558" class="form-control">
-                        <input type="hidden" name="timestamp_secret" value="d829b1a91315af3cb6ee93b9e37873e0a5746d8cb7d2ff90f6c7bbc17df46a2b"
-                            class="form-control">
+<div class="container bootstrap snippet">
+    <div class="row">
 
 
-                        <p class="note mb-2">
-                            All of the fields on this page are optional and can be deleted at any
-                            time, and by filling them out, you're giving us consent to share this
-                            data wherever your user profile appears. Please see our
-                            <a href="https://github.com/site/privacy">privacy statement</a>
-                            to learn more about how we use this information.
-                        </p>
 
-                        <p><button type="submit" class="btn btn-primary">Update profile</button></p>
-                    </div>
-                </form>
+
+        <!-- Left navBar -->
+        <div class="col-md-3">
+            <!-- <ul class="list-group">
+                <span class="card-header"> ewfwefwe</span>
+                </li>
+                <li class="list-group-item text-right"><span class="float-left"><strong>Shares</strong></span> 125</li>
+                <li class="list-group-item text-right"><span class="float-left"><strong>Likes</strong></span> 13</li>
+                <li class="list-group-item text-right"><span class="float-left"><strong>Posts</strong></span> 37</li>
+                <li class="list-group-item text-right"><span class="float-left"><strong>Followers</strong></span> 78</li>
+            </ul>
+
+            <br> -->
+
+            <div class="list-group ">
+                <span class="card-header">Personal Settings</span>
+                <a href="#" class="list-group-item list-group-item-action active">Profile</a>
+                <a href="#" class="list-group-item list-group-item-action">Account</a>
+                <a href="#" class="list-group-item list-group-item-action">Emails</a>
+                <a href="#" class="list-group-item list-group-item-action">Billing</a>
             </div>
-
-            <form class="col-4 d-inline-block" id="profile_34192856" novalidate="novalidate" action="/users/afern247"
-                accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden"
-                    name="_method" value="put"><input type="hidden" name="authenticity_token" value="Kweq7x7Z8N6/r9DB3RkDJNN7UJ1zdghWh0DxECvkUZ6FyxZoTI5AI6DMKXIjgE6HiFErp+wnISOzMT15LUWWaw==">
-                <file-attachment class="js-upload-avatar-image is-default" data-alambic-owner-id="34192856"
-                    data-alambic-owner-type="User" data-upload-policy-url="/upload/policies/avatars"
-                    data-upload-policy-authenticity-token="URwNxhlm/jlX0F1cfzXF1HkuVmziyupo/8RSdXy1E/WjFblpL/LDf7iWzdZxErpOzRgYoq7XFQ/npNLT/SeZUg==">
-                    <dl>
-                        <dt><label class="d-block mb-2">Profile picture</label></dt>
-                        <dd class="avatar-upload-container clearfix position-relative">
-
-                            <div class="avatar-upload">
-                                <details class="dropdown details-reset details-overlay">
-                                    <summary aria-haspopup="menu">
-                                        <img class="avatar rounded-2" src="https://avatars0.githubusercontent.com/u/34192856?s=400&amp;u=514c918d79838ce3a723780e1cd76ab8051b70e8&amp;v=4"
-                                            alt="@afern247" width="200" height="200">
-                                        <div class="position-absolute bg-gray-dark rounded-2 text-white px-2 py-1 left-0 bottom-0 ml-2 mb-2">
-                                            <svg height="16" width="16" class="octicon octicon-pencil" viewBox="0 0 14 16"
-                                                version="1.1" aria-hidden="true">
-                                                <path fill-rule="evenodd" d="M0 12v3h3l8-8-3-3-8 8zm3 2H1v-2h1v1h1v1zm10.3-9.3L12 6 9 3l1.3-1.3a.996.996 0 0 1 1.41 0l1.59 1.59c.39.39.39 1.02 0 1.41z"></path>
-                                            </svg>
-                                            Edit
-                                        </div>
-                                    </summary>
-                                    <details-menu class="dropdown-menu dropdown-menu-se" style="z-index: 99" role="menu">
-                                        <label class="dropdown-item text-normal" style="cursor: pointer;" role="menuitem"
-                                            tabindex="0">
-                                            Upload a photo…
-                                            <input type="file" class="manual-file-chooser width-full ml-0 js-manual-file-chooser left-0 top-0 position-absolute"
-                                                style="display: none;">
-                                        </label>
-                                        <!-- '"` -->
-                                        <!-- </textarea></xmp> -->
-                                        <form action="/settings/reset_avatar" accept-charset="UTF-8" method="post"><input
-                                                name="utf8" type="hidden" value="✓"><input type="hidden" name="_method"
-                                                value="put"><input type="hidden" name="authenticity_token" value="1XO37hTxtbX9bj4dfHBVKQyAAXsXYoD8nf72Bwo7q2xJ81NTHRru6ZrPLFxhnymDL0jt5uLghKBo9sbsVML6sQ==">
-                                            <button class="btn-link dropdown-item js-detect-gravatar" type="submit"
-                                                name="op" value="reset" role="menuitem" data-disable-with=""
-                                                data-confirm="Are you sure you want to reset your current avatar?"
-                                                data-gravatar-text="Revert to Gravatar" data-url="/settings/user_has_gravatar">
-                                                Remove photo
-                                            </button>
-                                        </form>
-                                    </details-menu>
-                                </details>
-
-                                <div class="upload-state loading position-absolute bg-gray-light rounded-2" style="top: 0; right: 0; opacity: 0.25; width: 200px; height: 200px;">
-                                    <img class="position-absolute" style="top: 40px; left: 35px;" alt="Loading" src="https://github.githubassets.com/images/spinners/octocat-spinner-128.gif">
-                                </div>
-                            </div>
-                            <div class="avatar-upload">
-                                <div class="upload-state text-red file-empty">
-                                    This file is empty.
-                                </div>
-
-                                <div class="upload-state text-red too-big">
-                                    Please upload a picture smaller than 1 MB.
-                                </div>
-
-                                <div class="upload-state text-red bad-dimensions">
-                                    Please upload a picture smaller than 10,000x10,000.
-                                </div>
-
-                                <div class="upload-state text-red bad-file">
-                                    We only support PNG, GIF, or JPG pictures.
-                                </div>
-
-                                <div class="upload-state text-red failed-request">
-                                    Something went really wrong and we can’t process that picture.
-                                </div>
-
-                                <div class="upload-state text-red bad-format">
-                                    File contents don’t match the file extension.
-                                </div>
-                            </div>
-                        </dd>
-                    </dl>
-
-                </file-attachment>
-            </form>
         </div>
 
-        <div class="d-inline-block">
-            <div class="Subhead Subhead--spacious">
-                <h2 class="Subhead-heading">Profile settings</h2>
-            </div>
-            <form class="edit_user" id="edit_user_34192856" action="/users/afern247/set_pro_badge_preference"
-                accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden"
-                    name="_method" value="put"><input type="hidden" name="authenticity_token" value="V/gAzFE0iecO9re1ZKXTaM1SsikBMG2XwiyH+qoj6IFHjCoGAQH0yB69UDmzWa14JPq68J6q5kfkcDlrjC1yJA==">
-                <div class="form-checkbox mt-0">
-                    <input type="hidden" name="user[pro_badge_enabled]" value="0">
-                    <input type="checkbox" name="user[pro_badge_enabled]" value="1" id="user_pro_badge_enabled" checked="">
-                    <label for="user_pro_badge_enabled">Display PRO badge</label>
-                    <span class="note">
-                        This will display the
-                        <span class="label bg-purple text-uppercase">Pro</span>
 
-                        badge on your public profile page.
-                    </span>
+
+        <!--center-right navBar-->
+        <div class="col-md-9">
+
+            <div class="row">
+                <div class="col-md-10">
+                    <h3>Public Profile</h1>
                 </div>
-                <button type="submit" class="btn">Update preferences</button>
-            </form>
-        </div>
-
-        <div class="d-inline-block">
-            <div class="Subhead Subhead--spacious">
-                <h2 class="Subhead-heading">Contributions</h2>
             </div>
-            <form class="edit_user" id="user_profile_contributions_34192856" action="/users/afern247/set_private_contributions_preference"
-                accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden"
-                    name="_method" value="put"><input type="hidden" name="authenticity_token" value="EtygVPKZcGQS8v+zPws7V8/pCBqJYZskZHRqgZrw9NaI8++KEMIMbRbeV5/boS04lOlJgwVxlZkhJ8TD59Gf3g==">
-                <div class="form-checkbox mt-0">
-                    <input type="hidden" name="user[show_private_contribution_count]" value="0">
-                    <input type="checkbox" name="user[show_private_contribution_count]" value="1" id="user_show_private_contribution_count"
-                        checked="">
-                    <label for="user_show_private_contribution_count">Include private contributions on my profile</label>
-                    <span class="note"> Get credit for all your work by showing the number of contributions to private
-                        repositories on your profile without any repository or
-                        organization information. <a href="https://help.github.com/articles/viewing-contributions-on-your-profile-page/">Learn
-                            how we count contributions</a>.</span>
+            <ul class="nav nav-tabs" id="myTab">
+                <li class="active nav-item"><a href="#home" data-toggle="tab" class="nav-link">Name</a>
+                </li>
+                <li class="nav-item"><a href="#messages" data-toggle="tab" class="nav-link">Bio</a>
+                </li>
+                <li class="nav-item"><a href="#settings" data-toggle="tab" class="nav-link">Social</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="home">
+                    <br>
+                    <form class="form" action="##" method="post" id="registrationForm">
+                        <div class="form-group">
+                            <div class="col-6">
+                                <label for="first_name">
+                                    <h4>First name</h4>
+                                </label>
+                                <input type="text" class="form-control" name="first_name" id="first_name" placeholder="first name" title="enter your first name if any.">
+                            </div>
+                        </div>
+                    </form>
+                    <form class="form" action="##" method="post" id="registrationForm">
+                        <div class="form-group">
+                            <div class="col-6">
+                                <label for="first_name">
+                                    <h4>Last Name</h4>
+                                </label>
+                                <input type="text" class="form-control" name="first_name" id="first_name" placeholder="first name" title="enter your first name if any.">
+                            </div>
+                        </div>
+                    </form>
+<br>
+                    <hr>
                 </div>
-                <button type="submit" class="btn">Update contributions</button>
-            </form> <!-- GitHub Developer Program Membership -->
+                <!--/tab-pane-->
+                <div class="tab-pane" id="messages">
+                    <h2></h2>
+                    <ul class="list-group">
 
-            <div class="Subhead Subhead--spacious mb-0 border-bottom-0">
-                <h2 class="Subhead-heading">GitHub Developer Program</h2>
+                        <li class="list-group-item text-right"><a href="#" class="float-left">Swedish chef is
+                                assaortor. A lobortis vitae, condimentum justo...</a> 2.11.2014</li>
+                    </ul>
+                </div>
+                <!--/tab-pane-->
+                <div class="tab-pane" id="settings">
+
+                    <form class="form" action="##" method="post" id="registrationForm">
+                        <div class="form-group">
+                            <div class="col-6">
+                                <label for="first_name">
+                                    <h4>First name</h4>
+                                </label>
+                                <input type="text" class="form-control" name="first_name" id="first_name" placeholder="first name"
+                                    title="enter your first name if any.">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-12">
+                                <br>
+                                <button class="btn btn-lg btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i>
+                                    Save</button>
+                                <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i>
+                                    Reset</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-
-            <div id="github-developer-program" class="Box Box-body clearfix">
-                <p class="mb-0">
-                    Building an application, service, or tool that integrates with GitHub?
-                    <a href="/developer/register?account=afern247">Join the GitHub Developer Program</a>,
-                    or read more about it at our <a href="https://developer.github.com">Developer site</a>.
-                </p>
-            </div>
-
-            <p class="note mb-6 mt-3"><a href="https://developer.github.com">Check out the Developer site</a> for
-                guides, our API
-                reference, and other resources for building applications that
-                integrate with GitHub. Make sure your contact information is
-                up-to-date below. Thanks for being a member!
-            </p>
-
-
-            <!-- Jobs Profile -->
-            <div class="Subhead Subhead--spacious">
-                <h2 class="Subhead-heading">Jobs profile</h2>
-            </div>
-            <form class="edit_user" id="jobs_profile_34192856" action="/users/afern247" accept-charset="UTF-8" method="post"><input
-                    name="utf8" type="hidden" value="✓"><input type="hidden" name="_method" value="put"><input type="hidden"
-                    name="authenticity_token" value="iukQp8RtEAGGuN9Gz58m28IybZJHVcPZ2OU8+3tM5vkkJawgljqg/JnbJvUxBmt4mRgWqNgE6qzslPCSfe0hDA==">
-                <p>
-                    <input name="user[profile_hireable]" type="hidden" value="0"><input type="checkbox" value="1"
-                        checked="checked" name="user[profile_hireable]" id="user_profile_hireable">
-                    <label for="user_profile_hireable">Available for hire</label>
-                </p>
-                <span class="success" style="display: none"><svg class="octicon octicon-check" viewBox="0 0 12 16"
-                        version="1.1" width="12" height="16" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path>
-                    </svg> Saved</span>
-                <button type="submit" class="btn">Save jobs profile</button>
-            </form>
+            <!--/tab-pane-->
         </div>
-
+        <!--/tab-content-->
     </div>
+    <!--/col-9-->
 </div>
+
+
+
+
+
+
+
 
 
 {% endblock %}
