@@ -4,7 +4,7 @@ Challenge: Use Scrum to deliver a fully funcional website using sprints for deve
 
 ### Sprint 1:
 
-Version 1.0.1 Users can register, login, logout and when doing so, they'll be redirected to the right page.
+Version 1.0.0
 
 
 Feature Checklist
