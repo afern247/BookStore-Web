@@ -1,44 +1,139 @@
-
-{% extends "storePage/partials/__base.html" %}   <!-- This is saying: inherit everything from __base.html -->
+{% extends "users/partials/_base.html" %}
 {% load crispy_forms_tags %}
-<!-- To beautify the form at signup -->
-{% block body %}
+{% block settingsPageInfo %}
 
 
-<main role="main" class="container">
-    <div class="content-section" style="margin-left: 25%; margin-right: 25%;">
-        <div class="content-section">
-            <div class="media">
-                <!-- <img class="rounded-circle account-img" src="{{ user.profile.image.url }}"> -->
-                <div class="media-body">
-                    <!-- <h2 class="account-heading">{{ user.username }}</h2> -->
-                    <!-- <p class="text-secondary">{{ user.email }}</p> -->
+<header>
+    <style>
+        .custom-class{
+    background-color: yellow;
+}
+
+#custom-class{
+    background: violet
+}
+    </style>
+</header>
+
+<div class="container bootstrap snippet">
+    <div class="row">
+
+
+
+
+        <!-- Left navBar -->
+        <div class="col-md-3">
+            <!-- <ul class="list-group">
+                <span class="card-header"> ewfwefwe</span>
+                </li>
+                <li class="list-group-item text-right"><span class="float-left"><strong>Shares</strong></span> 125</li>
+                <li class="list-group-item text-right"><span class="float-left"><strong>Likes</strong></span> 13</li>
+                <li class="list-group-item text-right"><span class="float-left"><strong>Posts</strong></span> 37</li>
+                <li class="list-group-item text-right"><span class="float-left"><strong>Followers</strong></span> 78</li>
+            </ul>
+
+            <br> -->
+
+            <div class="list-group ">
+                <label class="card-header">Personal Settings</label>
+                <a href="#" class="list-group-item list-group-item-action active">Profile</a>
+                <a href="#" class="list-group-item list-group-item-action">Account</a>
+                <a href="#" class="list-group-item list-group-item-action">Emails</a>
+                <a href="#" class="list-group-item list-group-item-action">Billing</a>
+            </div>
+        </div>
+
+
+
+        <!-- Center-right navBar-->
+        <div class="col-md-9">
+
+            <!-- Top Menu-->
+            <div class="row">
+                <div class="col-md-10">
+                    <h3>Public Profile</h1>
                 </div>
             </div>
-            <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                <fieldset class="form-group">
-                    <div class="card text-center">
-                        <div class="card-header">
-                            Profile Info
+            <ul class="nav nav-tabs" id="myTab">
+                <li class="active nav-item"><a href="#home" data-toggle="tab" class="nav-link">Name</a>
+                </li>
+                <li class="nav-item"><a href="#messages" data-toggle="tab" class="nav-link">Bio</a>
+                </li>
+                <li class="nav-item"><a href="#settings" data-toggle="tab" class="nav-link">Social</a>
+                </li>
+            </ul>
+
+
+
+
+
+
+
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="home">
+                    <br>
+                    <div class="form-group">
+                        <div class="col-6">
+                            <form method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+
+                                <label for="first_name">
+                                    <h4>First name</h4>
+                                </label>
+                                {{ user_ProfileForm.first_name |as_crispy_field }}
+
+                                <label for="last_name">
+                                    <h4>Last name</h4>
+                                </label>
+                                {{ user_ProfileForm.last_name |as_crispy_field }}
+
+                                <div class="form-group">
+                                    <button class="btn btn-outline-info" type="submit">Update</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                    <p></p>
-                    {{ u_form|crispy }}
-                    <!-- Public profile: Username, email, website url  -->
-                    {{ p_form|crispy }}
-                    <!-- Image form -->
-                    {{ u_Passform|crispy }}
-                    <!-- Password reset form -->
-                    {{ user_form.as_p }}
-                    {{ profile_form.as_p }}
-                </fieldset>
-                <div class="form-group">
-                    <button class="btn btn-outline-info" type="submit">Update</button>
+                    <br>
+                    <hr>
                 </div>
-            </form>
+
+                <!--/tab-pane-->
+                <div class="tab-pane" id="messages">
+                    <br>
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <label for="last_name">
+                            <h4>Bio</h4>
+                        </label>
+                        {{ user_BioAndSocialForm.bio |as_crispy_field }}
+                        <div class="form-group">
+                            <button class="btn btn-outline-info" type="submit">Update</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!--/tab-pane-->
+                <div class="tab-pane" id="settings">
+
+                    <br>
+                    <h3>To-do</h3>
+
+                </div>
+            </div>
+            <!--/tab-pane-->
         </div>
+        <!--/tab-content-->
     </div>
-</main>
+    <!--/col-9-->
+</div>
+
+
+
+
+
+
+
+
 
 {% endblock %}

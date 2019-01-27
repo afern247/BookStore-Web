@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages # to display alert messages when the form data is valid
-from .forms import UserSignUpForm, UserUpdateForm, ProfileUpdateForm, UserForm
+from .forms import UserSignUpForm, UserUpdateForm, ProfileUpdateForm, UserProfileForm, BioAndSocialForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.http import HttpResponseRedirect
@@ -26,42 +26,28 @@ def signup(request):
     return render(request, 'users/signup.html', {'form': form})
 
 
-# the @ is a decorator, it adds functionality to the function
+
 @login_required
 def profile(request):
     if request.method == 'POST':
-        user_form = UserForm(request.POST, instance=request.user)
-        # profile_form = ProfileForm(request.POST, instance=request.user.profile)
+        user_ProfileForm = UserProfileForm(request.POST, instance=request.user)
+        user_BioAndSocialForm = BioAndSocialForm(request.POST, instance=request.user)
 
-        u_Passform = PasswordChangeForm(request.user, request.POST)
-        u_form = UserUpdateForm(request.POST, instance=request.user)
-        p_form = ProfileUpdateForm(request.POST,
-                                   request.FILES,
-                                   instance=request.user.profile)
-
-        if u_form.is_valid() and p_form.is_valid() and u_Passform.is_valid() and user_form.is_valid():
-            u_Passform.save()
-            u_form.save()
-            p_form.save()
-            update_session_auth_hash(request, u_Passform)
-            messages.success(request, f'Your account has been updated!')
+        if user_ProfileForm.is_valid() and user_BioAndSocialForm.is_valid:
+            user_ProfileForm.save()
+            user_BioAndSocialForm.save()
+            messages.success(request, f'Profile updated!')
             return HttpResponseRedirect(request.path_info)
         else:
             messages.error(request, _('Please correct the error below.'))
 
     else:
-        u_Passform = PasswordChangeForm(request.user)
-        u_form = UserUpdateForm(instance=request.user)
-        p_form = ProfileUpdateForm(instance=request.user.profile)
-        user_form = UserForm(instance=request.user)
-        # profile_form = ProfileForm(instance=request.user.profile)
+        user_ProfileForm = UserProfileForm(instance=request.user)
+        user_BioAndSocialForm = BioAndSocialForm(instance=request.user)
 
     context = {
-        'u_Passform': u_Passform,
-        'u_form': u_form,
-        'p_form': p_form,
-        'user_form': user_form
-        # 'profile_form': profile_form
+        'user_ProfileForm': user_ProfileForm,
+        'user_BioAndSocialForm': user_BioAndSocialForm
     }
 
     return render(request, 'users/profile.html', context)
