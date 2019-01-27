@@ -33,7 +33,7 @@ def profile(request):
         user_ProfileForm = UserProfileForm(request.POST, instance=request.user)
         user_BioAndSocialForm = BioAndSocialForm(request.POST, instance=request.user)
 
-        if user_ProfileForm.is_valid() and user_BioAndSocialForm.is_valid:
+        if user_ProfileForm.is_valid() and user_BioAndSocialForm.is_valid():
             user_ProfileForm.save()
             user_BioAndSocialForm.save()
             messages.success(request, f'Profile updated!')
