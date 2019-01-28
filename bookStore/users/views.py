@@ -62,5 +62,5 @@ def billingSettings(request):
 def accountSettings(request):
     return render(request, 'users/account.html')
 
-def emailSettings(request):
-    return HttpResponse('<h1>Email page</h1>')
+def securitySettings(request):
+    return render(request, 'users/security.html')

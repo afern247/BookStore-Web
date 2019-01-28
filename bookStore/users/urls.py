@@ -5,6 +5,7 @@ urlpatterns = [
     path('', views.settingsHome, name='settings-home'),
     path('profile/', views.profile, name='profile-settings'),
     path('account/', views.accountSettings, name='account-settings'),
-    path('emails/', views.emailSettings, name='emails-settings'),
     path('billing/', views.billingSettings, name='billing-settings'),
+    path('security/', views.securitySettings, name='security-settings'),
 ]
+

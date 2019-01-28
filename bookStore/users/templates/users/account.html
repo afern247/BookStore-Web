@@ -3,112 +3,44 @@
 {% block settingsPageInfo %}
 
 
-<header>
-    <style>
-        .custom-class{
-    background-color: yellow;
-}
-
-#custom-class{
-    background: violet
-}
-    </style>
-</header>
-
-<div class="container bootstrap snippet">
-    <div class="row">
 
 
-
-
-        <!-- Left navBar -->
-        <div class="col-md-3">
-            <!-- <ul class="list-group">
-                <span class="card-header"> ewfwefwe</span>
-                </li>
-                <li class="list-group-item text-right"><span class="float-left"><strong>Shares</strong></span> 125</li>
-                <li class="list-group-item text-right"><span class="float-left"><strong>Likes</strong></span> 13</li>
-                <li class="list-group-item text-right"><span class="float-left"><strong>Posts</strong></span> 37</li>
-                <li class="list-group-item text-right"><span class="float-left"><strong>Followers</strong></span> 78</li>
-            </ul>
-
-            <br> -->
-
-            <div class="list-group ">
-                <label class="card-header">Personal Settings</label>
-                <a href="{% url 'profile-settings' %}" class="list-group-item list-group-item-action active">Profile</a>
-                <a href="{% url 'account-settings' %}" class="list-group-item list-group-item-action">Account</a>
-                <a href="{% url 'emails-settings' %}" class="list-group-item list-group-item-action">Emails</a>
-                <a href="{% url 'billing-settings' %}" class="list-group-item list-group-item-action">Billing</a>
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>User Settings</h4>
+                <hr>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form>
+                    <div class="form-group row">
 
-
-
-        <!-- Center-right navBar-->
-        <div class="col-md-9">
-
-            <!-- Top Menu-->
-            <div class="row">
-                <div class="col-md-10">
-                    <h3>Public Profile</h1>
-                </div>
-            </div>
-            <ul class="nav nav-tabs" id="myTab">
-                <li class="active nav-item"><a href="#home" data-toggle="tab" class="nav-link">Name</a>
-                </li>
-                <li class="nav-item"><a href="#messages" data-toggle="tab" class="nav-link">Bio</a>
-                </li>
-                <li class="nav-item"><a href="#settings" data-toggle="tab" class="nav-link">Social</a>
-                </li>
-            </ul>
-
-
-
-
-
-
-
-
-            <div class="tab-content">
-                <div class="tab-pane active" id="home">
-                    <br>
-                    <div class="form-group">
-                        <div class="col-6">
-
+<h5>User Name (to-do)</h5>
+                        <div class="col-8">
+                            <input id="username" name="username" placeholder="Username" class="form-control here"
+                                required="required" type="text">
                         </div>
                     </div>
-                    <br>
-                    <hr>
-                </div>
-
-                <!--/tab-pane-->
-                <div class="tab-pane" id="messages">
-                    <br>
-
-                </div>
-
-                <!--/tab-pane-->
-                <div class="tab-pane" id="settings">
-
-                    <br>
-                    <h3>To-do</h3>
-
-                </div>
+                    <div class="form-group row">
+<h5>Email (to-do)</h5>
+                        <div class="col-8">
+                            <input id="email" name="email" placeholder="Email" class="form-control here" required="required"
+                                type="text">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="offset-4 col-8">
+                            <button name="submit" type="submit" class="btn btn-primary">Update My Profile</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <!--/tab-pane-->
         </div>
-        <!--/tab-content-->
     </div>
-    <!--/col-9-->
 </div>
-
-
-
-
-
-
-
 
 
 {% endblock %}
