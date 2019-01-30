@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'wishlist.apps.WishlistConfig',
     'storePage.apps.StorepageConfig',
     'users.apps.UsersConfig',
     'crispy_forms',
