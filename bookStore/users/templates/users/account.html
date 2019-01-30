@@ -15,28 +15,18 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <form>
-                    <div class="form-group row">
 
-<h5>User Name (to-do)</h5>
-                        <div class="col-8">
-                            <input id="username" name="username" placeholder="Username" class="form-control here"
-                                required="required" type="text">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-<h5>Email (to-do)</h5>
-                        <div class="col-8">
-                            <input id="email" name="email" placeholder="Email" class="form-control here" required="required"
-                                type="text">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="offset-4 col-8">
-                            <button name="submit" type="submit" class="btn btn-primary">Update My Profile</button>
-                        </div>
-                    </div>
-                </form>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+{{ u_form|crispy }}
+
+<div class="form-group">
+    <button class="btn btn-outline-info" type="submit">Update</button>
+</div>
+
+</form>
+
             </div>
         </div>
     </div>
