@@ -126,6 +126,10 @@ STATIC_URL = '/static/'
 # To beautify the form at signup
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+# This is where Django is going to store the media files. (the path)
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
 # Where to redirect user once they log-in
 LOGIN_REDIRECT_URL = 'store-home-page'
 # When somone tries to access a restricted page, it will redirect to the login page. login is the name I gave to the route
