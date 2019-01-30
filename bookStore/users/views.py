@@ -4,7 +4,6 @@ from .forms import UserSignUpForm, UserUpdateForm, ProfileUpdateForm, UserSignUp
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.http import HttpResponseRedirect
-from django.shortcuts import HttpResponse
 from django.contrib.auth.forms import PasswordChangeForm
 
 
