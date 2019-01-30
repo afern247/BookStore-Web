@@ -4,7 +4,7 @@
 .DS_Store
 .AppleDouble
 .LSOverride
-__pycache__
+__pycache__/*
 
 # Icon must end with two \r
 Icon
@@ -217,7 +217,7 @@ modules.xml
 pyvenv.cfg
 .venv
 pip-selfcheck.json
-.vscode
+
 
 ### VirtualEnv ###
 # Virtualenv
@@ -225,6 +225,7 @@ pip-selfcheck.json
 
 ### VisualStudioCode ###
 .vscode/*
+.vscode
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
