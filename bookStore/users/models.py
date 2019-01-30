@@ -2,11 +2,11 @@ from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
 
-# Profle model with data regarding the user
+# All user data is/should be linked to this profile, so when user gets deleted, all data deletes as
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=500, blank=True)
-    birth_date = models.DateField(null=True, blank=True)
+    # INNACTIVE -> birth_date = models.DateField(null=True, blank=True)
 
     #Image feature upload
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
