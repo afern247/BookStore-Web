@@ -18,8 +18,7 @@ urlpatterns = [
     # Navigation
     path('', include('storePage.urls')),        # Home page
     path('settings/', include('users.urls')),   # user profile, billing, etc. settings page
-    path('books/', include('books.urls')),      # Data about books
-
+    path('wishlist/', include('wishlist.urls')), # Wishlist
 ]
 
 if settings.DEBUG:

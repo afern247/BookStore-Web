@@ -31,10 +31,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    
+    #Custom APPS (write the newones on top)
+    'wishlist.apps.WishlistConfig',
     'books.apps.BooksConfig',           # Holds data releated to the books
     'storePage.apps.StorepageConfig',   # Display general views for other apps
     'users.apps.UsersConfig',           # Holds user data and it's views
-    'crispy_forms',                    # Module helper for forms
+    'crispy_forms',                     # Module helper for forms
+    
     # Built in
     'django.contrib.admin',
     'django.contrib.auth',
