@@ -13,13 +13,8 @@ urlpatterns = [
     path('signup/', user_views.signup, name='signup'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
-
-    # Navigation
-    path('', include('storePage.urls')),    # Home page
-    path('settings/', include('users.urls')),   # user profile, billing, etc. settings page
-
-    #Wishlist
     path('wishlist/', include('wishlist.urls')),
+    path('', include('storePage.urls')),
 ]
 
 if settings.DEBUG:
