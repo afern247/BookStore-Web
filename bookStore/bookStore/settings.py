@@ -31,9 +31,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'storePage.apps.StorepageConfig',
-    'users.apps.UsersConfig',
-    'crispy_forms',
+    
+    #Custom APPS (write the newones on top)
+    'wishlist.apps.WishlistConfig',
+    'books.apps.BooksConfig',           # Holds data releated to the books
+    'storePage.apps.StorepageConfig',   # Display general views for other apps
+    'users.apps.UsersConfig',           # Holds user data and it's views
+    'crispy_forms',                     # Module helper for forms
+    
+    # Built in
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -124,6 +130,10 @@ STATIC_URL = '/static/'
 
 # To beautify the form at signup
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# This is where Django is going to store the media files. (the path)
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 # Where to redirect user once they log-in
 LOGIN_REDIRECT_URL = 'store-home-page'
