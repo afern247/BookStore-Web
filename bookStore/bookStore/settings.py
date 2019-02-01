@@ -32,7 +32,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     
-    #Custom APPS (write the newones on top)
+    # Custom APPS (write the new ones on top)
+    'cart.apps.CartConfig'
     'wishlist.apps.WishlistConfig',
     'books.apps.BooksConfig',           # Holds data releated to the books
     'storePage.apps.StorepageConfig',   # Display general views for other apps
@@ -139,3 +140,6 @@ MEDIA_URL = '/media/'
 LOGIN_REDIRECT_URL = 'store-home-page'
 # When somone tries to access a restricted page, it will redirect to the login page. login is the name I gave to the route
 LOGIN_URL = 'login'
+
+# For a user's cart session
+CART_SESSION_ID = 'cart'
