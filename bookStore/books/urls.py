@@ -3,5 +3,5 @@ from . import views                     # Import the views defined in the curren
 
 urlpatterns = [
     path('', views.books, name='books-home'),
-    path('bookDetails/', views.bookDetails, name='book-details'),
+    path('details/', views.bookDetails, name='book-details'),
 ]

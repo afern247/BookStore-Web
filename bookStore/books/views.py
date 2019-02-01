@@ -8,4 +8,3 @@ def books(request):
 # Book details
 def bookDetails(request):
     return render(request, 'books/bookDetails.html')
-
