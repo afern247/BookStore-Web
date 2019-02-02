@@ -55,7 +55,6 @@ class Cart(object):
 
     # This iterator will be used to iterate (of course) through the
     # books in the cart, i.e. the Book models (instances)
-
     def __iter__(self):
         # Get the keys corresponding to all the books
         # in the database
@@ -79,6 +78,10 @@ class Cart(object):
             book['price'] = book.price
             book['total_price'] = book['price'] * book['amount']
             yield book
+
+    # Returns the total number of items in a user's cart
+    def __len__(self):
+        return sum(book['amount'] for book in self.userCart.values())
 
     # The function that will be used to add items to the cart.
     # Since no book models exist as of the present date (1/26/2019),
@@ -125,4 +128,14 @@ class Cart(object):
         if book_name in self.userCart:
             del self.userCart[book_name]
             self.save()
+
+    # Calculates the total cost of all the books in the cart
+    def get_total_price(self):
+        return sum((book.price * book.amount) for book in self.userCart.values())
+
+    # "Empties" the cart by deleting the cart from the session
+    def empty(self):
+        # Delete the cart from the current session
+        del self.session[settings.CART_SESSION_ID]
+        self.save()
 
