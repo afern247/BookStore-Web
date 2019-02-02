@@ -33,7 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     
     # Custom APPS (write the new ones on top)
-    'cart.apps.CartConfig'
+    'cart.apps.CartConfig',
     'wishlist.apps.WishlistConfig',
     'books.apps.BooksConfig',           # Holds data releated to the books
     'storePage.apps.StorepageConfig',   # Display general views for other apps
