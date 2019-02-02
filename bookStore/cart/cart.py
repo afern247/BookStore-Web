@@ -30,8 +30,6 @@ from cart.models import Book
 # doesn't exist yet
 
 # This is the cart class.
-
-
 class Cart(object):
     # Constructor method for the class - includes a request parameter
     def __init__(self, request):
@@ -45,7 +43,6 @@ class Cart(object):
             userCart = self.session[settings.CART_SESSION_ID] = {}
         # Assign the newly created and ID'd userCart to this cart model
         self.userCart = userCart
-
 
     # Our cart's status has to be modifiable, i.e. we need to be able
     # to change the state of the cart dynamically. For this, we need
@@ -138,4 +135,3 @@ class Cart(object):
         # Delete the cart from the current session
         del self.session[settings.CART_SESSION_ID]
         self.save()
-
