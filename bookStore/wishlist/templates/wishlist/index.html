@@ -4,14 +4,70 @@
 <!-- The code from the index page that will be added to the __base template -->
 {% block body %}
 <head>
-	<!-- Any header file for this doc you'd like to include. The main header is in __base.html already -->
+    <style>
+        .alignLeft{
+            float: left;
+        }
+        .alignRight{
+            float: right;
+        }
+        .lists{
+            height: 100px;
+            width: 30%;
+        }
+        .btn-outline-danger,.btn-outline-success{
+            margin: 10px;
+        }
+    </style>
 </head>
+    <div class="container">
+        <div>
+            <div class="alignLeft">
+                <h2>{{ user.username }}'s Lists</h2>
+            </div>
+            <div class="alignRight">
+                <button class="btn btn-outline-success">Create a List</button>
+                <button class="btn btn-outline-danger">Delete List</button>
+            </div>
+        </div>
+        <br><br>
+        <hr>
+        <div>
+            <!-- if this list is selected and being displayed already it should be highlighted -->
+            <div class="alignLeft lists" >
+                <table align="center" cellspacing="10" cellpadding="10" width="80%">
+					<tr>
+                        <td><a href="#" >Wishlist 1</a></td>
+					</tr>
+                    <tr>
+						<td><a href="#" >Wishlist 2</a></td>
+					</tr>
+                    <tr>
+						<td><a href="#" >Wishlist 3</a></td>
+					</tr>
+                </table>
+            </div>
+            <div class="alignLeft">
+                <table align="center" cellspacing="10" cellpadding="20" width=>
+                    <tr>
+                        <td>Book1</td>
+                    </tr>
+                    <tr>
+                        <td>Book2</td>
+                    </tr>
+                    <tr>
+                        <td>Book3</td>
+                    </tr>
+                    <tr>
+                        <td>Book4</td>
+                    </tr>
+                    <tr>
+                        <td>Book5</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
 
-	<br><br><br><br>
-    {% if user.is_authenticated %}
-        <center><h1>Wishlist is online!</h1></center>
-    {% else %}
-        <center><h1>You are not logged in!</h1></center>
-    {% endif %}
+    </div><!--Container closed-->
 
 {% endblock %}
