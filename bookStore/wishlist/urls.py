@@ -4,5 +4,5 @@ from . import views
 
 app_name = 'wishlist'
 urlpatterns = [
-    path('', views.index, name='wishlist-page'),
+    path('', views.index, name='wishlist-home'),
 ]
