@@ -1,10 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
-"""
-def index(request):
-    return HttpResponse("HELLO WORLD")
-"""
-
+@login_required()
 def index(request):
     return render(request, 'wishlist/index.html')
