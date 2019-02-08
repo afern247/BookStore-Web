@@ -631,7 +631,22 @@ local_settings.py
 */*/*/__pycache__/
 */*/__pycache__/
 */__pycache__/
+__pycache__/
+*.py[cod]
+*$py.class
 
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pyenv
+.python-version
+
