@@ -622,6 +622,19 @@ healthchecksdb
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
+/db/*.sqlite3-journal
 *.sqlite3
 *.sql
 *.sqlite
+migrations/
+db.sqlite3
+
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+
+.env
+db.sqlite3
