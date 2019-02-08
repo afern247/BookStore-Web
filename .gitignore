@@ -620,24 +620,18 @@ healthchecksdb
 
 # End of https://www.gitignore.io/api/venv,macos,windows,pycharm,virtualenv,pycharm+iml,pycharm+all,visualstudio,visualstudiocode
 
-<<<<<<< HEAD
-
-=======
-# Ignore the default SQLite database.
-/db/*.sqlite3
-/db/*.sqlite3-journal
-*.sqlite3
-*.sql
-*.sqlite
-migrations/
-db.sqlite3
-
 ### Django ###
 *.log
 *.pot
 *.pyc
 __pycache__/
 local_settings.py
+*.pot
+*.pyc
+*/*/*/__pycache__/
+*/*/__pycache__/
+*/__pycache__/
 
->>>>>>> d0248cbe427b0e21ce2c9ee123018c87d068d9e9
-#fe
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
