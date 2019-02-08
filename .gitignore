@@ -605,3 +605,5 @@ ASALocalRun/
 healthchecksdb
 
 # End of https://www.gitignore.io/api/venv,macos,windows,pycharm,virtualenv,pycharm+iml,pycharm+all,visualstudio,visualstudiocode
+
+g
