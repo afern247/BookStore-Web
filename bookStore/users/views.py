@@ -35,6 +35,7 @@ def profile(request):
         user_ProfileForm = UserProfileForm(request.POST, instance=request.user)
         user_BioAndSocialForm = BioAndSocialForm(request.POST, request.FILES, instance=request.user.profile)
 
+
         if user_ProfileForm.is_valid() and user_BioAndSocialForm.is_valid():
             user_ProfileForm.save()
             user_BioAndSocialForm.save()
@@ -46,6 +47,7 @@ def profile(request):
     else:
         user_ProfileForm = UserProfileForm(instance=request.user)
         user_BioAndSocialForm = BioAndSocialForm(instance=request.user.profile)
+
 
     context = {
         'user_ProfileForm': user_ProfileForm,
