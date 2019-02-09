@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from django.contrib import messages                 # to display alert messages when the form data is valid
+from django.shortcuts import render
+
 
 # Books
 def books(request):
@@ -8,3 +8,15 @@ def books(request):
 # Book details
 def bookDetails(request):
     return render(request, 'books/bookDetails.html')
+
+
+# =====================================================
+# CODE AUTHOR: RAUL ESPINOSA
+# Views necessary for the implementation of the add to cart functionality.
+# =====================================================
+
+
+
+# =====================================================
+# RAUL'S CODE ENDS HERE
+# =====================================================

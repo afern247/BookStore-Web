@@ -1,10 +1,11 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
-from books import views as books_views
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from users import views as user_views
-from django.conf import settings
-from django.conf.urls.static import static
+
+# Cart imports
 
 urlpatterns = [
     # Administration
@@ -20,6 +21,7 @@ urlpatterns = [
     path('settings/', include('users.urls')),       # user profile, billing, etc. settings page
     path('wishlist/', include('wishlist.urls')),    # Wishlist
     path('books/', include('books.urls')),          # Books data
+    path('cart/', include('cart.urls')),            # Shopping cart
 ]
 
 if settings.DEBUG:
