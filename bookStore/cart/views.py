@@ -15,12 +15,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 # require HTTP POST requests.
 from django.views.decorators.http import require_POST
 
-# These are the cart and cart forms.
-from bookStore.cart.cart import Cart
-from bookStore.cart.forms import AddToCartForm
 # This is the TEMPORARY Book model that I created
 # to be used with the cart.
 from cart.models import Book
+# These are the cart and cart forms.
+from .cart import Cart
+from .forms import AddToCartForm
 
 
 # This is the view that will handle adding/updating items

@@ -7,6 +7,7 @@ from users import views as user_views
 
 # Cart imports
 
+
 urlpatterns = [
     # Administration
     path('admin/', admin.site.urls),
