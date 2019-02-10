@@ -30,7 +30,7 @@ class Author(models.Model):
     # Meta class used to define the order the authors will
     # appear in
     class Meta:
-        ordering = ('name',)
+        ordering = ('author_name',)
 
     # Saw this used in the Django docs and did some research.
     # Seems to be a Python "toString" analogue.
