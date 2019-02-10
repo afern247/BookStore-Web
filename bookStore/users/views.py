@@ -34,7 +34,7 @@ def profile(request):
     if request.method == 'POST':
         user_ProfileForm = UserProfileForm(request.POST, instance=request.user)
         user_BioForm = BioForm(request.POST, instance=request.user.profile)
-        user_AddressForm = AddressForm(request.POST, instance=request.user.profile)
+        user_AddressForm = AddressForm(request.POST, instance=request.user)
 
         if user_ProfileForm.is_valid() and user_BioForm.is_valid() and user_AddressForm.is_valid():
             user_AddressForm.save()
@@ -48,7 +48,7 @@ def profile(request):
     else:
         user_ProfileForm = UserProfileForm(instance=request.user)
         user_BioForm = BioForm(instance=request.user.profile)
-        user_AddressForm = AddressForm(instance=request.user.profile)
+        user_AddressForm = AddressForm()
 
 
     context = {
