@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Profile
+from .models import Profile, Address, AddressInfo
 from crispy_forms.helper import FormHelper
 
 
@@ -44,14 +44,23 @@ class UserProfileForm(forms.ModelForm):
         self.helper.form_show_labels = False
 
 # Form to upddate the user bio at the profile page
-class BioAndSocialForm(forms.ModelForm):
+class BioForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['bio']
 
     def __init__(self, *args, **kwargs):
-        super(BioAndSocialForm, self).__init__(*args, **kwargs)
+        super(BioForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_show_labels = False
 
 
+class AddressForm (forms.ModelForm):
+    class Meta:
+        model = Address
+        fields = ['name', 'address', 'city', 'state', 'zipcode', 'country']
+
+    def __init__(self, *args, **kwargs):
+        super(AddressForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_show_labels = False

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages # to display alert messages when the form data is valid
-from .forms import UserSignUpForm, UserUpdateForm, ProfileUpdateForm, UserSignUpForm, UserUpdateForm, ProfileUpdateForm, UserProfileForm, BioAndSocialForm
+from .forms import UserSignUpForm, ProfileUpdateForm, UserUpdateForm, UserProfileForm, BioForm, AddressForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.http import HttpResponseRedirect
@@ -33,12 +33,13 @@ def settingsHome(request):
 def profile(request):
     if request.method == 'POST':
         user_ProfileForm = UserProfileForm(request.POST, instance=request.user)
-        user_BioAndSocialForm = BioAndSocialForm(request.POST, request.FILES, instance=request.user.profile)
+        user_BioForm = BioForm(request.POST, instance=request.user.profile)
+        user_AddressForm = AddressForm(request.POST, instance=request.user.profile)
 
-
-        if user_ProfileForm.is_valid() and user_BioAndSocialForm.is_valid():
+        if user_ProfileForm.is_valid() and user_BioForm.is_valid() and user_AddressForm.is_valid():
+            user_AddressForm.save()
             user_ProfileForm.save()
-            user_BioAndSocialForm.save()
+            user_BioForm.save()
             messages.success(request, f'Your profile has been updated successfully')
             return HttpResponseRedirect(request.path_info)
         else:
@@ -46,21 +47,24 @@ def profile(request):
 
     else:
         user_ProfileForm = UserProfileForm(instance=request.user)
-        user_BioAndSocialForm = BioAndSocialForm(instance=request.user.profile)
+        user_BioForm = BioForm(instance=request.user.profile)
+        user_AddressForm = AddressForm(instance=request.user.profile)
 
 
     context = {
         'user_ProfileForm': user_ProfileForm,
-        'user_BioAndSocialForm': user_BioAndSocialForm
+        'user_BioForm': user_BioForm,
+        'user_AddressForm': user_AddressForm
     }
 
     return render(request, 'users/profile.html', context)
 
 
-# Billing page
+# Billing page (credit card and billing address)
 def billingSettings(request):
     return render(request, 'users/billing.html')
 
+# Username and email form
 def accountSettings(request):
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
