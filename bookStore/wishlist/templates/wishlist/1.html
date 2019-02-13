@@ -15,31 +15,31 @@
         .lists{
             height: 100px;
             width: 30%;
+            border-style: solid;
+        }
+        .btn-outline-danger,.btn-outline-success{
+            margin: 10px;
         }
     </style>
 </head>
-
     <div class="container">
         <div>
             <div class="alignLeft">
-                <h1>{{ user.username }}'s Wishlists</h1>
+                <h2>{{ user.username }}'s Wishlists</h2>
             </div>
             <div class="alignRight">
-                <form method="post">
-                {% csrf_token %}
-                    {% if num_of_lists < 3 %}
-                        <input id="listName" type="text" placeholder="Enter List Name Here" maxlength="25" required>
-                        <button type="submit" class="btn btn-outline-success">Create List</button>
-                    {% else %}
-                        <button class="btn btn-outline-secondary" disabled>Create List</button>
-                    {% endif %}
-                </form>
+                {% if num_of_lists <= 2 %}
+                    <button class="btn btn-outline-success">Create a List</button>
+                {% else %}
+                    <button class="btn btn-outline-secondary" disabled>Create a List</button>
+                {% endif %}
+                <button class="btn btn-outline-danger">Delete List</button>
             </div>
         </div>
         <br><br>
         <hr>
         {% if num_of_lists == 0 %}
-            <h2>You do not have any lists. Click "Create A List" above to create a new list.</h2>
+            <h1>You do not have any lists. Click "Create A List" above to create a new list.</h1>
         {% else %}
             <div>
                 <div class="alignLeft lists" >
