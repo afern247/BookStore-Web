@@ -13,6 +13,9 @@
 # Necessary import for working with models
 from django.db import models
 
+# For use with the get_absolute_url methods
+from django.urls import reverse
+
 # This class models book authors, which have a many-to-many relationship
 # with books: a book can have multiple authors and authors can write multiple
 # books
@@ -32,10 +35,21 @@ class Author(models.Model):
     class Meta:
         ordering = ('author_name',)
 
+        # How we'll refer to a single author
+        # in the views.py for bookDetails
+        verbose_name = 'author'
+        # How we'll refer to multiple authors
+        # in the views.py for bookDetails
+        verbose_name_plural = 'authors'
+
     # Saw this used in the Django docs and did some research.
     # Seems to be a Python "toString" analogue.
     def __str__(self):
         return self.author_name
+
+    # For use when a user searches for books by author. Returns the URL.
+    def get_absolute_url(self):
+        return reverse('bookDetails:book_list_by_author', args=[self.slug])
 
 
 # The model that represents an individual Book. I've copy-pasted
@@ -112,3 +126,7 @@ class Book(models.Model):
     # "toString" method for the Book model
     def __str__(self):
         return self.book_name
+
+    # For use when a user searches for a book by name. Returns the URL
+    def get_absolute_url(self):
+        return reverse('bookDetails: book_info', args=[self.book_name, self.slug])

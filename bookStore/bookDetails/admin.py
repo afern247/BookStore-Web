@@ -11,7 +11,7 @@
 from django.contrib import admin
 
 # Importing the Author and Book models from the bookDetails package
-from bookStore.bookDetails.models import Author, Book
+from .models import Author, Book
 
 
 # Registering the models
@@ -31,9 +31,12 @@ class AuthorAdmin(admin.ModelAdmin):
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    list_display = ['book_name', 'book_cover', 'book_author', 'author_bio'
-                    ,'book_description', 'book_genre', 'publishing_info'
-                    ,'avg_rating', 'price', 'slug']
+    # NOTE: I had to remove book_author from here because apparently, list_display
+    # can't contain ManyToMany fields. That results in a SystemCheckError when trying to
+    # run the server and make migrations.
+    list_display = ['book_name', 'book_cover', 'author_bio'
+                   ,'book_description', 'book_genre', 'publishing_info'
+                   ,'avg_rating', 'price', 'slug']
 
     # Creating the book's slug using the book's name
     prepopulated_fields = {'slug': ('book_name',)}
