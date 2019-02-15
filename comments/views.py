@@ -1,23 +1,20 @@
-from django.shortcuts import render
-from django.contrib.auth.decorators import user_passes_test
-from django.shortcuts import redirect, render_to_response, get_object_or_404
-from django.template import RequestContext
-from .forms import CommentForm
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Post, Comment
+from .forms import CommentForm, PostForm
 
+# Create your views here.
+def details(request):
+    return render(request, 'details/Details.html')
 
-#Book model must be finished to use as foreign key and let users add comments to
-#bookDetails page
-'''
-def add_comment(request, pk):
-    addComment = get_object_or_404(book, pk=pk)
+def add_comment(request):
+    post = get_object_or_404(Post)
     if request.method == "POST":
-        form = CommentForm(requst.POST)
+        form = CommentForm(request.Post)
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.book = book
+            comment.post = post
             comment.save()
-            return redirect(,pk=book.pk)
-        else:
-            form = CommentForm()
-        return render(request, '', {'form':form})
-'''
+            return redirect('details/Details.html')
+    else:
+        form = CommentForm()
+    return render(request, 'details/add_comment.html', {'form' : form})

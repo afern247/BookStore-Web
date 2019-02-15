@@ -1,10 +1,12 @@
-from django.shortcuts import render
 from django import forms
-from .models import Comment
+from .models import Comment, Post
 
-# Create your forms here.
+class PostForm(forms.ModelForm):
+    class Meta:
+        exclude = ['title']
+
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ('author', 'text')
-
+        fields = ['text']
+        exclude = ['post']
