@@ -70,7 +70,7 @@ class Book(models.Model):
     # optional for now (null=True option),
     # so that the server won't crash
     # if there are no image files
-    book_cover = models.ImageField(upload_to='bookList/', blank=True, null=True)
+    book_cover = models.ImageField(upload_to='bookDetails/', blank=True, null=True)
 
     # The book's author(s). Here we make note of the many-to-many
     # relationship between the Book and Author classes;
@@ -129,4 +129,4 @@ class Book(models.Model):
 
     # For use when a user searches for a book by name. Returns the URL
     def get_absolute_url(self):
-        return reverse('bookDetails: book_info', args=[self.book_name, self.slug])
+        return reverse('bookDetails:book_info', args=[self.book_name, self.slug])

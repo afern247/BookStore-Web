@@ -27,15 +27,16 @@ def book_list(request, author_slug=None):
         author = get_object_or_404(Author, slug=author_slug)
         books = books.filter(author=author)
 
-    return render(request, 'bookDetails/list.html', {'author': author,
-                                                     'authors': authors,
-                                                     'books': books})
+    return render(request, 'bookDetails/book/list.html', {'author': author,
+                                                          'authors': authors,
+                                                          'books': books})
 
 # Display a single book at a time
+
 
 def book_info(request, book_name, slug):
     # Attempt to retrieve the book requested based on the provided
     # name and slug
     book = get_object_or_404(Book, book_name=book_name, slug=slug)
 
-    return render(request, 'bookDetails/info.html', {'book': book})
+    return render(request, 'bookDetails/book/detail.html', {'book': book})

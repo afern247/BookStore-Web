@@ -1,10 +1,24 @@
+{% extends "storePage/partials/__base.html" %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{% block title %}Book List{% endblock %}</title>
+   <!-- <link href="{% static "css/base.css" %}" rel="stylesheet"> -->
 </head>
 <body>
-
+    <div id="header">
+        <a href="/" class="logo">Book List</a>
+    </div>
+    <div id="subheader">
+        <div class="cart">
+            Your cart is empty.
+        </div>
+    </div>
+    <div id="content">
+        {% block content %}
+        {% endblock %}
+    </div>
 </body>
 </html>

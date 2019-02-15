@@ -1,10 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "bookDetails/base.html" %}
 
-</body>
-</html>
+{% load static %}
+
+{% block title %}
+    {% if author %}{{ author.author_name }}{% else %}Books{% endif %}
+{% endblock %}
+
+{% block content %}
+    <div id="sidebar">
+        <h3>Authors</h3>
+        <ul>
+            <!-- If no author was specified, print every
+             author's name and a link to their page -->
+            {% if not author %}
+                {% for current in authors %}
+                <li class="selected">
+                    <a href="">{{ current.author_name }}</a>
+
+                </li>
+                {% endfor %}
+            {% endif %}
+
+            <!-- Otherwise, an author must have been specified
+            so iterate through the set of all authors, looking for
+            the one whose slug matches the specified author's, then
+            print all their books' URLs and names -->
+            {% for current in authors %}
+                {% if author.slug == current.slug %}
+                <li class="selected">
+                    <a href="">{{ current.author_name }}</a>
+                </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
