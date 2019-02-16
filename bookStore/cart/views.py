@@ -5,6 +5,9 @@
 
 # https://docs.djangoproject.com/en/2.1/topics/http/views/
 # https://docs.djangoproject.com/en/2.1/ref/views/
+
+# EDIT: Don't know why, but my last push from when I was working in my branch
+# didn't push either this or my forms.py file to the Development branch.
 # =====================================================
 
 from django.shortcuts import render, redirect, get_object_or_404
@@ -12,12 +15,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 # require HTTP POST requests.
 from django.views.decorators.http import require_POST
 
-# These are the cart and cart forms.
-from bookStore.cart.cart import Cart
-from bookStore.cart.forms import AddToCartForm
 # This is the TEMPORARY Book model that I created
 # to be used with the cart.
 from cart.models import Book
+# These are the cart and cart forms.
+from .cart import Cart
+from .forms import AddToCartForm
 
 
 # This is the view that will handle adding/updating items
@@ -67,4 +70,3 @@ def removeFromCart(request, book_name):
 def cart_info(request):
     userCart = Cart(request)
     return render(request, 'cart/info.html', {'userCart': userCart})
-
