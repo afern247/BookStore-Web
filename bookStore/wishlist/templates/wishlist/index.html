@@ -1,12 +1,76 @@
 <!-- This is saying: inherit everything from __base.html -->
+<!DOCTYPE html>
 {% extends "../storePage/partials/__base.html" %}
 
 <!-- The code from the index page that will be added to the __base template -->
 {% block body %}
 <head>
-	<!-- Any header file for this doc you'd like to include. The main header is in __base.html already -->
+    <style>
+        .alignLeft{
+            float: left;
+        }
+        .alignRight{
+            float: right;
+        }
+        .lists{
+            height: 100px;
+            width: 30%;
+        }
+    </style>
 </head>
 
-	<br><br><br><br><br><br><br>
-	<center><h1>Wishlist is online!</h1></center>
+    <div class="container">
+        <div>
+            <div class="alignLeft">
+                <h1>{{ user.username }}'s Wishlists</h1>
+            </div>
+            <div class="alignRight">
+                <form method="post">
+                {% csrf_token %}
+                    {% if num_of_lists < 3 %}
+                        <input id="listName" type="text" placeholder="Enter List Name Here" maxlength="25" required>
+                        <button type="submit" class="btn btn-outline-success">Create List</button>
+                    {% else %}
+                        <button class="btn btn-outline-secondary" disabled>Create List</button>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+        <br><br>
+        <hr>
+        {% if num_of_lists == 0 %}
+            <h2>You do not have any lists. Click "Create A List" above to create a new list.</h2>
+        {% else %}
+            <div>
+                <div class="alignLeft lists" >
+                    <table align="center" cellspacing="10" cellpadding="10" width="80%">
+                        {% for list in all_lists %}
+                            <tr>
+                                <td><a href=""><h3>{{ list.name }}</h3></a></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="alignLeft">
+                    <table align="center" cellspacing="10" cellpadding="20" width=>
+                        <tr>
+                            <th>Book Name</th>
+                            <th>Author Name</th>
+                            <th>Book Price</th>
+                            <!-- <th>List</th> -->
+                        </tr>
+                        {% for book in all_books %}
+                            <tr>
+                                <td>{{ book.name }}</td>
+                                <td>{{ book.author_name }}</td>
+                                <td>{{ book.price }}</td>
+                                <td>{{ book.list_name }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        {% endif %}
+    </div><!--Container closed-->
+
 {% endblock %}

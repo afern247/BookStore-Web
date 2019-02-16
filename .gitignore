@@ -6,12 +6,26 @@
 .LSOverride
 __pycache__/*
 __pycache__*
-.idea*
+*.pyc
+
 # Icon must end with two \r
 Icon
 
 # Thumbnails
 ._*
+
+# Ignore all logfiles and tempfiles.
+/log/*.log
+/tmp
+*.log
+
+
+# Ignore JetBrains RubyMine IDE settings
+/.idea
+.idea*
+
+# Ignore PaperClip images
+/public/system
 
 # Files that might appear in the root of a volume
 .DocumentRevisions-V100
@@ -605,3 +619,35 @@ ASALocalRun/
 healthchecksdb
 
 # End of https://www.gitignore.io/api/venv,macos,windows,pycharm,virtualenv,pycharm+iml,pycharm+all,visualstudio,visualstudiocode
+
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+*.pot
+*.pyc
+*/*/*/__pycache__/
+*/*/__pycache__/
+*/__pycache__/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pyenv
+.python-version
+
+*.sqlite3

@@ -1,5 +1,5 @@
 from django.urls import path, include   # path is to create the path in urlpatterns
-from . import views                     # Import the views defined in the current directory
+from . import views
 
 urlpatterns = [
     path('', views.books, name='books-home'),

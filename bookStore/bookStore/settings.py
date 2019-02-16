@@ -32,13 +32,16 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     
-    #Custom APPS (write the newones on top)
+    # Custom APPS (write the new ones on top)
+    'bookDetails.apps.BookDetailsConfig', # New bookDetails functionality made by Raul
+    'cart.apps.CartConfig',             # Cart functionality
     'wishlist.apps.WishlistConfig',
-    'books.apps.BooksConfig',           # Holds data releated to the books
+    'books.apps.BooksConfig',           # Holds data related to the books
     'storePage.apps.StorepageConfig',   # Display general views for other apps
     'users.apps.UsersConfig',           # Holds user data and it's views
     'crispy_forms',                     # Module helper for forms
-    
+    'comments.apps.CommentsConfig',     #  Comments functionality
+
     # Built in
     'django.contrib.admin',
     'django.contrib.auth',
@@ -139,3 +142,6 @@ MEDIA_URL = '/media/'
 LOGIN_REDIRECT_URL = 'store-home-page'
 # When somone tries to access a restricted page, it will redirect to the login page. login is the name I gave to the route
 LOGIN_URL = 'login'
+
+# For a user's cart session
+CART_SESSION_ID = 'cart'

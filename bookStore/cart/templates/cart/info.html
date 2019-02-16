@@ -1,0 +1,55 @@
+{% extends "storePage/index.html" %}
+{% load static %}
+
+{% block title %}
+    --- Shopping Cart ---
+{% endblock %}
+
+{% block content %}
+    <h1>Shopping Cart</h1>
+    <table class="userCart">
+        <thead>
+            <tr>
+                <!-- List of all the attributes associated with a book that should
+                be visible from a cart -->
+                <th>Image</th>
+                <th>Book</th>
+                <th>Amount</th>
+                <th>Remove</th>
+                <th>Price</th>
+                <th>Total Cost</th>
+            </tr>
+        </thead>
+        <tr>
+            {% for book in userCart %}
+                {% with book=book.book_name %}
+                <tr>
+                    <td>
+                        <!-- This is where you'd display the book's image using the URL of the img,
+                        but these aren't available at present-->
+                        {% static "img/no_image.png" %}
+                    </td>
+                    <td>{{ book.name }}</td>
+                    <td>{{ book.quantity }}</td>
+                    <td class="num">${{ book.price }}</td>
+                    <td class="num">${{ book.total_price }}</td>
+                    <!-- <td><a href="{% url "cart:removeFromCart" book.name %}">Remove</a></td> -->
+                </tr>
+                {% endwith %}
+            {% endfor %}
+            <!-- Table row showing the total cost of items in cart. Uses
+            the get_total_price function defined in cart.py -->
+            <tr class="total"></tr>
+                <td>Total</td>
+                <td class="num">${{ cart.get_total_price }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>
+        <!-- Should be a link back to the product list here later -->
+        <!-- CHECKOUT BUTTON -->
+        <a href="#" class="button">Checkout</a>
+    </p>
+
+{% endblock %}
