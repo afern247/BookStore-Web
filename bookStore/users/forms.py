@@ -58,7 +58,7 @@ class BioForm(forms.ModelForm):
 class AddressForm (forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['addresses']
+        fields = ['Address']
 
     def __init__(self, *args, **kwargs):
         super(AddressForm, self).__init__(*args, **kwargs)
