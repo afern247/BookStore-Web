@@ -74,7 +74,8 @@ class Book(models.Model):
 
     # The book's author(s). Here we make note of the many-to-many
     # relationship between the Book and Author classes;
-    book_author = models.ManyToManyField(Author, related_name='authored')
+    #book_author = models.ManyToManyField(Author, related_name='authored')
+    book_author = models.CharField(max_length=200)
 
     # The bio of the author(s); This can be lengthy, so
     # I've set the length to 1000 chars
@@ -97,11 +98,6 @@ class Book(models.Model):
     # decimal place, i.e. 4.5 or 3.4
     avg_rating = models.DecimalField(max_digits=2, decimal_places=1)
 
-    # The amount of this particular book that's in a cart
-    # Commented out for now since it relates
-    # to the CART app and isn't directly related to books themselves
-    #amount = models.PositiveIntegerField()
-
     # The price of each book, specified as taking 2
     # decimal places as they do in real life,
     # i.e. $15.95, not $15.95231239501...
@@ -111,12 +107,6 @@ class Book(models.Model):
     # for something, containing only letters, numbers, underscores
     # or hyphens", and are used in URLs. It makes them look neater.
     slug = models.SlugField(max_length=150, db_index=True)
-
-    # Function that tells you how many units of a book
-    # are in your cart. Commented out for now since it relates
-    # to the CART app and isn't directly related to books themselves
-    #def ___unicode__(self):
-        #return '%d copies of %s in cart' % (self.amount, self.book_name)
 
     # Books will also be ordered by name, since no other
     # specification has been set

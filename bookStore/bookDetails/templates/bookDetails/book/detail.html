@@ -1,10 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!-- Inherit from the bookDetails' base.html -->
+{% extends "bookDetails/base.html" %}
+<!-- Load crispy forms functionality -->
+{% load crispy_forms_tags %}
+<!-- Load from static folder -->
+{% load static %}
 
-</body>
-</html>
+{% block title %}
+    {{ book.book_name }}
+{% endblock %}
+
+{% block body %}
+    <div class="book-info">
+    <img src="{% if book.book_cover %}{{ book.book_cover.url }}
+             {% else %}NO IMAGE{% endif %}">
+    <h1>{{ book.book_name }}</h1>
+    <h2><a href="{{ author.get_absolute_url }}">{{ author.author_name }}</a></h2>
+    <p class="price">PRICE: ${{ book.price }}</p>
+    <p class="publishing-info">PUBLISHER: {{ book.publishing_info }}</p>
+    <p class="book-genre">GENRE: {{ book.book_genre }}</p>
+    <p class="book-desc">DESCRIPTION: {{ book.book_description }}</p>
+    <p class="auth-bio">AUTHOR BIO: {{ book.author_bio }}</p>
+    <!-- The book's comments can go here! -->
+    </div>
+{% endblock %}

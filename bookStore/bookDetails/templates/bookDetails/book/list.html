@@ -1,13 +1,14 @@
 <!-- Inherit from the bookDetails' base.html -->
 {% extends "bookDetails/base.html" %}
-
 <!-- Load crispy forms functionality -->
 {% load crispy_forms_tags %}
 <!-- Load from static folder -->
 {% load static %}
 
 {% block title %}
-    {% if author %}{{ author.author_name }}{% else %}Books{% endif %}
+    <h1>
+        Bookstore
+    </h1>
 {% endblock %}
 
 {% block content %}
@@ -16,16 +17,6 @@
         <ul>
             <!-- If no author was specified, print every
              author's name and a link to their page -->
-        {% comment %}
-            {% if not author %}
-                {% for current in authors %}
-                <li class="selected">
-                    <a href="{{ current.get_absolute_url }}">{{ current.author_name }}</a>
-                </li>
-                {% endfor %}
-            {% endif %}
-        {% endcomment %}
-
         <li {% if not author %}class="selected"{% endif %}>
             <a href="{% url "bookDetails:book_list" %}">All</a>
         </li>
@@ -33,17 +24,6 @@
             so iterate through the set of all authors, looking for
             the one whose slug matches the specified author's, then
             print all their books' URLs and names -->
-
-        {% comment %}
-            {% for current in authors %}
-                {% if author.slug == current.slug %}
-                <li class="selected">
-                    <a href="{{ current.get_absolute_url }}">{{ current.author_name }}</a>
-                </li>
-                {% endif %}
-            {% endfor %}
-        {% endcomment %}
-
         {% for current in authors %}
             <li {% if author.slug == current.slug %}class="selected"{% endif %}>
                 <a href="{{ current.get_absolute_url }}">{{ current.author_name }}</a>
@@ -55,16 +35,21 @@
     <!-- If an author was specified, print all their books. Otherwise,
     print all books -->
     <div id="main" class="book-list">
-        <h1>{% if author %}{{ author.author_name }}{% else %}Books{% endif %}</h1>
+        <h1>
+            {% if author %}
+            <a href="{{ author.get_absolute_url }}">Books by {{ author.author_name }}</a>
+            {% else %}All Books{% endif %}
+        </h1>
         {% for book in books %}
             <div class="item">
                 <a href="{{ book.get_absolute_url }}">
                     <img src="{% if book.book_cover %}{{ book.book_cover.url }}
                     {% else %}NO IMAGE{% endif %}">
                 </a>
-                <a href="{{ book.get_absolute_url }}">{{ book.book_name }}</a>
                 <br>
-                ${{ book.price }}
+                <h2><a href="{{ book.get_absolute_url }}">{{ book.book_name }}</a></h2>
+                <br>
+                PRICE: ${{ book.price }}
                 <br>
                 RATING: {{ book.avg_rating }}
                 <br>
@@ -73,6 +58,7 @@
                 DESCRIPTION: {{ book.book_description }}
                 <br>
                 PUBLISHING INFO: {{ book.publishing_info }}
+                <br>
                 <br>
             </div>
         {% endfor %}
