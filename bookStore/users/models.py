@@ -37,7 +37,7 @@ class AddressInfo(models.Model):
     class Meta:
         verbose_name_plural = 'AddressInfo'
         verbose_name = 'Addresses of all users'
-        
+
 
 
 
