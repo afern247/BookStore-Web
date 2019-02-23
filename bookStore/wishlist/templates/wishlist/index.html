@@ -19,6 +19,21 @@
     </style>
 </head>
 
+    <!-- Delete Start -->
+    <p>Leave this here for testing. Delete later.</p>
+    <p>num_of_lists: {{ num_of_lists }}</p>
+    <p>user.username: {{ user.username }}</p>
+    {% for list in all_lists %}
+        <ul>
+            <li>list.user: {{ list.user }}</li>
+            <li>list.id: {{ list.id }}</li>
+            <li>list.user.id: {{ list.user.id }}</li>
+            <li>list.user.user: {{ list.user.user }}</li>
+            <li>list.user.user.username: {{ list.user.user.username }}</li>
+        </ul>
+    {% endfor %}
+    <!-- Delete Stop -->
+
     <div class="container">
         <div>
             <div class="alignLeft">
@@ -45,7 +60,7 @@
                 <div class="alignLeft lists" >
                     <table align="center" cellspacing="10" cellpadding="10" width="80%">
                         {% for list in all_lists %}
-                            {% if list.user_name == user.username %}
+                            {% if list.user.user.username == user.username %}
                                 <tr>
                                     <td><a href=""><h3>{{ list.name }}</h3></a></td>
                                 </tr>
@@ -59,14 +74,12 @@
                             <th>Book Name</th>
                             <th>Author Name</th>
                             <th>Book Price</th>
-                            <!-- <th>List</th> -->
                         </tr>
                         {% for book in all_books %}
                             <tr>
                                 <td>{{ book.name }}</td>
                                 <td>{{ book.author_name }}</td>
                                 <td>{{ book.price }}</td>
-                                <!-- <td>{{ book.list_name }}</td> -->
                             </tr>
                         {% endfor %}
                     </table>
