@@ -3,12 +3,11 @@ from datetime import datetime
 from django.contrib.auth.models import User
 from django.conf import settings
 
-# Create your models here.
-
 class List(models.Model):
     #user = models.ForeignKey(User, default=0, on_delete=models.CASCADE)
     name = models.CharField(max_length=25)
     date_created = models.DateTimeField(default=datetime.now, blank=True)
+    user_name = models.CharField(max_length=150, default="Testing")
 
     def __str__(self):
         return self.name

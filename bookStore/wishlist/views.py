@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Book
 from .models import List
+from .models import User
 from .forms import CreateList
 
 def create_list(request):
@@ -14,6 +15,8 @@ def create_list(request):
         return redirect('')
     return render(request, 'wishlist/index.html', {'form': form})
 
+def detail(request, wishlist_id):
+    return HttpResponse("<h2>Details for album id: " + str(wishlist_id) + "</h2>")
 
 @login_required()
 def index(request):

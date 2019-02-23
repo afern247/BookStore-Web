@@ -45,9 +45,11 @@
                 <div class="alignLeft lists" >
                     <table align="center" cellspacing="10" cellpadding="10" width="80%">
                         {% for list in all_lists %}
-                            <tr>
-                                <td><a href=""><h3>{{ list.name }}</h3></a></td>
-                            </tr>
+                            {% if list.user_name == user.username %}
+                                <tr>
+                                    <td><a href=""><h3>{{ list.name }}</h3></a></td>
+                                </tr>
+                            {% endif %}
                         {% endfor %}
                     </table>
                 </div>
@@ -64,7 +66,7 @@
                                 <td>{{ book.name }}</td>
                                 <td>{{ book.author_name }}</td>
                                 <td>{{ book.price }}</td>
-                                <td>{{ book.list_name }}</td>
+                                <!-- <td>{{ book.list_name }}</td> -->
                             </tr>
                         {% endfor %}
                     </table>
