@@ -26,7 +26,7 @@ class AuthorAdmin(admin.ModelAdmin):
     # specify fields whose value is automatically
     # set using other fields. Here I create a slug
     # using the name of the author
-    prepopulated_fields= {'slug': ('author_name',)}
+    prepopulated_fields = {'slug': ('author_name',)}
 
 
 @admin.register(Book)
@@ -35,8 +35,8 @@ class BookAdmin(admin.ModelAdmin):
     # can't contain ManyToMany fields. That results in a SystemCheckError when trying to
     # run the server and make migrations.
     list_display = ['book_name', 'book_cover', 'author_bio'
-                   ,'book_description', 'book_genre', 'publishing_info'
-                   ,'avg_rating', 'price', 'slug']
+                    , 'book_description', 'book_genre', 'publishing_info'
+                    , 'avg_rating', 'price']
 
     # Creating the book's slug using the book's name
     prepopulated_fields = {'slug': ('book_name',)}
