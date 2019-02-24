@@ -15,9 +15,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 # require HTTP POST requests.
 from django.views.decorators.http import require_POST
 
-# This is the TEMPORARY Book model that I created
-# to be used with the cart.
-from cart.models import Book
+# This is the Book model from the bookDetails package I made.
+from bookStore.bookDetails.models import Book
 # These are the cart and cart forms.
 from .cart import Cart
 from .forms import AddToCartForm
@@ -31,7 +30,7 @@ def addToCart(request, book_name):
     userCart = Cart(request)
     # Attempt to get the Book that has the
     # given book name
-    book = get_object_or_404(Book, name=book_name)
+    book = get_object_or_404(Book, book_name=book_name)
 
     # Validate the form for adding the item to the cart
     form = AddToCartForm(request.POST)
@@ -55,7 +54,7 @@ def addToCart(request, book_name):
 def removeFromCart(request, book_name):
     userCart = Cart(request)
     # Same as addToCart function
-    book = get_object_or_404(Book, name=book_name)
+    book = get_object_or_404(Book, book_name=book_name)
 
     # Simply remove the Book with the given name
     # from the cart

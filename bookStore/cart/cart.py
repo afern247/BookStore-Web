@@ -13,21 +13,17 @@
 # https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Sessions
 # ====================================================================
 
-from django.conf import settings
-
-# Importing Cart for the Cart class and Book
-# for the Books (which I just wrote myself since the
-# actual bookDetails haven't been made yet)
-from cart.models import Book
-
-
 # This data type simplifies floating-point arithmetic and makes it
 # look more like what calculators make it look like in real life.
 # Also allows for rounding rules to be established,
 # which will help with price calculations
+from decimal import Decimal
 
-# Next we'd need to import the models class for the books, but that
-# doesn't exist yet
+from django.conf import settings
+
+# Importing my Book class from the bookDetails package I made
+from bookStore.bookDetails.models import Book
+
 
 # This is the cart class.
 class Cart(object):
@@ -39,7 +35,7 @@ class Cart(object):
             # Get the userCart's session ID. If it fails, raises KeyError
             userCart = self.session.get(settings.CART_SESSION_ID)
         except:
-            # If we can't, just make it a blank cart and handle KeyError
+            # If we can't, just make it a blank cart and handle KeyError.
             userCart = self.session[settings.CART_SESSION_ID] = {}
         # Assign the newly created and ID'd userCart to this cart model
         self.userCart = userCart
@@ -54,7 +50,9 @@ class Cart(object):
     # books in the cart, i.e. the Book models (instances)
     def __iter__(self):
         # Get the keys corresponding to all the books
-        # in the database
+        # in the database. This might be using Django's
+        # "hidden" ID parameter as the key values so it
+        # might be more appropriate to name it "book_ids"
         book_names = self.userCart.keys()
 
         # Use the keys to get the actual Book objects
@@ -66,13 +64,19 @@ class Cart(object):
 
         # Add the books to the copy of the cart
         for book in books:
-            cart[book.name]['book'] = book
+            cart[book.book_name]['book'] = book
 
         # Iterate over the books in the copied cart,
         # adding a price and total price attribute to each
         # item, then returning the book instance
         for book in cart.values():
-            book['price'] = book.price
+            # We made the price attribute of the book a string
+            # in the add method so we could serialize it (needed
+            # for use w/ Sessions); now we have to convert back to
+            # a Decimal value so we can perform arithmetic on it
+            book['price'] = Decimal(book['price'])
+
+            # Calculate the subtotal price for the copies of each book
             book['total_price'] = book['price'] * book['amount']
             yield book
 
@@ -90,15 +94,21 @@ class Cart(object):
     # the change_amount parameter of the function ("Users can change the quantity
     # of items in the cart").
     def add(self, book, amount=1, change_amount=False):
-        # The book's name, to be set to value of the corresponding
-        # attribute of the book that was passed in as an argument
-        # I'm assuming this will be a string - Django's JSON
-        # serializes session data in string form ONLY
-        book_name = book.name
+        # The book's name, which will be used as the key.
+        book_name = book.book_name
 
-        # If the book isn't in the cart, add it
+        # If the book isn't in the cart, add it (and all the requisite parameters
+        # the cart has to show)
         if book_name not in self.userCart:
-            self.userCart[book_name] = {'amount': 0, 'price': book.price}
+            self.userCart[book_name] = {'amount': 0,
+                                        # 'cover': str(book.book_cover),
+                                        'author': book.book_author,
+                                        'author_bio': book.author_bio,
+                                        'description': book.book_description,
+                                        'genre': book.book_genre,
+                                        'publishing_info': book.publishing_info,
+                                        'avg_rating': book.avg_rating,
+                                        'price': str(book.price)}
 
         # If change_amount is True, we change the number of the specified
         # book in the cart to the specified amount
@@ -118,7 +128,7 @@ class Cart(object):
         # Same idea as in the add() function - we use
         # the book's name as the key through which
         # we find the specified book in the cart, if it exists
-        book_name = book.name
+        book_name = book.book_name
 
         # If the book is in the cart, remove it,
         # then save the state of the cart
@@ -132,6 +142,5 @@ class Cart(object):
 
     # "Empties" the cart by deleting the cart from the session
     def empty(self):
-        # Delete the cart from the current session
         del self.session[settings.CART_SESSION_ID]
         self.save()

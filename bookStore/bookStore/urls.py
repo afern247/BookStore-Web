@@ -22,7 +22,7 @@ urlpatterns = [
     path('settings/', include('users.urls')),       # user profile, billing, etc. settings page
     path('wishlist/', include('wishlist.urls')),    # Wishlist
     path('books/', include('books.urls')),          # Books data
-    path('cart/', include('cart.urls')),            # Shopping cart
+    path('cart/', include('cart.urls', namespace='userCart')),            # Shopping cart
     path('bookDetails/', include('bookDetails.urls', namespace='bookDetails')),  # Raul's bookDetails implementation
 ]
 
