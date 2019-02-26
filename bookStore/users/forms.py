@@ -1,15 +1,10 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Profile, Address, AddressInfo
+from .models import Profile, Address #, AddressInfo
 from crispy_forms.helper import FormHelper
 
 
-states = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DC", "DE", "FL", "GA",
-          "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
-          "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
-          "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
-          "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"]
 
 # User registration form
 class UserSignUpForm(UserCreationForm):
@@ -55,12 +50,12 @@ class BioForm(forms.ModelForm):
         self.helper.form_show_labels = False
 
 
-class AddressForm (forms.ModelForm):
-    class Meta:
-        model = Profile
-        fields = ['Address']
+# class AddressForm (forms.ModelForm):
+#     class Meta:
+#         model = Profile
+#         fields = ['Address']
 
-    def __init__(self, *args, **kwargs):
-        super(AddressForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_show_labels = False
+#     def __init__(self, *args, **kwargs):
+#         super(AddressForm, self).__init__(*args, **kwargs)
+#         self.helper = FormHelper()
+#         self.helper.form_show_labels = False

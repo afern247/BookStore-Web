@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages # to display alert messages when the form data is valid
-from .forms import UserSignUpForm, ProfileUpdateForm, UserUpdateForm, UserProfileForm, BioForm, AddressForm
+from .forms import UserSignUpForm, ProfileUpdateForm, UserUpdateForm, UserProfileForm, BioForm #, AddressForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.http import HttpResponseRedirect
@@ -34,10 +34,10 @@ def profile(request):
     if request.method == 'POST':
         user_ProfileForm = UserProfileForm(request.POST, instance=request.user)
         user_BioForm = BioForm(request.POST, instance=request.user.profile)
-        user_AddressForm = AddressForm(request.POST, instance=request.user)
+        # user_AddressForm = AddressForm(request.POST, instance=request.user)
 
-        if user_ProfileForm.is_valid() and user_BioForm.is_valid() and user_AddressForm.is_valid():
-            user_AddressForm.save()
+        if user_ProfileForm.is_valid() and user_BioForm.is_valid():
+            # user_AddressForm.save()
             user_ProfileForm.save()
             user_BioForm.save()
             messages.success(request, f'Your profile has been updated successfully')
@@ -48,13 +48,13 @@ def profile(request):
     else:
         user_ProfileForm = UserProfileForm(instance=request.user)
         user_BioForm = BioForm(instance=request.user.profile)
-        user_AddressForm = AddressForm()
+        # user_AddressForm = AddressForm()
 
 
     context = {
         'user_ProfileForm': user_ProfileForm,
-        'user_BioForm': user_BioForm,
-        'user_AddressForm': user_AddressForm
+        'user_BioForm': user_BioForm
+        # 'user_AddressForm': user_AddressForm
     }
 
     return render(request, 'users/profile.html', context)
