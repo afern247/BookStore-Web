@@ -27,12 +27,12 @@ class Profile(models.Model):
     addresses = models.ManyToManyField(
         Address,
         through='AddressType',
-        through_fields=('address', 'profile'),
-    )
+        through_fields=('address', 'profile')
+        )
 
     # If we don't have this, it's going to say profile object only
-    # def __str__(self):
-    #     return f'{self.user.username} Profile'  # it's going to print username Profile
+    def __str__(self):
+        return f'{self.user.username} Profile'  # it's going to print username Profile
 
     def save(self, *args, **kwargs):
             super().save(*args, **kwargs)
@@ -55,15 +55,15 @@ class AddressType(models.Model):
         (SHIPPING_ADDRESS, "Shipping address"),
     )
 
-    address = models.ForeignKey('Address', on_delete=models.CASCADE)
-    profile = models.ForeignKey('Profile', on_delete=models.CASCADE)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
 
     # This is the field you would use for know the type of address.
     address_type = models.PositiveIntegerField(choices=TYPE_ADDRESS_CHOICES)
 
-    # class Meta:
-    #     verbose_name = 'Type of Address'
-    #     verbose_name_plural = 'Type of Address'
+    class Meta:
+        verbose_name = 'Type of Address'
+        verbose_name_plural = 'Type of Address'
 
-    # def __str__(self):
-    #     return f'{self.address_type}'
+    def __str__(self):
+        return f'{self.address_type}'
