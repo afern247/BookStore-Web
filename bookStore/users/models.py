@@ -24,11 +24,7 @@ class Profile(models.Model):
     nick_name = models.CharField('Nick name', max_length=30, blank=True, default='')
     bio = models.TextField(max_length=500, blank=True)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
-    addresses = models.ManyToManyField(
-        Address,
-        through='AddressType',
-        through_fields=('address', 'profile')
-        )
+
 
     # If we don't have this, it's going to say profile object only
     def __str__(self):
@@ -45,25 +41,3 @@ class Profile(models.Model):
                 img.save(self.image.path)
 
 
-class AddressType(models.Model):
-
-    HOME_ADDRESS = 1
-    SHIPPING_ADDRESS = 2
-
-    TYPE_ADDRESS_CHOICES = (
-        (HOME_ADDRESS, "Home address"),
-        (SHIPPING_ADDRESS, "Shipping address"),
-    )
-
-    address = models.ForeignKey(Address, on_delete=models.CASCADE)
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
-
-    # This is the field you would use for know the type of address.
-    address_type = models.PositiveIntegerField(choices=TYPE_ADDRESS_CHOICES)
-
-    class Meta:
-        verbose_name = 'Type of Address'
-        verbose_name_plural = 'Type of Address'
-
-    def __str__(self):
-        return f'{self.address_type}'
