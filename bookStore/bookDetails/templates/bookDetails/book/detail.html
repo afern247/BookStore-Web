@@ -20,6 +20,12 @@
     <p class="book-genre">GENRE: {{ book.book_genre }}</p>
     <p class="book-desc">DESCRIPTION: {{ book.book_description }}</p>
     <p class="auth-bio">AUTHOR BIO: {{ book.author_bio }}</p>
+    <!-- The form for adding a product to the cart! -->
+    <form action="{% url "cart:addToCart" book.id %}" method="post">
+        {{ ATC_book_form }}
+        {% csrf_token %}
+        <input type="submit" value="Add to Cart">
+    </form>
     <!-- The book's comments can go here! -->
     </div>
 {% endblock %}

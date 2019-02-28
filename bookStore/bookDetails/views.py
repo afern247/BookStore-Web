@@ -5,11 +5,15 @@
 
 from django.shortcuts import render, get_object_or_404
 
+# Import the Form for adding products from the Cart package
+from cart.forms import AddToCartForm
+# Import the Author and Book models from this package's models.py file
 from .models import Author, Book
 
 
 # List all the books. Allows one to filter books by author name,
 # which is why there's a parameter called author_slug
+
 
 def book_list(request, author_slug=None):
     # We assume no author was specified at first
@@ -40,6 +44,9 @@ def book_info(request, book_name, slug):
     # name and slug
     book = get_object_or_404(Book, book_name=book_name, slug=slug)
 
+    # The form for Adding a product To the Cart (Add To Cart = ATC)
+    ATC_product_form = AddToCartForm()
+
     # If we retrieved the book successfully, get its author
     # so we can reference their attributes in the HTML page
     if book:
@@ -47,4 +54,5 @@ def book_info(request, book_name, slug):
         author = get_object_or_404(Author, author_name=author_name)
 
     return render(request, 'bookDetails/book/detail.html', {'book': book,
-                                                            'author': author})
+                                                            'author': author,
+                                                            'ATC_book_form': ATC_product_form})

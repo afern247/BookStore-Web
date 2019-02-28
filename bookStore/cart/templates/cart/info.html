@@ -1,12 +1,18 @@
-{% extends "storePage/index.html" %}
+<!-- Inherit from bookDetails' base.html -->
+{# extends "bookDetails/book/detail.html" %} #}
+<!-- Load crispy forms functionality -->
+{% load crispy_forms_tags %}
+<!-- Load from static folder -->
 {% load static %}
 
 {% block title %}
-    --- Shopping Cart ---
+    <h1 style="text-align:center">
+        --- SHOPPING CART ---
+    </h1>
 {% endblock %}
 
 {% block content %}
-    <h1>Shopping Cart</h1>
+    <h1>Your Shopping Cart</h1>
     <table class="userCart">
         <thead>
             <tr>
@@ -20,20 +26,22 @@
                 <th>Total Cost</th>
             </tr>
         </thead>
+        <tbody>
         <tr>
-            {% for book in userCart %}
-                {% with book=book.book_name %}
+            {% for current in userCart %}
+                {% with book=current.book %}
                 <tr>
                     <td>
-                        <!-- This is where you'd display the book's image using the URL of the img,
-                        but these aren't available at present-->
-                        {% static "img/no_image.png" %}
+                        <a href="{{ book.get_absolute_url }}">
+                            <img src="{% if book.book_cover %}{{ book.book_cover.url }}
+                                      {% else %}NO IMAGE{% endif %}">
+                        </a>
                     </td>
-                    <td>{{ book.name }}</td>
+                    <td>{{ book.book_name }}</td>
                     <td>{{ book.quantity }}</td>
                     <td class="num">${{ book.price }}</td>
                     <td class="num">${{ book.total_price }}</td>
-                    <!-- <td><a href="{% url "cart:removeFromCart" book.name %}">Remove</a></td> -->
+                    <td><a href="{% url "cart:removeFromCart" book.id %}">Remove</a></td>
                 </tr>
                 {% endwith %}
             {% endfor %}
@@ -41,13 +49,16 @@
             the get_total_price function defined in cart.py -->
             <tr class="total"></tr>
                 <td>Total</td>
-                <td class="num">${{ cart.get_total_price }}</td>
+                <td class="num">${{ userCart.get_total_price }}</td>
             </tr>
         </tbody>
     </table>
 
     <p>
-        <!-- Should be a link back to the product list here later -->
+        <!-- Button that takes you back to the Book List -->
+        <a href="{% url "bookDetails:book_list" %}" class="button light">
+            Back to Catalog
+        </a>
         <!-- CHECKOUT BUTTON -->
         <a href="#" class="button">Checkout</a>
     </p>

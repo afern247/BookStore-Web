@@ -22,7 +22,15 @@ from decimal import Decimal
 from django.conf import settings
 
 # Importing my Book class from the bookDetails package I made
-from bookStore.bookDetails.models import Book
+from bookDetails.models import Book
+
+
+# 2/23/19: While looking through Django docs + tutorial videos, I found out that
+# models have a hidden implicit parameter called ID that acts as the primary key
+# for their equivalent column in the database. I have been using the book's name
+# as a makeshift primary key because I didn't know how to declare it as an official
+# primary key - this was causing some issues, so I've changed the model to use the
+# ID as the primary key. It's better this way anyhow
 
 
 # This is the cart class.
@@ -31,11 +39,13 @@ class Cart(object):
     def __init__(self, request):
         # Start by creating a session for the new cart
         self.session = request.session
-        try:
-            # Get the userCart's session ID. If it fails, raises KeyError
-            userCart = self.session.get(settings.CART_SESSION_ID)
-        except:
-            # If we can't, just make it a blank cart and handle KeyError.
+
+        # This structure is better than the try/except I had before.
+        # Just try to get the cart from the current session
+        userCart = self.session.get(settings.CART_SESSION_ID)
+
+        if not userCart:
+            # If we can't, just make a blank cart
             userCart = self.session[settings.CART_SESSION_ID] = {}
         # Assign the newly created and ID'd userCart to this cart model
         self.userCart = userCart
@@ -46,25 +56,77 @@ class Cart(object):
     def save(self):
         self.session.modified = True
 
+    # The function that will be used to add items to the cart.
+    # Since no book models exist as of the present date (1/26/2019),
+    # I have to start making assumptions here. I'll be using the Book Details
+    # Feature Checklist as a guideline for what attributes the books will have and
+    # name them accordingly
+
+    # Of course, my app's Feature Checklist will be followed as well, hence
+    # the change_amount parameter of the function ("Users can change the quantity
+    # of items in the cart").
+    def add(self, book, amount=1, change_amount=False):
+        # The book's name, which will be used as the key.
+        # book_name = book.book_name
+
+        # Get the book's ID (its Primary Key)
+        book_id = str(book.id)
+
+        # If the book isn't in the cart, add it (and all the requisite parameters
+        # the cart has to show)
+        if book_id not in self.userCart:
+            self.userCart[book_id] = {'amount': 0,
+                                      'author': book.book_author,
+                                      'author_bio': book.author_bio,
+                                      'description': book.book_description,
+                                      'genre': book.book_genre,
+                                      'publishing_info': book.publishing_info,
+                                      'avg_rating': str(book.avg_rating),
+                                      'price': str(book.price)}
+
+        # If change_amount is True, we change the number of the specified
+        # book in the cart to the specified amount
+        if change_amount:
+            self.userCart[book_id]['amount'] = amount
+
+        # Otherwise, we just add the specified amount of the specified book
+        # to the cart
+        else:
+            self.userCart[book_id]['amount'] += amount
+
+        # Save the state of the cart, cementing our changes
+        self.save()
+
+    # Now the function for removing books from the cart
+    def remove(self, book):
+        # Same idea as in the add() function - now uses
+        # book's ID!
+        book_id = str(book.id)
+
+        # If the book is in the cart, remove it,
+        # then save the state of the cart
+        if book_id in self.userCart:
+            del self.userCart[book_id]
+            self.save()
+
     # This iterator will be used to iterate (of course) through the
     # books in the cart, i.e. the Book models (instances)
     def __iter__(self):
         # Get the keys corresponding to all the books
-        # in the database. This might be using Django's
-        # "hidden" ID parameter as the key values so it
-        # might be more appropriate to name it "book_ids"
-        book_names = self.userCart.keys()
+        # in the database - now uses Book model's hidden ID
+        # parameter!
+        book_ids = self.userCart.keys()
 
         # Use the keys to get the actual Book objects
         # and add them to the cart
-        books = Book.objects.filter(id__in=book_names)
+        books = Book.objects.filter(id__in=book_ids)
 
         # Create a copy of the current cart
         cart = self.userCart.copy()
 
         # Add the books to the copy of the cart
         for book in books:
-            cart[book.book_name]['book'] = book
+            cart[str(book.id)]['book'] = book
 
         # Iterate over the books in the copied cart,
         # adding a price and total price attribute to each
@@ -78,67 +140,21 @@ class Cart(object):
 
             # Calculate the subtotal price for the copies of each book
             book['total_price'] = book['price'] * book['amount']
+
+            # NOTE 2/23/19:
+            # Maybe we need to add the book's other attributes here, such
+            # as author name, etc...? Not sure if that's needed, since
+            # we pass the book instance later
             yield book
 
     # Returns the total number of items in a user's cart
     def __len__(self):
         return sum(book['amount'] for book in self.userCart.values())
 
-    # The function that will be used to add items to the cart.
-    # Since no book models exist as of the present date (1/26/2019),
-    # I have to start making assumptions here. I'll be using the Book Details
-    # Feature Checklist as a guideline for what attributes the books will have and
-    # name them accordingly
-
-    # Of course, my app's Feature Checklist will be followed as well, hence
-    # the change_amount parameter of the function ("Users can change the quantity
-    # of items in the cart").
-    def add(self, book, amount=1, change_amount=False):
-        # The book's name, which will be used as the key.
-        book_name = book.book_name
-
-        # If the book isn't in the cart, add it (and all the requisite parameters
-        # the cart has to show)
-        if book_name not in self.userCart:
-            self.userCart[book_name] = {'amount': 0,
-                                        # 'cover': str(book.book_cover),
-                                        'author': book.book_author,
-                                        'author_bio': book.author_bio,
-                                        'description': book.book_description,
-                                        'genre': book.book_genre,
-                                        'publishing_info': book.publishing_info,
-                                        'avg_rating': book.avg_rating,
-                                        'price': str(book.price)}
-
-        # If change_amount is True, we change the number of the specified
-        # book in the cart to the specified amount
-        if change_amount:
-            self.userCart[book_name]['amount'] = amount
-
-        # Otherwise, we just add the specified amount of the specified book
-        # to the cart
-        else:
-            self.userCart[book_name]['amount'] += amount
-
-        # Save the state of the cart, cementing our changes
-        self.save()
-
-    # Now the function for removing books from the cart
-    def remove(self, book):
-        # Same idea as in the add() function - we use
-        # the book's name as the key through which
-        # we find the specified book in the cart, if it exists
-        book_name = book.book_name
-
-        # If the book is in the cart, remove it,
-        # then save the state of the cart
-        if book_name in self.userCart:
-            del self.userCart[book_name]
-            self.save()
-
     # Calculates the total cost of all the books in the cart
     def get_total_price(self):
-        return sum((book.price * book.amount) for book in self.userCart.values())
+        # return sum((book.price * book.amount) for book in self.userCart.values())
+        return sum((book['price'] * book['amount']) for book in self.userCart.values())
 
     # "Empties" the cart by deleting the cart from the session
     def empty(self):
