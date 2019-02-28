@@ -1,6 +1,5 @@
 {
     "python.pythonPath": "/Users/Arturo/anaconda3/envs/SoftEngVEnv/bin/python",
     "**/*.pyc": {"when": "$(basename).py"},
-    "**/__pycache__": true,
-    "python.linting.enabled": false
+    "**/__pycache__": true
 }
