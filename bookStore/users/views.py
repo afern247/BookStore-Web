@@ -7,7 +7,6 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.forms import PasswordChangeForm
 
 
-
 # User registration page
 def signup(request):
     # If the request is a post, then proceed w/ the form
@@ -37,7 +36,6 @@ def profile(request):
         user_BioForm = BioForm(request.POST, instance=request.user.profile)
         # user_AddressForm = AddressForm(request.POST, instance=request.user)
 
-
         if user_ProfileForm.is_valid() and user_BioForm.is_valid():
             # user_AddressForm.save()
             user_ProfileForm.save()
@@ -51,10 +49,6 @@ def profile(request):
         user_ProfileForm = UserProfileForm(instance=request.user)
         user_BioForm = BioForm(instance=request.user.profile)
         # user_AddressForm = AddressForm()
-
-        #test get current user
-        current_user = request.user
-        print(current_user.username)
 
 
     context = {

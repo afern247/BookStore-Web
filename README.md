@@ -1,4 +1,4 @@
-## How to run:
+Personal development branch for Arturo  wefwefewfwefwefwefwefwefwef
 
 - Clone the repo
 - Do the migrations: `python manage.py migrate`
