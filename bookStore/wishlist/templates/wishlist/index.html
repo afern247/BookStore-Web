@@ -19,7 +19,9 @@
     </style>
 </head>
 <body>
-    <!-- Delete Start
+    <!-- Delete Start -->
+    <b>Testing:</b>
+    <!--
     <p>Leave this here for testing. Delete later.</p>
     <p>num_of_lists: {{ num_of_lists }}</p>
     <p>user.username: {{ user.username }}</p>
@@ -30,7 +32,13 @@
                 List Number: {{ list.list_num }}</l1>
         </ul>
     {% endfor %}
-     Delete Stop -->
+    -->
+    {% for list in all_lists %}
+        {% if list.user.user.username == user.username %}
+            <p>list.name: {{ list.name }} list.books.all.count: {{ list.books.all.count }}</p>
+        {% endif %}
+    {% endfor %}
+    <!-- Delete Stop -->
     <div class="container">
         <div>
             <div class="alignLeft">
@@ -69,18 +77,18 @@
             </div>
             <div class="alignLeft">
                 <table align="center" cellspacing="10" cellpadding="20" width=>
-                    <tr>
+                    <!-- <tr>
                         <th>Book Name</th>
                         <th>Author Name</th>
                         <th>Book Price</th>
                     </tr>
-                    {% for book in all_books %}
+                    {# for book in all_books #}
                         <tr>
                             <td>{{ book.name }}</td>
                             <td>{{ book.author_name }}</td>
                             <td>{{ book.price }}</td>
                         </tr>
-                    {% endfor %}
+                    {# endfor #} -->
                 </table>
             </div>
             </div>
@@ -123,6 +131,6 @@
 
         checkNumOfLists();
         createList();
-        console.log(countOfUserLists);
+        console.log('Count of Lists for this User: ' + countOfUserLists);
     </script>
 {% endblock %}
