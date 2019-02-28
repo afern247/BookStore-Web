@@ -15,33 +15,8 @@ class Address(models.Model):
     class Meta:
         verbose_name_plural = 'Address'
 
-    # def __str__(self):
-    #     return self.name
-
-
-
-
-
-
-# class AddressInfo(models.Model):
-
-#     HOME_ADDRESS = 1
-#     SHIPPING_ADDRESS = 2
-
-#     TYPE_ADDRESS_CHOICES = (
-#         (HOME_ADDRESS, "Home address"),
-#         (SHIPPING_ADDRESS, "Shipping address"),
-#     )
-
-#     address = models.ForeignKey('Address', on_delete=models.CASCADE)
-#     profile = models.ForeignKey('Profile', on_delete=models.CASCADE)
-
-#     # This is the field you would use for know the type of address.
-#     address_type = models.PositiveIntegerField(choices=TYPE_ADDRESS_CHOICES)
-
-#     class Meta:
-#         verbose_name_plural = 'AddressInfo'
-#         verbose_name = 'Addresses of all users'
+    def __str__(self):
+        return self.name
 
 
 
@@ -55,7 +30,8 @@ class Profile(models.Model):
 
     # If we don't have this, it's going to say profile object only
     def __str__(self):
-        return f'{self.user.username} Profile'  # it's going to print username Profile
+        return self.user.username
+        #return f'{self.user.username}'  # it's going to print username Profile
 
     def save(self, *args, **kwargs):
             super().save(*args, **kwargs)
