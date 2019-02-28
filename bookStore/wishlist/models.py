@@ -6,6 +6,7 @@ class List(models.Model):
     name = models.CharField(max_length=25)
     date_created = models.DateTimeField(default=datetime.now, blank=True)
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    list_num = models.IntegerField(range(1, 3))
 
     def __str__(self):
         return self.name

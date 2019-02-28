@@ -31,8 +31,6 @@ Need to do testing that only the list books shown per list per user is shown.
 def index(request):
     all_books = Book.objects.all()
     all_lists = List.objects.all()
-    num_of_lists = List.objects.count()
-    #num_of_lists = List.objects.count(List.user_name == Profile.user)
 
     return render(request, 'wishlist/index.html',
-                  {'all_books': all_books, 'all_lists': all_lists, 'num_of_lists': num_of_lists})
+                  {'all_books': all_books, 'all_lists': all_lists})

@@ -18,22 +18,19 @@
         }
     </style>
 </head>
-
-    <!-- Delete Start -->
+<body>
+    <!-- Delete Start
     <p>Leave this here for testing. Delete later.</p>
     <p>num_of_lists: {{ num_of_lists }}</p>
     <p>user.username: {{ user.username }}</p>
     {% for list in all_lists %}
         <ul>
-            <li>list.user: {{ list.user }}</li>
-            <li>list.id: {{ list.id }}</li>
-            <li>list.user.id: {{ list.user.id }}</li>
-            <li>list.user.user: {{ list.user.user }}</li>
-            <li>list.user.user.username: {{ list.user.user.username }}</li>
+            <l1>Username: {{ list.user.user.username }}
+                List Name: {{ list.name }}
+                List Number: {{ list.list_num }}</l1>
         </ul>
     {% endfor %}
-    <!-- Delete Stop -->
-
+     Delete Stop -->
     <div class="container">
         <div>
             <div class="alignLeft">
@@ -42,50 +39,90 @@
             <div class="alignRight">
                 <form method="post">
                 {% csrf_token %}
-                    {% if num_of_lists < 3 %}
+                    <div id="newList">
                         <input id="listName" type="text" placeholder="Enter List Name Here" maxlength="25" required>
                         <button type="submit" class="btn btn-outline-success">Create List</button>
-                    {% else %}
+                    </div>
+                    <div id="noNewList">
                         <button class="btn btn-outline-secondary" disabled>Create List</button>
-                    {% endif %}
+                    </div>
                 </form>
             </div>
         </div>
         <br><br>
         <hr>
-        {% if num_of_lists == 0 %}
-            <h2>You do not have any lists. Click "Create A List" above to create a new list.</h2>
-        {% else %}
-            <div>
-                <div class="alignLeft lists" >
-                    <table align="center" cellspacing="10" cellpadding="10" width="80%">
-                        {% for list in all_lists %}
-                            {% if list.user.user.username == user.username %}
-                                <tr>
-                                    <td><a href=""><h3>{{ list.name }}</h3></a></td>
-                                </tr>
-                            {% endif %}
-                        {% endfor %}
-                    </table>
-                </div>
-                <div class="alignLeft">
-                    <table align="center" cellspacing="10" cellpadding="20" width=>
-                        <tr>
-                            <th>Book Name</th>
-                            <th>Author Name</th>
-                            <th>Book Price</th>
-                        </tr>
-                        {% for book in all_books %}
-                            <tr>
-                                <td>{{ book.name }}</td>
-                                <td>{{ book.author_name }}</td>
-                                <td>{{ book.price }}</td>
-                            </tr>
-                        {% endfor %}
-                    </table>
-                </div>
+        <div>
+            <div id="noLists">
+                <h1>You do not have any wishlists. Please create one.</h1>
             </div>
-        {% endif %}
-    </div><!--Container closed-->
+            <div id="listContent">
+                <div class="alignLeft lists">
+                <table align="center" cellspacing="10" cellpadding="10" width="80%">
+                    {% for list in all_lists %}
+                           {% if list.user.user.username == user.username %}
+                               <tr>
+                                   <td><a href=""><h3>{{ list.name }}</h3></a></td>
+                               </tr>
+                           {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="alignLeft">
+                <table align="center" cellspacing="10" cellpadding="20" width=>
+                    <tr>
+                        <th>Book Name</th>
+                        <th>Author Name</th>
+                        <th>Book Price</th>
+                    </tr>
+                    {% for book in all_books %}
+                        <tr>
+                            <td>{{ book.name }}</td>
+                            <td>{{ book.author_name }}</td>
+                            <td>{{ book.price }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            </div>
 
+        </div>
+    </div><!--Container closed-->
+</body>
+    <script>
+        let countOfUserLists = 0;
+
+        //function to count the number of lists based on the user
+        function checkNumOfLists() {
+            {% for list in all_lists %}
+                {% if list.user.user.username == user.username %}
+                    countOfUserLists++;
+                {% endif %}
+            {% endfor %}
+        }
+
+        //function to display the create list button based on how many lists the user has.
+        //Also will display a message when no lists exists.
+        function createList(){
+            let x = document.getElementById("newList");
+            let y = document.getElementById("noNewList");
+            let a = document.getElementById("listContent");
+            let b = document.getElementById("noLists");
+            if (countOfUserLists == 0){
+                a.style.display = "none";
+                y.style.display = "none";
+            }
+            else if (countOfUserLists > 2){
+                x.style.display = "none";
+                b.style.display = "none";
+            }
+            else {
+                y.style.display = "none";
+                b.style.display = "none";
+            }
+        }
+
+        checkNumOfLists();
+        createList();
+        console.log(countOfUserLists);
+    </script>
 {% endblock %}
