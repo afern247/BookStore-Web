@@ -52,10 +52,6 @@ def profile(request):
         user_BioForm = BioForm(instance=request.user.profile)
         # user_AddressForm = AddressForm()
 
-        #test get current user
-        current_user = request.user
-        print(current_user.username)
-
 
     context = {
         'user_ProfileForm': user_ProfileForm,
