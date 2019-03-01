@@ -8,69 +8,208 @@
     <style>
         .alignLeft{
             float: left;
+            overflow: hidden;
         }
         .alignRight{
             float: right;
+            overflow: hidden;
+        }
+        .container{
+            padding: 15px;
+            overflow: hidden;
+        }
+        .header{
+            border-bottom-style: solid;
+            overflow: hidden;
+            padding: 10px;
+            margin-bottom: 5px;
+        }
+        .content{
+            /*border-left-style: solid;
+            border-left-width: thin;*/
+            width: 80%;
+            height: auto;
         }
         .lists{
-            height: 100px;
-            width: 30%;
+            width: 19%;
+            text-align: center;
         }
+
+        /* Book Information */
+        .wishlistItem {
+            /*border-bottom-style: solid;
+            border-bottom-width: thin;*/
+            padding: 3%;
+            overflow: hidden;
+        }
+        .bookCover {
+            width: 140px;
+            height: 225px;
+        }
+        .bookInfo {
+            font-size: 15px;
+            padding: 20px;
+            overflow: hidden;
+        }
+        .bookName {
+            font-size: 25px;
+            font-weight: bolder;
+            text-decoration: underline;
+        }
+        .price {
+            font-size: 22px;
+            font-weight: bold;
+        }
+        img {
+            width: 100%;
+            height: auto;
+        }
+        /*Use for aligned 3 elements in one line*/
+        .oneOfThree {
+            float: left;
+            overflow: hidden;
+            width: 25%;
+            text-align: center;
+        }
+
     </style>
 </head>
-
+<body>
+    <!-- Delete Start --> <!--
+    <b>Testing:</b>
+    <p>Leave this here for testing. Delete later.</p>
+    {% for list in all_lists %}
+        {% if list.user.user.username == user.username %}
+            <p>Username: {{ list.user.user.username }}</p>
+            <p>list.name: {{ list.name }} list.books.all.count: {{ list.books.all.count }}</p>
+            <p>list.books.name: {{ list.books.name }}</p>
+        {% endif %}
+    {% endfor %} -->
+    <!-- Delete Stop -->
     <div class="container">
-        <div>
+        <div class="header">
             <div class="alignLeft">
                 <h1>{{ user.username }}'s Wishlists</h1>
             </div>
             <div class="alignRight">
                 <form method="post">
                 {% csrf_token %}
-                    {% if num_of_lists < 3 %}
+                    <div id="newList">
                         <input id="listName" type="text" placeholder="Enter List Name Here" maxlength="25" required>
                         <button type="submit" class="btn btn-outline-success">Create List</button>
-                    {% else %}
+                    </div>
+                    <div id="noNewList">
                         <button class="btn btn-outline-secondary" disabled>Create List</button>
-                    {% endif %}
+                    </div>
                 </form>
             </div>
         </div>
-        <br><br>
-        <hr>
-        {% if num_of_lists == 0 %}
-            <h2>You do not have any lists. Click "Create A List" above to create a new list.</h2>
-        {% else %}
-            <div>
-                <div class="alignLeft lists" >
-                    <table align="center" cellspacing="10" cellpadding="10" width="80%">
-                        {% for list in all_lists %}
-                            <tr>
-                                <td><a href=""><h3>{{ list.name }}</h3></a></td>
-                            </tr>
-                        {% endfor %}
-                    </table>
-                </div>
-                <div class="alignLeft">
-                    <table align="center" cellspacing="10" cellpadding="20" width=>
-                        <tr>
-                            <th>Book Name</th>
-                            <th>Author Name</th>
-                            <th>Book Price</th>
-                            <!-- <th>List</th> -->
-                        </tr>
-                        {% for book in all_books %}
-                            <tr>
-                                <td>{{ book.name }}</td>
-                                <td>{{ book.author_name }}</td>
-                                <td>{{ book.price }}</td>
-                                <td>{{ book.list_name }}</td>
-                            </tr>
-                        {% endfor %}
-                    </table>
-                </div>
+        <div>
+            <div id="noLists">
+                <h1>You do not have any wishlists. Please create one.</h1>
             </div>
-        {% endif %}
+            <div id="listContent" class="lists alignLeft">
+                <table align="center" cellspacing="10" cellpadding="10" width="80%">
+                    {% for list in all_lists %}
+                           {% if list.user.user.username == user.username %}
+                               <tr>
+                                   <td><a href=""><h3>{{ list.name }}</h3></a></td>
+                               </tr>
+                           {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="alignRight content">
+                {% for books in all_books %}
+                    <div class="wishlistItem border-bottom">
+                        <div class="alignLeft bookCover" id="bookImage">
+                            <img src="{{ books.book_cover.url }}">
+                        </div>
+                        <div class="bookInfo">
+                            <div class="bookName">
+                                {{ books.book_name }}
+                            </div>
+                            <div class="authorName">
+                                by {{ books.book_author }}
+                            </div>
+                            <div class="bookDescription">
+                                "{{ books.book_description }}"
+                            </div>
+                            <div class="rating">
+                                {{ books.avg_rating }}/5.0
+                            </div>
+                            <div class="price">
+                                ${{ books.price }}
+                            </div>
+                        </div>
+                        <div class="shopMoveDelete">
+                            <div class="oneOfThree">
+                                <a href="">Move to Shopping Cart</a>
+                            </div>
+                            <div class="oneOfThree">
+                                <a href="">Move Wishlist</a>
+                            </div>
+                            <div class="oneOfThree">
+                                <a href="">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <!-- Old way to display books
+                <table align="center" cellspacing="10" cellpadding="20" width=>
+                     <tr>
+                        <th>Book Name</th>
+                        <th>Author Name</th>
+                        <th>Book Price</th>
+                    </tr>
+                    {# for book in all_books #}
+                        <tr>
+                            <td>{{ book.name }}</td>
+                            <td>{{ book.author_name }}</td>
+                            <td>{{ book.price }}</td>
+                        </tr>
+                    {# endfor #}
+                </table>
+                -->
+            </div>
+        </div>
     </div><!--Container closed-->
+</body>
+    <script>
+        let countOfUserLists = 0;
 
+        //function to count the number of lists based on the user
+        function checkNumOfLists() {
+            {% for list in all_lists %}
+                {% if list.user.user.username == user.username %}
+                    countOfUserLists++;
+                {% endif %}
+            {% endfor %}
+        }
+
+        //function to display the create list button based on how many lists the user has.
+        //Also will display a message when no lists exists.
+        function createList(){
+            let x = document.getElementById("newList");
+            let y = document.getElementById("noNewList");
+            let a = document.getElementById("listContent");
+            let b = document.getElementById("noLists");
+            if (countOfUserLists == 0){
+                a.style.display = "none";
+                y.style.display = "none";
+            }
+            else if (countOfUserLists > 2){
+                x.style.display = "none";
+                b.style.display = "none";
+            }
+            else {
+                y.style.display = "none";
+                b.style.display = "none";
+            }
+        }
+
+        checkNumOfLists();
+        createList();
+        console.log('Count of Lists for this User: ' + countOfUserLists);
+    </script>
 {% endblock %}
