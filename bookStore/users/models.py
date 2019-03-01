@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
+from localflavor.us.models import USStateField
 
 
 # All user data is/should be linked to this profile, so when user gets deleted, all data deletes as well
@@ -28,14 +29,15 @@ class Profile(models.Model):
 
 
 class Address(models.Model):
-    user = models.ForeignKey('Profile', on_delete=models.CASCADE)
     # users = models.ManyToManyField(Profile, blank=True)
-    name = models.CharField(max_length=30)
-    address = models.CharField(max_length=50)
-    city = models.CharField(max_length=60, default="Miami")
-    state = models.CharField(max_length=30, default="Florida")
-    zipcode = models.CharField(max_length=5, default="33165")
-    country = models.CharField(max_length=50)
+    name = models.CharField(max_length=100, blank=False)
+    address1 = models.CharField("Address lines 1", max_length=128)
+    address2 = models.CharField("Address lines 2", max_length=128, blank=True)
+    city = models.CharField("City", max_length=64)
+    # state = USStateField("State", default='FL')
+    state = models.CharField("State", max_length=128, default='FL')
+    zipcode = models.CharField("Zipcode", max_length=5)
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=False)
 
     class Meta:
         verbose_name_plural = 'Address'
