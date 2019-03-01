@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.http import HttpResponseRedirect
 from django.contrib.auth.forms import PasswordChangeForm
+from users.models import Profile, Address
 
 
 # User registration page
@@ -49,6 +50,13 @@ def profile(request):
         user_ProfileForm = UserProfileForm(instance=request.user)
         user_BioForm = BioForm(instance=request.user.profile)
         # user_AddressForm = AddressForm()
+
+
+        currentUser = request.user.username
+        allAddresses = Address.objects.all().filter(users__user__username=currentUser)
+        print('\n\n\n', allAddresses, '\n\n\n')
+
+
 
 
     context = {
