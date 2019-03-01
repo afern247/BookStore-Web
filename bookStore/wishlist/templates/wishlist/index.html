@@ -8,31 +8,43 @@
     <style>
         .alignLeft{
             float: left;
+            overflow: hidden;
         }
         .alignRight{
             float: right;
+            overflow: hidden;
+        }
+        .container{
+            /*border-style: solid;
+            border-width: thin;
+            border-color: black;*/
+            padding: 15px;
+            overflow: hidden;
+        }
+        .header{
+            border-bottom-style: solid;
+            /*border-bottom-width: thin;*/
+            overflow: hidden;
+            padding: 10px;
+            margin-bottom: 10px;
         }
         .lists{
-            height: 100px;
-            width: 30%;
+            width: 19%;
+        }
+        .content{
+            border-left-style: solid;
+            border-left-width: thin;
+
+            width: 80%;
+            padding: 2%;
+            height: auto;
         }
     </style>
 </head>
 <body>
     <!-- Delete Start -->
     <b>Testing:</b>
-    <!--
     <p>Leave this here for testing. Delete later.</p>
-    <p>num_of_lists: {{ num_of_lists }}</p>
-    <p>user.username: {{ user.username }}</p>
-    {% for list in all_lists %}
-        <ul>
-            <l1>Username: {{ list.user.user.username }}
-                List Name: {{ list.name }}
-                List Number: {{ list.list_num }}</l1>
-        </ul>
-    {% endfor %}
-    -->
     {% for list in all_lists %}
         {% if list.user.user.username == user.username %}
             <p>list.name: {{ list.name }} list.books.all.count: {{ list.books.all.count }}</p>
@@ -40,7 +52,7 @@
     {% endfor %}
     <!-- Delete Stop -->
     <div class="container">
-        <div>
+        <div class="header">
             <div class="alignLeft">
                 <h1>{{ user.username }}'s Wishlists</h1>
             </div>
@@ -57,14 +69,13 @@
                 </form>
             </div>
         </div>
-        <br><br>
-        <hr>
+        <!-- <br><br>
+        <hr> -->
         <div>
             <div id="noLists">
                 <h1>You do not have any wishlists. Please create one.</h1>
             </div>
-            <div id="listContent">
-                <div class="alignLeft lists">
+            <div id="listContent" class="lists alignLeft">
                 <table align="center" cellspacing="10" cellpadding="10" width="80%">
                     {% for list in all_lists %}
                            {% if list.user.user.username == user.username %}
@@ -75,7 +86,15 @@
                     {% endfor %}
                 </table>
             </div>
-            <div class="alignLeft">
+            <div class="alignRight content">
+                {% for lists in all_lists %}
+                    <div class="alignRight" id="bookImage">
+                        <img src="{{ lists.books.book_cover.url }}">
+                    </div>
+                    <div class="alignLeft">
+                        <h2>Book Name: {{ lists.books.name }}</h2>
+                    </div>
+                {% endfor %}
                 <table align="center" cellspacing="10" cellpadding="20" width=>
                     <!-- <tr>
                         <th>Book Name</th>
