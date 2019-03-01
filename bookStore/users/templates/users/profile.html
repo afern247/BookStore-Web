@@ -16,132 +16,54 @@
 
 
 
-        <!-- Menus -->
-        <ul class="nav nav-tabs" id="myTab">
-            <li class="active nav-item"><a href="#Name" data-toggle="tab" class="nav-link">Name</a></li>
-            <li class="nav-item"><a href="#Home-Address" data-toggle="tab" class="nav-link">Home-Address</a></li>
-            <li class="nav-item"><a href="#Social" data-toggle="tab" class="nav-link">Social</a></li>
-            <li class="nav-item"><a href="#Bio" data-toggle="tab" class="nav-link">Bio</a></li>
-
-        </ul>
-
 
         <div class="tab-content">
-            <div class="tab-pane active" id="Name">
-                <div class="form-group">
-                    <div class="tab-pane" id="settings">
-                        <br>
-                        <form method="POST" enctype="multipart/form-data">
-                            {% csrf_token %}
+            <div class="form-group">
 
-                            <label for="first_name">
-                                <h5>First name</h4>
-                            </label>
-                            {{ user_ProfileForm.first_name |as_crispy_field }}
-                            <label for="last_name">
-                                <h5>Last name</h4>
-                            </label>
-                            {{ user_ProfileForm.last_name |as_crispy_field }}
 
-                            <div class="form-group">
-                                <button class="btn btn-outline-info" type="submit">Update</button>
-                            </div>
-                    </div>
-                </div>
                 <br>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
 
-            </div>
+                    <!-- Personal information section -->
+                    <label for="first_name">
+                        <h5>First name</h4>
+                    </label>
+                    {{ user_ProfileForm.first_name |as_crispy_field }}
+                    <label for="last_name">
+                        <h5>Last name</h4>
+                    </label>
+                    {{ user_ProfileForm.last_name |as_crispy_field }}
 
-            <!--/tab-pane-->
-            <div class="tab-pane" id="Home-Address">
-                <br>
+                    <!-- Nickname section -->
+                    <p>
+                        <label for="first_name">
+                            <h5>Nickname</h4>
+                        </label>
+                        {{ user_NicknameForm.nick_name |as_crispy_field }}
+                    </p>
 
-                <div class="container">
-                    <div class="row">
-                        <div class="span8">
-                            <form action="billing" method="post" class="form-horizontal" id="billingform"
-                                accept-charset="utf-8">
+                    <!-- Bio section -->
+                    <p>
+                        <label for="first_name">
+                            <h5>Bio</h4>
+                        </label>
+                        {{ user_BioForm.bio |as_crispy_field }}
+                    </p>
 
-                                <br>
-                                <div class="form-group row">
-                                    <label for="first_name">
-                                        <h5>Street Address (To-do)</h4>
-                                    </label>
-                                    <br>
-                                    <input id="text" placeholder="W 123 Street" class="form-control here" value="" type="text">
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="first_name">
-                                        <h5>Zip Code (To-do)</h4>
-                                    </label>
-                                    <br>
-                                    <input id="text" class="form-control here" value="" type="text">
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="first_name">
-                                        <h5>City (To-do)</h4>
-                                    </label>
-                                    <br>
-                                    <input id="text" class="form-control here" value="" type="text">
-                                </div>
-
-
-                                <div class="form-group row">
-                                    <label for="first_name">
-                                        <h5>Country (To-do)</h4>
-                                    </label>
-
-                                    <div class="controls">
-                                        <select name="country" id="country">
-                                            <option value=""></option>
-                                            <option value="AR">Argentina</option>
-                                            <option value="AU">Australia</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-
-                                <br>
-                                <div class="form-actions">
-                                    <button type="submit" class="btn btn-large btn-primary">Save Billing Address</button>
-                                </div>
-                            </form>
-                        </div> <!-- .span8 -->
-                    </div>
-                </div>
-
-            </div>
-
-            <!--/tab-pane-->
-            <div class="tab-pane" id="Bio">
-                <br>
-                <label">
-                    <h4>Bio</h4></label>
-                    {{ user_BioAndSocialForm.bio |as_crispy_field }}
                     <div class="form-group">
                         <button class="btn btn-outline-info" type="submit">Update</button>
                     </div>
+                </form>
             </div>
-
-            <!--/tab-pane-->
-            <div class="tab-pane" id="Social">
-                <br>
-                <div class="form-group row">
-                    <label for="first_name">
-                        <h4>Nick Name (To-do)</h4>
-                    </label>
-                    <br>
-                    <input id="text" placeholder="Nick Name" class="form-control here" type="text">
-                </div>
-            </div>
-
-
-
-            </form>
         </div>
     </div>
 </div>
+
+
+
+
+
+
 
 {% endblock %}

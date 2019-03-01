@@ -1,15 +1,11 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Profile
+from .models import Profile, Address #, AddressInfo
 from crispy_forms.helper import FormHelper
 
-
-states = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DC", "DE", "FL", "GA",
-          "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
-          "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
-          "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
-          "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"]
+import re
+from django.core.exceptions import ValidationError
 
 # User registration form
 class UserSignUpForm(UserCreationForm):
@@ -44,14 +40,34 @@ class UserProfileForm(forms.ModelForm):
         self.helper.form_show_labels = False
 
 # Form to upddate the user bio at the profile page
-class BioAndSocialForm(forms.ModelForm):
+class BioForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['bio']
 
     def __init__(self, *args, **kwargs):
-        super(BioAndSocialForm, self).__init__(*args, **kwargs)
+        super(BioForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_show_labels = False
 
 
+class NicknameForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['nick_name']
+
+    def __init__(self, *args, **kwargs):
+        super(NicknameForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_show_labels = False
+
+
+# class AddressForm (forms.ModelForm):
+#     class Meta:
+#         model = Profile
+#         fields = ['Address']
+
+#     def __init__(self, *args, **kwargs):
+#         super(AddressForm, self).__init__(*args, **kwargs)
+#         self.helper = FormHelper()
+#         self.helper.form_show_labels = False
