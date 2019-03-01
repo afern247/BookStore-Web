@@ -651,3 +651,4 @@ dmypy.json
 .python-version
 
 # *.sqlite3
+README.md
