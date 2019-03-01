@@ -24,7 +24,6 @@ urlpatterns = [
     path('books/', include('books.urls')),          # Books data
     path('cart/', include('cart.urls')),            # Shopping cart
     path('cart/', include('bookDetails.urls')),     # Raul's bookDetails implementation
-    path('details/', include('comments.urls')),
 ]
 
 if settings.DEBUG:
