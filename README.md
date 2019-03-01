@@ -1,22 +1,18 @@
-# Development branch
+# Software Engineering Class Spring 2019.
 
-## Remove old junk files
+Challenge: Use Scrum to deliver a fully funcional website using sprints for development.
 
-- Update the .gitignore by merging the code into your personal branch.
-- Remove the junk files in your personal branch:
-```
-git rm -r -f log
-git rm -r -f tmp
-git rm --cached *.pyc
-find . -name '*.pyc' | xargs -n 1 git rm --cached
-```
-- Removing SQLite3 file:
-```
-git rm -f *.sqlite3
-```
+### Sprint 1:
 
-The suggestions to do these changes came from: [Why not to commit .pyc files into git](https://github.com/fraction/readme-boilerplate/issues/new) and [Ignoring SQLite files](https://github.com/fraction/readme-boilerplate/issues/new)
+Version 1.0.0
 
-- After you clean those files, your online branch will not have them so you will only push the right files once you modify something. In order to keep developing offline, make sure you do `python manage.py migrate` so that the sqlite3 database can be created offline for your personal use which will not be pushed once changed.
 
-## Do not push to the development branch code with these junk files.
+Feature Checklist
+-----------------
+
+**Wish List Management**
+- [ ] Users can create up to 3 wish lists (including the primary) and give them a specific name
+- [ ] Users can add items to any of their created wish list from the item details page
+- [ ] Users can list of the contents of each wish list and move the items to their cart.
+- [ ] Users can remove items from each wish list
+- [ ] Users can transfer items from one wish list to another

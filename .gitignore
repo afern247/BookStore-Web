@@ -650,4 +650,5 @@ dmypy.json
 # pyenv
 .python-version
 
-*.sqlite3
+# *.sqlite3
+README.md
