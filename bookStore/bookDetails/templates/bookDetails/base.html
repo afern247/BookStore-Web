@@ -1,10 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!-- Inherit from the store page's main __base.html -->
+{% extends "storePage/partials/__base.html" %}
+<!-- Load crispy forms functionality -->
+{% load crispy_forms_tags %}
+<!-- Load from the static folder -->
+{% load static %}
 
-</body>
-</html>
+{% block body %}
+    {% block title %}Book List{% endblock %}
+
+    <div id="header">
+        <h1>BOOK LIST</h1>
+    </div>
+    <div id="subheader">
+        <div class="cart">
+            Your cart is empty.
+        </div>
+    </div>
+    <div id="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+
+{% endblock %}

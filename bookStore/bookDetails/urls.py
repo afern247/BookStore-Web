@@ -13,6 +13,7 @@ app_name = 'bookDetails'
 # The URLs
 urlpatterns = [
     path('', views.book_list, name='book_list'),
-    #path('<slug:author_slug>/', views.book_list, name='book_list_by_author')
-    #path('<string:book_name>/<slug:slug>/', views.book_info, name='book_info')
+    path('<slug:author_slug>/', views.book_list, name='book_list_by_author'),
+    path('<str:book_name>/<slug:slug>/', views.book_info, name='book_info'),
+    path('<str:book_name>/<slug:slug>/comment/', views.add_comment, name='add_comment'),
 ]

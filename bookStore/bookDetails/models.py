@@ -15,6 +15,8 @@ from django.db import models
 
 # For use with the get_absolute_url methods
 from django.urls import reverse
+from users.models import Profile
+
 
 # This class models book authors, which have a many-to-many relationship
 # with books: a book can have multiple authors and authors can write multiple
@@ -70,11 +72,12 @@ class Book(models.Model):
     # optional for now (null=True option),
     # so that the server won't crash
     # if there are no image files
-    book_cover = models.ImageField(upload_to='bookList/', blank=True, null=True)
+    book_cover = models.ImageField(upload_to='books/', blank=True, null=True)
 
     # The book's author(s). Here we make note of the many-to-many
     # relationship between the Book and Author classes;
-    book_author = models.ManyToManyField(Author, related_name='authored')
+    #book_author = models.ManyToManyField(Author, related_name='authored')
+    book_author = models.CharField(max_length=200)
 
     # The bio of the author(s); This can be lengthy, so
     # I've set the length to 1000 chars
@@ -97,11 +100,6 @@ class Book(models.Model):
     # decimal place, i.e. 4.5 or 3.4
     avg_rating = models.DecimalField(max_digits=2, decimal_places=1)
 
-    # The amount of this particular book that's in a cart
-    # Commented out for now since it relates
-    # to the CART app and isn't directly related to books themselves
-    #amount = models.PositiveIntegerField()
-
     # The price of each book, specified as taking 2
     # decimal places as they do in real life,
     # i.e. $15.95, not $15.95231239501...
@@ -111,12 +109,6 @@ class Book(models.Model):
     # for something, containing only letters, numbers, underscores
     # or hyphens", and are used in URLs. It makes them look neater.
     slug = models.SlugField(max_length=150, db_index=True)
-
-    # Function that tells you how many units of a book
-    # are in your cart. Commented out for now since it relates
-    # to the CART app and isn't directly related to books themselves
-    #def ___unicode__(self):
-        #return '%d copies of %s in cart' % (self.amount, self.book_name)
 
     # Books will also be ordered by name, since no other
     # specification has been set
@@ -129,4 +121,20 @@ class Book(models.Model):
 
     # For use when a user searches for a book by name. Returns the URL
     def get_absolute_url(self):
-        return reverse('bookDetails: book_info', args=[self.book_name, self.slug])
+        return reverse('bookDetails:book_info', args=[self.book_name, self.slug])
+
+class Comment(models.Model):
+    book        = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='comment')
+    user        = models.ForeignKey(Profile,on_delete=models.CASCADE)
+    text        = models.TextField(max_length=150)
+    created_on  = models.DateTimeField(auto_now_add=True)
+    approved    = models.BooleanField(default=False)
+
+    def approved(self):
+        self.approved = True
+        self.save()
+    def user(self):
+        return self.user
+    def __str__(self):
+        return self.text
+    #FIXME: will need to know if user has purchased the book
