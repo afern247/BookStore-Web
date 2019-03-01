@@ -13,25 +13,112 @@
                 <hr>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <form>
-                    <h1>To-do</h1>
 
-                    <ul>
-                        <li>Can manage multiple credit card info</li>
-                        <li>Can manage multiple shipping addresses</li>
-                        <li>Validation on credit card info and passwords must meet security standards (encrypted/hashed
-                            password storage, basic
-                            validation that credit card contains numbers and proper dates)</li>
-                    </ul>
 
-                </form>
+
+        <h6 class="card-title">Primary shipping address</h6>
+        <div class="card">
+            <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">Arturo Fernandez</h6>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            12700 SW 122nd Ave
+                            <!-- <button class="btn btn-secondary float-right">Button</button> -->
+                            <div class="float-right">
+                                <a href="#">Edit</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <br>
+
+        <!-- Navbar menu -->
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-addresses-tab" data-toggle="tab" href="#nav-addresses" role="tab"
+                    aria-controls="nav-addresses" aria-selected="true">Your Addresses</a>
+                <a class="nav-item nav-link" id="nav-payment-tab" data-toggle="tab" href="#nav-payment" role="tab"
+                    aria-controls="nav-payment" aria-selected="false">Payment info</a>
+            </div>
+        </nav>
+
+        <!-- Content -->
+        <div class="tab-content" id="nav-tabContent">
+            <!-- Address tab -->
+            <div class="tab-pane fade show active" id="nav-addresses" role="tabpanel" aria-labelledby="nav-addresses-tab">
+                <br>
+
+
+
+
+
+
+                <h6 class="card-title">Other shipping address</h6>
+                <div class="card">
+                    <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-2 text-muted">Work</h6>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    123 SE 12nd Ave
+                                    <!-- <button class="btn btn-secondary float-right">Button</button> -->
+                                    <div class="float-right">
+                                        <a href="#">Make Primary</a> | <a href="#">Edit</a> | <a href="#">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="card">
+                    <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-2 text-muted">Home</h6>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    1002 NE 34 ST
+                                    <!-- <button class="btn btn-secondary float-right">Button</button> -->
+                                    <div class="float-right">
+                                        <a href="#">Make Primary</a> | <a href="#">Edit</a> | <a href="#">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+            </div>
+            <!-- Payment tab -->
+            <div class="tab-pane fade" id="nav-payment" role="tabpanel" aria-labelledby="nav-payment-tab">
+                <ul>
+                    <li>Can manage multiple credit card info</li>
+                    <li>Validation on credit card info and passwords must meet security standards (encrypted/hashed
+                        password storage, basic
+                        validation that credit card contains numbers and proper dates)</li>
+                </ul>
             </div>
         </div>
 
     </div>
 </div>
 
-
 {% endblock %}
+
+
+
+<!-- for card styes -->
+<!-- style="width: 18rem; -->

@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages # to display alert messages when the form data is valid
-from .forms import UserSignUpForm, ProfileUpdateForm, UserUpdateForm, UserProfileForm, BioForm #, AddressForm
+from .forms import UserSignUpForm, ProfileUpdateForm, UserUpdateForm, UserProfileForm, BioForm, NicknameForm  # , AddressForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.http import HttpResponseRedirect
 from django.contrib.auth.forms import PasswordChangeForm
+from users.models import Profile, Address
 
 
 # User registration page
@@ -34,27 +35,27 @@ def profile(request):
     if request.method == 'POST':
         user_ProfileForm = UserProfileForm(request.POST, instance=request.user)
         user_BioForm = BioForm(request.POST, instance=request.user.profile)
-        # user_AddressForm = AddressForm(request.POST, instance=request.user)
+        user_NicknameForm = NicknameForm(request.POST, instance=request.user.profile)
 
-        if user_ProfileForm.is_valid() and user_BioForm.is_valid():
-            # user_AddressForm.save()
+        if user_ProfileForm.is_valid() and user_BioForm.is_valid() and user_NicknameForm.is_valid():
             user_ProfileForm.save()
             user_BioForm.save()
+            user_NicknameForm.save()
             messages.success(request, f'Your profile has been updated successfully')
             return HttpResponseRedirect(request.path_info)
         else:
-            messages.warning(request, f'Please correct the error below.')
+            messages.warning(request, f'There were some errors updating you profile.')
 
     else:
         user_ProfileForm = UserProfileForm(instance=request.user)
         user_BioForm = BioForm(instance=request.user.profile)
-        # user_AddressForm = AddressForm()
+        user_NicknameForm = NicknameForm(instance=request.user.profile)
 
 
     context = {
         'user_ProfileForm': user_ProfileForm,
-        'user_BioForm': user_BioForm
-        # 'user_AddressForm': user_AddressForm
+        'user_BioForm': user_BioForm,
+        'user_NicknameForm': user_NicknameForm
     }
 
     return render(request, 'users/profile.html', context)
@@ -62,6 +63,21 @@ def profile(request):
 
 # Billing page (credit card and billing address)
 def billingSettings(request):
+
+    currentUser = request.user
+    currentUser_userName = currentUser.username
+    currentUserId = currentUser.id
+
+
+    addresses_list = Address.objects.all().filter(user__user__username=currentUser_userName)
+    print('\n\n\n', addresses_list)
+    # user_id = Address.objects.all().filter(user=currentUser.id)
+
+    for address in addresses_list:
+        print (address.id)
+
+        print('\n\n\n')
+
     return render(request, 'users/billing.html')
 
 # Username and email form
