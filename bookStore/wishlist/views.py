@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Book
+from bookDetails.models import Book
 from .models import List
 from users.models import Profile
 from .forms import CreateList

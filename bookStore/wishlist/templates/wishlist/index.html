@@ -15,41 +15,76 @@
             overflow: hidden;
         }
         .container{
-            /*border-style: solid;
-            border-width: thin;
-            border-color: black;*/
             padding: 15px;
             overflow: hidden;
         }
         .header{
             border-bottom-style: solid;
-            /*border-bottom-width: thin;*/
             overflow: hidden;
             padding: 10px;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
+        }
+        .content{
+            /*border-left-style: solid;
+            border-left-width: thin;*/
+            width: 80%;
+            height: auto;
         }
         .lists{
             width: 19%;
+            text-align: center;
         }
-        .content{
-            border-left-style: solid;
-            border-left-width: thin;
 
-            width: 80%;
-            padding: 2%;
+        /* Book Information */
+        .wishlistItem {
+            /*border-bottom-style: solid;
+            border-bottom-width: thin;*/
+            padding: 3%;
+            overflow: hidden;
+        }
+        .bookCover {
+            width: 140px;
+            height: 225px;
+        }
+        .bookInfo {
+            font-size: 15px;
+            padding: 20px;
+            overflow: hidden;
+        }
+        .bookName {
+            font-size: 25px;
+            font-weight: bolder;
+            text-decoration: underline;
+        }
+        .price {
+            font-size: 22px;
+            font-weight: bold;
+        }
+        img {
+            width: 100%;
             height: auto;
         }
+        /*Use for aligned 3 elements in one line*/
+        .oneOfThree {
+            float: left;
+            overflow: hidden;
+            width: 25%;
+            text-align: center;
+        }
+
     </style>
 </head>
 <body>
-    <!-- Delete Start -->
+    <!-- Delete Start --> <!--
     <b>Testing:</b>
     <p>Leave this here for testing. Delete later.</p>
     {% for list in all_lists %}
         {% if list.user.user.username == user.username %}
+            <p>Username: {{ list.user.user.username }}</p>
             <p>list.name: {{ list.name }} list.books.all.count: {{ list.books.all.count }}</p>
+            <p>list.books.name: {{ list.books.name }}</p>
         {% endif %}
-    {% endfor %}
+    {% endfor %} -->
     <!-- Delete Stop -->
     <div class="container">
         <div class="header">
@@ -69,8 +104,6 @@
                 </form>
             </div>
         </div>
-        <!-- <br><br>
-        <hr> -->
         <div>
             <div id="noLists">
                 <h1>You do not have any wishlists. Please create one.</h1>
@@ -87,16 +120,44 @@
                 </table>
             </div>
             <div class="alignRight content">
-                {% for lists in all_lists %}
-                    <div class="alignRight" id="bookImage">
-                        <img src="{{ lists.books.book_cover.url }}">
-                    </div>
-                    <div class="alignLeft">
-                        <h2>Book Name: {{ lists.books.name }}</h2>
+                {% for books in all_books %}
+                    <div class="wishlistItem border-bottom">
+                        <div class="alignLeft bookCover" id="bookImage">
+                            <img src="{{ books.book_cover.url }}">
+                        </div>
+                        <div class="bookInfo">
+                            <div class="bookName">
+                                {{ books.book_name }}
+                            </div>
+                            <div class="authorName">
+                                by {{ books.book_author }}
+                            </div>
+                            <div class="bookDescription">
+                                "{{ books.book_description }}"
+                            </div>
+                            <div class="rating">
+                                {{ books.avg_rating }}/5.0
+                            </div>
+                            <div class="price">
+                                ${{ books.price }}
+                            </div>
+                        </div>
+                        <div class="shopMoveDelete">
+                            <div class="oneOfThree">
+                                <a href="">Move to Shopping Cart</a>
+                            </div>
+                            <div class="oneOfThree">
+                                <a href="">Move Wishlist</a>
+                            </div>
+                            <div class="oneOfThree">
+                                <a href="">Delete</a>
+                            </div>
+                        </div>
                     </div>
                 {% endfor %}
+                <!-- Old way to display books
                 <table align="center" cellspacing="10" cellpadding="20" width=>
-                    <!-- <tr>
+                     <tr>
                         <th>Book Name</th>
                         <th>Author Name</th>
                         <th>Book Price</th>
@@ -107,11 +168,10 @@
                             <td>{{ book.author_name }}</td>
                             <td>{{ book.price }}</td>
                         </tr>
-                    {# endfor #} -->
+                    {# endfor #}
                 </table>
+                -->
             </div>
-            </div>
-
         </div>
     </div><!--Container closed-->
 </body>
