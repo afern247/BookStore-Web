@@ -4,7 +4,8 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Profile, Address #, AddressInfo
 from crispy_forms.helper import FormHelper
 
-
+import re
+from django.core.exceptions import ValidationError
 
 # User registration form
 class UserSignUpForm(UserCreationForm):
@@ -46,6 +47,17 @@ class BioForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(BioForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_show_labels = False
+
+
+class NicknameForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['nick_name']
+
+    def __init__(self, *args, **kwargs):
+        super(NicknameForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_show_labels = False
 

@@ -28,9 +28,8 @@ class Profile(models.Model):
 
 
 class Address(models.Model):
-    # One to many, functioning but not correct
-    # user = models.ForeignKey('Profile', related_name='address', on_delete=models.CASCADE)
-    users = models.ManyToManyField(Profile, blank=True)
+    user = models.ForeignKey('Profile', on_delete=models.CASCADE)
+    # users = models.ManyToManyField(Profile, blank=True)
     name = models.CharField(max_length=30)
     address = models.CharField(max_length=50)
     city = models.CharField(max_length=60, default="Miami")
