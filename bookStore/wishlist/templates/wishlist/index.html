@@ -122,9 +122,15 @@
             <div class="alignRight content">
                 {% for books in all_books %}
                     <div class="wishlistItem border-bottom">
-                        <div class="alignLeft bookCover" id="bookImage">
-                            <img src="{{ books.book_cover.url }}">
-                        </div>
+                        {% if books.book_cover %}
+                            <div class="alignLeft bookCover" id="bookImage">
+                                <img src="{{ books.book_cover.url }}">
+                            </div>
+                        {% else %}
+                            <div class="alignLeft bookCover" id="bookImage">
+                                <img src="http://lgimages.s3.amazonaws.com/nc-md.gif">
+                            </div>
+                        {% endif %}
                         <div class="bookInfo">
                             <div class="bookName">
                                 {{ books.book_name }}
