@@ -18,16 +18,18 @@
             <tr>
                 <!-- List of all the attributes associated with a book that should
                 be visible from a cart -->
-                <th>Image</th>
-                <th>Book</th>
-                <th>Amount</th>
-                <th>Remove</th>
-                <th>Price</th>
-                <th>Total Cost</th>
+                <th align="center">Image</th>
+                <th align="center">Book</th>
+                <th align="center">Amount</th>
+                <th align="center">Price</th>
+                <th align="center">Total Cost</th>
+                <th align="center">Remove</th>
             </tr>
         </thead>
         <tbody>
         <tr>
+        <!-- Iterate through the books in userCart and render their cover, price,
+        name, etc -->
             {% for current in userCart %}
                 {% with book=current.book %}
                 <tr>
@@ -37,18 +39,26 @@
                                       {% else %}NO IMAGE{% endif %}">
                         </a>
                     </td>
-                    <td>{{ book.book_name }}</td>
-                    <td>{{ book.quantity }}</td>
-                    <td class="num">${{ book.price }}</td>
-                    <td class="num">${{ book.total_price }}</td>
-                    <td><a href="{% url "cart:removeFromCart" book.id %}">Remove</a></td>
+                    <td align="center"><a href="{{ book.get_absolute_url }}">{{ book.book_name }}</a></td>
+                    <td align="center">
+                        <form action="{% url "cart:addToCart" book.id %}" method="post">
+                            {{ current.update_amount_form.amount }}
+                            {{ current.update_amount_form.change_amount }}
+                            <input type="submit" value="Update">
+                            {% csrf_token %}
+                        </form>
+                    </td>
+                    <td class="num" align="center">${{ book.price }}</td>
+                    <td class="num" align="center">${{ current.total_price }}</td>
+                    <td align="center"><a href="{% url "cart:removeFromCart" book.id %}">Remove</a></td>
                 </tr>
                 {% endwith %}
             {% endfor %}
-            <!-- Table row showing the total cost of items in cart. Uses
+
+            <!-- Table row showing the subtotal cost of items in cart. Uses
             the get_total_price function defined in cart.py -->
             <tr class="total"></tr>
-                <td>Total</td>
+                <td>CART SUBTOTAL</td>
                 <td class="num">${{ userCart.get_total_price }}</td>
             </tr>
         </tbody>

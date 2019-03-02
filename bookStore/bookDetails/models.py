@@ -72,9 +72,7 @@ class Book(models.Model):
     # if there are no image files
     book_cover = models.ImageField(upload_to='books/', blank=True, null=True)
 
-    # The book's author(s). Here we make note of the many-to-many
-    # relationship between the Book and Author classes;
-    #book_author = models.ManyToManyField(Author, related_name='authored')
+    # The book's author
     book_author = models.CharField(max_length=200)
 
     # The bio of the author(s); This can be lengthy, so

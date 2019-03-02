@@ -68,4 +68,13 @@ def removeFromCart(request, book_id):
 
 def cart_info(request):
     userCart = Cart(request)
+
+    # Iterates through the cart and creates a form allowing for
+    # the modification of the amount of books in the cart
+    for current in userCart:
+        current['update_amount_form'] = AddToCartForm(
+            initial={'amount': current['amount'],
+                     'change_amount': True}
+        )
+
     return render(request, 'cart/info.html', {'userCart': userCart})
