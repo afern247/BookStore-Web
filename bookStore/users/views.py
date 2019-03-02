@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.http import HttpResponseRedirect
 from django.contrib.auth.forms import PasswordChangeForm
-from users.models import Profile, Address
+from .models import Profile, Address
 
 
 # User registration page
@@ -74,17 +74,18 @@ def billingSettings(request):
     #     print (address.id)
 
 
-
+    address_listNames = Address.objects.all().get(pk=3)
 
 
     if request.method == 'POST':
         user_AddressForm = AddressForm(request.POST, instance=request.user.profile)
 
     else:
-        user_AddressForm = AddressForm(instance=request.user.profile)
-        # print(user_AddressForm)
+        user_AddressForm = AddressForm(instance=address_listNames)
         print(user_AddressForm)
-
+        # print(address_listNames)
+        # print(user_AddressForm)
+        # print(address_listNames) # prints query
 
     context = {
         'user_AddressForm': user_AddressForm
