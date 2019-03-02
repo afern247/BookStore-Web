@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages # to display alert messages when the form data is valid
-from .forms import UserSignUpForm, ProfileUpdateForm, UserUpdateForm, UserProfileForm, BioForm, NicknameForm  # , AddressForm
+from .forms import UserSignUpForm, ProfileUpdateForm, UserUpdateForm, UserProfileForm, BioForm, NicknameForm, AddressForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.http import HttpResponseRedirect
 from django.contrib.auth.forms import PasswordChangeForm
-from users.models import Profile, Address
+from .models import Profile, Address
 
 
 # User registration page
@@ -67,18 +67,31 @@ def billingSettings(request):
     currentUser = request.user
     currentUser_userName = currentUser.username
     currentUserId = currentUser.id
+    address_listNames = Address.objects.all().filter(user__user__username=currentUser_userName)
 
-
-    addresses_list = Address.objects.all().filter(user__user__username=currentUser_userName)
-    print('\n\n\n', addresses_list)
     # user_id = Address.objects.all().filter(user=currentUser.id)
+    # for address in address_listNames:
+    #     print (address.id)
 
-    for address in addresses_list:
-        print (address.id)
 
-        print('\n\n\n')
+    address_listNames = Address.objects.all().get(pk=3)
 
-    return render(request, 'users/billing.html')
+
+    if request.method == 'POST':
+        user_AddressForm = AddressForm(request.POST, instance=request.user.profile)
+
+    else:
+        user_AddressForm = AddressForm(instance=address_listNames)
+        print(user_AddressForm)
+        # print(address_listNames)
+        # print(user_AddressForm)
+        # print(address_listNames) # prints query
+
+    context = {
+        'user_AddressForm': user_AddressForm
+    }
+
+    return render(request, 'users/billing.html', context)
 
 # Username and email form
 def accountSettings(request):

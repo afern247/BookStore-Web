@@ -3,4 +3,3 @@ from .models import Profile, Address
 
 admin.site.register(Profile)
 admin.site.register(Address)
-# admin.site.register(AddressInfo)
