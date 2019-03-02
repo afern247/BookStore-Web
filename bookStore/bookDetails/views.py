@@ -3,15 +3,14 @@
 # The views for the books.
 # =====================================================================================================
 
-from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse
+from django.shortcuts import redirect
 from django.shortcuts import render, get_object_or_404
 
 # Import the Form for adding products from the Cart package
 from cart.forms import AddToCartForm
+from .forms import CommentForm
 # Import the Author and Book models from this package's models.py file
 from .models import Author, Book
-from .forms import CommentForm
 
 
 # List all the books. Allows one to filter books by author name,
@@ -56,7 +55,8 @@ def book_info(request, book_name, slug):
         author = get_object_or_404(Author, author_name=author_name)
 
     return render(request, 'bookDetails/book/detail.html', {'book': book,
-                                                            'author': author})
+                                                            'author': author,
+                                                            'ATC_book_form': ATC_product_form})
 
 def add_comment(request, book_name, slug):
     book = get_object_or_404(Book, book_name=book_name, slug=slug)
