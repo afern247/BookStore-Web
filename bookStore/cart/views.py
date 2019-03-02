@@ -15,9 +15,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 # require HTTP POST requests.
 from django.views.decorators.http import require_POST
 
-# This is the TEMPORARY Book model that I created
-# to be used with the cart.
-from cart.models import Book
+# This is the Book model from the bookDetails package I made.
+from bookDetails.models import Book
 # These are the cart and cart forms.
 from .cart import Cart
 from .forms import AddToCartForm
@@ -27,11 +26,11 @@ from .forms import AddToCartForm
 
 
 @require_POST
-def addToCart(request, book_name):
+def addToCart(request, book_id):
     userCart = Cart(request)
     # Attempt to get the Book that has the
     # given book name
-    book = get_object_or_404(Book, name=book_name)
+    book = get_object_or_404(Book, id=book_id)
 
     # Validate the form for adding the item to the cart
     form = AddToCartForm(request.POST)
@@ -47,26 +46,35 @@ def addToCart(request, book_name):
 
     # Once finished, the function redirects the user to the page
     # that shows them the contents of their cart
-    return redirect('userCart:cart_info')
+    return redirect('cart:cart_info')
 
 # This view will handle removing items.
 
 
-def removeFromCart(request, book_name):
+def removeFromCart(request, book_id):
     userCart = Cart(request)
     # Same as addToCart function
-    book = get_object_or_404(Book, name=book_name)
+    book = get_object_or_404(Book, id=book_id)
 
     # Simply remove the Book with the given name
     # from the cart
     userCart.remove(book)
 
     # Again, redirect to cart contents page
-    return redirect('userCart:cart_info')
+    return redirect('cart:cart_info')
 
 
 # This view displays the cart and its contents
 
 def cart_info(request):
     userCart = Cart(request)
+
+    # Iterates through the cart and creates a form allowing for
+    # the modification of the amount of books in the cart
+    for current in userCart:
+        current['update_amount_form'] = AddToCartForm(
+            initial={'amount': current['amount'],
+                     'change_amount': True}
+        )
+
     return render(request, 'cart/info.html', {'userCart': userCart})

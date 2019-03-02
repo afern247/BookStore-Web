@@ -5,6 +5,11 @@
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
+from django.shortcuts import render, get_object_or_404
+
+# Import the Form for adding products from the Cart package
+from cart.forms import AddToCartForm
+# Import the Author and Book models from this package's models.py file
 from .models import Author, Book
 from .forms import CommentForm
 
@@ -40,6 +45,9 @@ def book_info(request, book_name, slug):
     # Attempt to retrieve the book requested based on the provided
     # name and slug
     book = get_object_or_404(Book, book_name=book_name, slug=slug)
+
+    # The form for Adding a product To the Cart (Add To Cart = ATC)
+    ATC_product_form = AddToCartForm()
 
     # If we retrieved the book successfully, get its author
     # so we can reference their attributes in the HTML page
