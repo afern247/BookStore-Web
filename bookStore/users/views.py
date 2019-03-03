@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages # to display alert messages when the form data is valid
-from .forms import UserSignUpForm, ProfileUpdateForm, UserUpdateForm, UserProfileForm, BioForm, NicknameForm, AddressForm
+from .forms import UserSignUpForm, ProfileUpdateForm, UserUpdateForm, UserProfileForm, BioForm, NicknameForm, EditAddressForm, DeleteAddressForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.http import HttpResponseRedirect
@@ -83,21 +83,21 @@ def addAddress(request):
     address_slug = None
 
     if request.method == 'POST':
-        user_AddressForm = AddressForm(request.POST)
+        user_AddressForm = EditAddressForm(request.POST)
 
         if user_AddressForm.is_valid():
             newaddress = user_AddressForm.save(commit=False)
             newaddress.user_id = request.user.profile.id
             newaddress.save()
 
-            messages.success(request, f'Your address has been updated successfully')
-            return HttpResponseRedirect(request.path_info)
+            messages.success(request, f'New address added')
+            return redirect('settings:billing-settings')
         else:
             messages.warning(
                 request, f'There were some errors updating you profile.')
 
     else:
-        user_AddressForm = AddressForm()
+        user_AddressForm = EditAddressForm()
 
     context = {
         'user_AddressForm': user_AddressForm
@@ -110,20 +110,24 @@ def addAddress(request):
 @login_required
 def addressChange(request, address_slug):
 
+    # Gets name of the address based on id
     currentAddress = Address.objects.all().get(pk=address_slug)
 
     if request.method == 'POST':
-        user_AddressForm = AddressForm(request.POST, instance=currentAddress)
+        user_AddressForm = EditAddressForm(request.POST, instance=currentAddress)
 
         if user_AddressForm.is_valid():
             user_AddressForm.save()
             messages.success(request, f'Your address has been updated successfully')
             return HttpResponseRedirect(request.path_info)
+        elif DeleteAddressForm():
+            Address.objects.filter(id=address_slug).delete()
+            return redirect('settings:billing-settings')
         else:
             messages.warning(request, f'There were some errors updating you profile.')
 
     else:
-        user_AddressForm = AddressForm(instance=currentAddress)
+        user_AddressForm = EditAddressForm(instance=currentAddress)
 
     context = {
         'address_slug': address_slug,

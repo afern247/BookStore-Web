@@ -36,9 +36,16 @@
                 <button class="btn btn-primary" type="submit">Save changes</button>
             </div>
         </form>
-
         {% endif %}
 
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{DeleteAddressForm |crispy}}
+            <div class="form-group">
+                <button class="btn btn-danger" type="submit">Delete</button>
+            </div>
+        </form>
 
     </div>
 </div>
