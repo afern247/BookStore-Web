@@ -5,13 +5,8 @@
 
 
 
-
-
-
-
-
-<div class="card">
-    <div class="card-body">
+<div class="card style=" margin-bottom: 20px;"">
+    <div class="card-body" style=" padding-bottom: 0px;">
         <div class="row">
             <div class="col-md-12">
                 <h4>Billing overview</h4>
@@ -22,6 +17,32 @@
 
 
 
+
+
+
+{% for address in user_AddressList %}
+
+    <a href="{{ address.get_absolute_url }}">{{ address.name }}</a>
+
+{% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br><br><br><br>
 
         <h6 class="card-title">Primary shipping address</h6>
         <div class="card">
@@ -61,10 +82,12 @@
                 <br>
 
 
-{{user_AddressForm |crispy}}
+                <!-- {{user_AddressForm |crispy}} -->
 
 
                 <h6 class="card-title">Other shipping address</h6>
+
+                {% for address in user_AddressList %}
 
 
                 <div class="card">
@@ -73,7 +96,9 @@
                             <h6 class="card-subtitle mb-2 text-muted">{{ address.name }}</h6>
                             <div class="row">
                                 <div class="col-lg-12">
-                                    {{ user_AddressForm.name }}
+                                    {{ address.address1 }}
+                                    <br>
+                                    {{ address.state }}, {{ address.zipcode }}
                                     <!-- <button class="btn btn-secondary float-right">Button</button> -->
                                     <div class="float-right">
                                         <a href="#">Make Primary</a> | <a href="#">Edit</a> | <a href="#">Delete</a>
@@ -84,21 +109,18 @@
                     </div>
                 </div>
                 <br>
+                {% endfor %}
 
 
 
-
-
-
-
-
-
+                <!-- ---------------------------------------------------------------------------------------------------------------------------------- -->
 
 
             </div>
             <!-- Payment tab -->
             <div class="tab-pane fade" id="nav-payment" role="tabpanel" aria-labelledby="nav-payment-tab">
                 <ul>
+                    <br>
                     <li>Can manage multiple credit card info</li>
                     <li>Validation on credit card info and passwords must meet security standards (encrypted/hashed
                         password storage, basic

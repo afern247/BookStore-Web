@@ -11,35 +11,35 @@
             <div class="list-group ">
                 <label class="card-header">Personal Settings</label>
                 {% if request.get_full_path == "/settings/profile/" %}
-                    <a href="{% url 'profile-settings' %}" class="list-group-item list-group-item-action active"><span class="fa fa-user"></span> Profile</a>
-                    <a href="{% url 'account-settings' %}" class="list-group-item list-group-item-action"><span class="fa fa-cog"></span> Account</a>
-                    <a href="{% url 'security-settings' %}" class="list-group-item list-group-item-action"><i class="fas fa-shield-alt"></i> Security</a>
-                    <a href="{% url 'billing-settings' %}" class="list-group-item list-group-item-action"><span class="fa fa-credit-card"></span> Billing</a>
+                    <a href="{% url 'settings:profile-settings' %}" class="list-group-item list-group-item-action active"><span class="fa fa-user"></span> Profile</a>
+                    <a href="{% url 'settings:account-settings' %}" class="list-group-item list-group-item-action"><span class="fa fa-cog"></span> Account</a>
+                    <a href="{% url 'settings:security-settings' %}" class="list-group-item list-group-item-action"><i class="fas fa-shield-alt"></i> Security</a>
+                    <a href="{% url 'settings:billing-settings' %}" class="list-group-item list-group-item-action"><span class="fa fa-credit-card"></span> Billing</a>
                 {% endif %}
                 {% if request.get_full_path == "/settings/account/" %}
-                    <a href="{% url 'profile-settings' %}" class="list-group-item list-group-item-action"><span class="fa fa-user"></span> Profile</a>
-                    <a href="{% url 'account-settings' %}" class="list-group-item list-group-item-action active"><span class="fa fa-cog"></span> Account</a>
-                    <a href="{% url 'security-settings' %}" class="list-group-item list-group-item-action"><i class="fas fa-shield-alt"></i> Security</a>
-                    <a href="{% url 'billing-settings' %}" class="list-group-item list-group-item-action"><span class="fa fa-credit-card"></span> Billing</a>
+                    <a href="{% url "settings:profile-settings" %}" class="list-group-item list-group-item-action"><span class="fa fa-user"></span> Profile</a>
+                    <a href="{% url 'settings:account-settings' %}" class="list-group-item list-group-item-action active"><span class="fa fa-cog"></span> Account</a>
+                    <a href="{% url 'settings:security-settings' %}" class="list-group-item list-group-item-action"><i class="fas fa-shield-alt"></i> Security</a>
+                    <a href="{% url 'settings:billing-settings' %}" class="list-group-item list-group-item-action"><span class="fa fa-credit-card"></span> Billing</a>
                 {% endif %}
                 {% if request.get_full_path == "/settings/security/" %}
-                    <a href="{% url 'profile-settings' %}" class="list-group-item list-group-item-action"><span class="fa fa-user"></span> Profile</a>
-                    <a href="{% url 'account-settings' %}" class="list-group-item list-group-item-action"><span class="fa fa-cog"></span> Account</a>
-                    <a href="{% url 'security-settings' %}" class="list-group-item list-group-item-action active"><i class="fas fa-shield-alt"></i> Security</a>
-                    <a href="{% url 'billing-settings' %}" class="list-group-item list-group-item-action"><span class="fa fa-credit-card"></span> Billing</a>
+                    <a href="{% url "settings:profile-settings" %}" class="list-group-item list-group-item-action"><span class="fa fa-user"></span> Profile</a>
+                    <a href="{% url 'settings:account-settings' %}" class="list-group-item list-group-item-action"><span class="fa fa-cog"></span> Account</a>
+                    <a href="{% url 'settings:security-settings' %}" class="list-group-item list-group-item-action active"><i class="fas fa-shield-alt"></i> Security</a>
+                    <a href="{% url 'settings:billing-settings' %}" class="list-group-item list-group-item-action"><span class="fa fa-credit-card"></span> Billing</a>
                 {% endif %}
                 {% if request.get_full_path == "/settings/billing/" %}
-                    <a href="{% url 'profile-settings' %}" class="list-group-item list-group-item-action"><span class="fa fa-user"></span> Profile</a>
-                    <a href="{% url 'account-settings' %}" class="list-group-item list-group-item-action"><span class="fa fa-cog"></span> Account</a>
-                    <a href="{% url 'security-settings' %}" class="list-group-item list-group-item-action"><i class="fas fa-shield-alt"></i> Security</a>
-                    <a href="{% url 'billing-settings' %}" class="list-group-item list-group-item-action active"><span class="fa fa-credit-card"></span> Billing</a>
+                    <a href="{% url "settings:profile-settings" %}" class="list-group-item list-group-item-action"><span class="fa fa-user"></span> Profile</a>
+                    <a href="{% url 'settings:account-settings' %}" class="list-group-item list-group-item-action"><span class="fa fa-cog"></span> Account</a>
+                    <a href="{% url 'settings:security-settings' %}" class="list-group-item list-group-item-action"><i class="fas fa-shield-alt"></i> Security</a>
+                    <a href="{% url 'settings:billing-settings' %}" class="list-group-item list-group-item-action active"><span class="fa fa-credit-card"></span> Billing</a>
                 {% endif %}
 
 
             </div>
         </div>
         <!-- Center-right navBar-->
-        <div class="col-md-9">
+        <div class="col-md-9" style="margin-bottom: 20px;">
             {% block settingsPageInfo %} {% endblock %} <!-- Here goes the user information on the profile page -->
         </div>
     </div>

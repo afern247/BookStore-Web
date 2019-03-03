@@ -24,6 +24,7 @@
 
   <!-- Custom styles -->
   <link rel="stylesheet" type="text/css" href="{% static 'css/navBar-Style.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
 
 </head>
 
@@ -55,7 +56,7 @@
           </a>
           <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
             <a class="dropdown-item" href="/wishlist/"><i class="fas fa-heart"></i> Wish list</a>
-            <a class="dropdown-item" href="{% url 'profile-settings' %}"><i class="fas fa-cog"></i> Settings</a>
+            <a class="dropdown-item" href="{% url "settings:profile-settings" %}"><i class="fas fa-cog"></i> Settings</a>
             <a class="dropdown-item" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
           </div>
         </li>
@@ -90,6 +91,19 @@
 
   </main>
 
+
+  <!-- Footer -->
+<!-- <div class="bottom section-padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <div class="copyright">
+          <p><span>Group 2 - CEN4010</span> | <a href="https://github.com/afern247/softwareEngineering_Group2" class="transition">Project Code</a> | © Spring 2019.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
 
 
 <!-- JQuery -->
