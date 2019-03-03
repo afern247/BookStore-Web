@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib import messages # to display alert messages when the form data is valid
-from .forms import UserSignUpForm, ProfileUpdateForm, UserUpdateForm, UserProfileForm, BioForm, NicknameForm, EditAddressForm, DeleteAddressForm
+from .forms import UserSignUpForm, ProfileUpdateForm, UserUpdateForm, UserProfileForm, BioForm, NicknameForm, AddressForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.http import HttpResponseRedirect
@@ -26,9 +26,8 @@ def signup(request):
     return render(request, 'users/signup.html', {'form': form})
 
 # When the user clicks on the profile menu, he/she will be redirected here
-@login_required
 def settingsHome(request):
-    return redirect('settings:profile-settings')
+    return redirect('profile-settings')
 
 # Profile page
 @login_required
@@ -63,87 +62,38 @@ def profile(request):
 
 
 # Billing page (credit card and billing address)
-@login_required
 def billingSettings(request):
 
-    address_slug = None
-    primaryAddressCheck = False
-    # Get user address list
-    user_AddressList = Address.objects.all().filter(user__user__username=request.user)
+    currentUser = request.user
+    currentUser_userName = currentUser.username
+    currentUserId = currentUser.id
+    address_listNames = Address.objects.all().filter(user__user__username=currentUser_userName)
 
-    for address in user_AddressList:
-        if address.primaryAddress == True:
-            primaryAddressCheck = True
-
-    context = {
-        'user_AddressList': user_AddressList,
-        'primaryAddressCheck': primaryAddressCheck
-    }
-
-    return render(request, 'users/billing.html', context)
+    # user_id = Address.objects.all().filter(user=currentUser.id)
+    # for address in address_listNames:
+    #     print (address.id)
 
 
-@login_required
-def addAddress(request):
+    address_listNames = Address.objects.all().get(pk=3)
 
-    address_slug = None
 
     if request.method == 'POST':
-        user_AddressForm = EditAddressForm(request.POST)
-
-        if user_AddressForm.is_valid():
-            newaddress = user_AddressForm.save(commit=False)
-            newaddress.user_id = request.user.profile.id
-            newaddress.save()
-
-            messages.success(request, f'New address added')
-            return redirect('settings:billing-settings')
-        else:
-            messages.warning(
-                request, f'There were some errors updating you profile.')
+        user_AddressForm = AddressForm(request.POST, instance=request.user.profile)
 
     else:
-        user_AddressForm = EditAddressForm()
+        user_AddressForm = AddressForm(instance=address_listNames)
+        print(user_AddressForm)
+        # print(address_listNames)
+        # print(user_AddressForm)
+        # print(address_listNames) # prints query
 
     context = {
         'user_AddressForm': user_AddressForm
     }
 
-    return render(request, 'users/addAddress.html', context)
-
-
-# Page to change user Addresses
-@login_required
-def addressChange(request, address_slug):
-
-    # Gets name of the address based on id
-    currentAddress = Address.objects.all().get(pk=address_slug)
-
-    if request.method == 'POST':
-        user_AddressForm = EditAddressForm(request.POST, instance=currentAddress)
-
-        if user_AddressForm.is_valid():
-            user_AddressForm.save()
-            messages.success(request, f'Your address has been updated successfully')
-            return HttpResponseRedirect(request.path_info)
-        elif DeleteAddressForm():
-            Address.objects.filter(id=address_slug).delete()
-            return redirect('settings:billing-settings')
-        else:
-            messages.warning(request, f'There were some errors updating you profile.')
-
-    else:
-        user_AddressForm = EditAddressForm(instance=currentAddress)
-
-    context = {
-        'address_slug': address_slug,
-        'user_AddressForm': user_AddressForm,
-    }
-    return render(request, 'users/addressChange.html', context)
-
+    return render(request, 'users/billing.html', context)
 
 # Username and email form
-@login_required
 def accountSettings(request):
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
@@ -165,7 +115,6 @@ def accountSettings(request):
 
 
 # User password reset page
-@login_required
 def securitySettings(request):
     if request.method == 'POST':
         u_Passform = PasswordChangeForm(request.user, request.POST)
@@ -174,7 +123,7 @@ def securitySettings(request):
             u_Passform.save()
             # update_session_auth_hash(request, u_Passform)
             update_session_auth_hash(request, u_Passform.user)
-            messages.success(request, f'Your password has been updated successfully')
+            messages.success(request, f'Password has been updated successfully')
             return HttpResponseRedirect(request.path_info)
         else:
             messages.warning(request, f'ERROR!')
@@ -186,4 +135,3 @@ def securitySettings(request):
         'u_Passform': u_Passform
     }
     return render(request, 'users/security.html', context)
-

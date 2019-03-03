@@ -20,8 +20,7 @@ urlpatterns = [
 
     # Navigation
     path('', include('storePage.urls')),            # Home page
-    # user profile, billing, etc. settings page
-    path('settings/', include('users.urls', namespace='settings')),    # URL namespaces allow you to uniquely reverse named URL patterns even if different applications use the same URL names.
+    path('settings/', include('users.urls')),       # user profile, billing, etc. settings page
     path('wishlist/', include('wishlist.urls')),    # Wishlist
     path('books/', include('books.urls')),          # Books data
     path('cart/', include('cart.urls', namespace='cart')),            # Shopping cart
