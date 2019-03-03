@@ -82,12 +82,9 @@
         {% if list.user.user.username == user.username %}
             <p>list.user.user.username: {{ list.user.user.username }}</p>
             <p>list.name: {{ list.name }} list.books.all.count: {{ list.books.all.count }}</p>
-            <p>list.books.name: {{ list.books.name}}</p>
         {% endif %}
     {% endfor %}
-    <p>{{ userId }}</p><p>{{ testingList }}</p>
-    <p>Lists.objects.count(): {{ listCount }}</p>
-    <p>all_books: {{ all_books }}</p><p>testingAgain: {{ testingAgain }}</p>
+    <p>myLists.count(): {{ listCount }}</p>
     <p>libros: {{ libros }}</p>
     {% for book in libros %}
         <p>book.name: {{ book.book_name }}</p>

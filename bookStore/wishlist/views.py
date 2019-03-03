@@ -22,13 +22,15 @@ Need to do testing that only the list books shown per list per user is shown.
 """
 @login_required()
 def index(request):
-    userId = request.user.id
-    #testingList = List.objects.filter(user=request.user.profile)
-    listCount = List.objects.filter(books__list__user=request.user.profile).distinct().count()
+    #Gets all the lists associated with the user.
     myLists = List.objects.filter(books__list__user=request.user.profile).distinct()
-    testingAgain = List.objects.filter(books__list__user=request.user.profile).values()
+
+    #Gets the count of all the lists associated with the user.
+    listCount = myLists.count()
 
     all_books = Book.objects.all()
+
+    #Need to put error checking for when no lists exists and for each amount of list.
     firstList = myLists[0]
 
     myListsValues = myLists.filter(name__contains=firstList.name).values('books')
@@ -38,7 +40,7 @@ def index(request):
     all_lists = List.objects.all()
 
     return render(request, 'wishlist/index.html',
-                  {'all_books': all_books, 'all_lists': all_lists, 'userId': userId, "myLists": myLists,
-                   'listCount': listCount, 'testingAgain': testingAgain, 'libros': libros, 'second': second,
+                  {'all_books': all_books, 'all_lists': all_lists, "myLists": myLists,
+                   'listCount': listCount, 'libros': libros, 'second': second,
                    #'secondBooks': secondBooks
                 })
