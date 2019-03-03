@@ -4,7 +4,6 @@
 
 
 
-
 <div class="card style=" margin-bottom: 20px;"">
     <div class="card-body" style=" padding-bottom: 0px;">
         <div class="row">
@@ -14,35 +13,6 @@
             </div>
         </div>
 
-
-
-
-
-
-
-{% for address in user_AddressList %}
-
-    <a href="{{ address.get_absolute_url }}">{{ address.name }}</a>
-
-{% endfor %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<br><br><br><br><br>
 
         <h6 class="card-title">Primary shipping address</h6>
         <div class="card">
@@ -81,10 +51,6 @@
             <div class="tab-pane fade show active" id="nav-addresses" role="tabpanel" aria-labelledby="nav-addresses-tab">
                 <br>
 
-
-                <!-- {{user_AddressForm |crispy}} -->
-
-
                 <h6 class="card-title">Other shipping address</h6>
 
                 {% for address in user_AddressList %}
@@ -101,7 +67,7 @@
                                     {{ address.state }}, {{ address.zipcode }}
                                     <!-- <button class="btn btn-secondary float-right">Button</button> -->
                                     <div class="float-right">
-                                        <a href="#">Make Primary</a> | <a href="#">Edit</a> | <a href="#">Delete</a>
+                                        <a style="color:dimgrey" href="#">Make Primary</a> | <a href="{{ address.get_absolute_url }}">Edit</a> | <a style="color:dimgrey" href="#">Delete</a>
                                     </div>
                                 </div>
                             </div>
@@ -110,6 +76,10 @@
                 </div>
                 <br>
                 {% endfor %}
+
+
+
+
 
 
 

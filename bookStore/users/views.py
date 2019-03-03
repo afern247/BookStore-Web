@@ -64,24 +64,25 @@ def profile(request):
 
 # Billing page (credit card and billing address)
 @login_required
-def billingSettings(request, address_slug=None):
+def billingSettings(request):
 
     # Since no address is selected first to edit, the value is none, below will be selected
     selectedAddress = None
+    address_slug = None
     # Get user address list
     user_AddressList = Address.objects.all().filter(user__user__username=request.user)
     # Get user current address to edit
     currentAddress = Address.objects.all().get(pk=3)
 
-    print(selectedAddress)
+
 
 
     if address_slug:
         selectedAddress = get_object_or_404(Address, slug=address_slug)
-        print(selectedAddress)
+        # print(selectedAddress)
 
     if request.method == 'POST':
-        user_AddressForm = AddressForm(request.POST, instance=request.user.profile)
+        user_AddressForm = AddressForm(request.POST, instance=currentAddress)
 
     else:
         user_AddressForm = AddressForm(instance=currentAddress)
@@ -94,6 +95,32 @@ def billingSettings(request, address_slug=None):
     }
 
     return render(request, 'users/billing.html', context)
+
+# Page to change user Addresses
+@login_required
+def addressChange(request, address_slug):
+
+    currentAddress = Address.objects.all().get(pk=address_slug)
+
+    if request.method == 'POST':
+        user_AddressForm = AddressForm(request.POST, instance=currentAddress)
+
+        if user_AddressForm.is_valid():
+            user_AddressForm.save()
+            messages.success(request, f'Your profile has been updated successfully')
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.warning(request, f'There were some errors updating you profile.')
+
+    else:
+        user_AddressForm = AddressForm(instance=currentAddress)
+
+    context = {
+        'address_slug': address_slug,
+        'user_AddressForm': user_AddressForm,
+    }
+    return render(request, 'users/addressChange.html', context)
+
 
 # Username and email form
 @login_required
@@ -140,11 +167,3 @@ def securitySettings(request):
     }
     return render(request, 'users/security.html', context)
 
-@login_required
-def addressChange(request, address_slug):
-
-
-    context = {
-        'address_slug': address_slug
-    }
-    return render(request, 'users/addressChange.html', context)
