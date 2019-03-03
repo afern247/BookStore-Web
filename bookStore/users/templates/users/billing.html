@@ -12,25 +12,40 @@
                 <hr>
             </div>
         </div>
-
-
         <h6 class="card-title">Primary shipping address</h6>
         <div class="card">
             <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
                 <div class="card-body">
-                    <h6 class="card-subtitle mb-2 text-muted">Arturo Fernandez</h6>
+
+                    {% if primaryAddressCheck is True %}
+                    {% for address in user_AddressList %}
+                    {% if address.primaryAddress is True %}
+                    <h6 class="card-subtitle mb-2 text-muted">{{ address.name }}</h6>
                     <div class="row">
                         <div class="col-lg-12">
-                            12700 SW 122nd Ave
-                            <!-- <button class="btn btn-secondary float-right">Button</button> -->
+                            {{ address.address1 }}
+                            <br>
+                            {{ address.state }}, {{ address.zipcode }}
                             <div class="float-right">
-                                <a href="#">Edit</a>
+                                <a href="{{ address.get_absolute_url }}">Edit</a>
                             </div>
                         </div>
                     </div>
+                    {% endif %}
+                    {% endfor %}
+
+                    {% else %}
+                    No primary address has been set.
+                    {% endif %}
+
                 </div>
             </div>
         </div>
+
+
+
+
+
 
 
         <br>
@@ -54,8 +69,7 @@
                 <h6 class="card-title">Other shipping address</h6>
 
                 {% for address in user_AddressList %}
-
-
+                {% if address.primaryAddress is False %}
                 <div class="card">
                     <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
                         <div class="card-body">
@@ -67,7 +81,7 @@
                                     {{ address.state }}, {{ address.zipcode }}
                                     <!-- <button class="btn btn-secondary float-right">Button</button> -->
                                     <div class="float-right">
-                                        <a style="color:dimgrey" href="#">Make Primary</a> | <a href="{{ address.get_absolute_url }}">Edit</a>
+                                        <a href="{{ address.get_absolute_url }}">Edit</a>
                                     </div>
                                 </div>
                             </div>
@@ -75,9 +89,11 @@
                     </div>
                 </div>
                 <br>
+                {% endif %}
                 {% endfor %}
 
-                <a type="button" class="btn btn-primary float-left" style="margin-bottom: 10px;" href="{% url 'settings:add-address' %}">Add new address</a>
+                <a type="button" class="btn btn-outline-info float-left" style="margin-bottom: 10px;" href="{% url 'settings:add-address' %}">Add
+                    new address</a>
 
 
 

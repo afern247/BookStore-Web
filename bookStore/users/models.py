@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, transaction
 from django.contrib.auth.models import User
 from PIL import Image
 from localflavor.us.models import USStateField  # To shows list of US states on address form
@@ -38,6 +38,7 @@ class Address(models.Model):
     zipcode = models.CharField("Zipcode", max_length=5)
     slug = models.SlugField(max_length=150, db_index=True)
     user = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=False)
+    primaryAddress = models.BooleanField()
 
     class Meta:
 
@@ -46,6 +47,13 @@ class Address(models.Model):
 
     def __str__(self):
         return self.name
+
+    @transaction.atomic
+    def save(self, *args, **kwargs):
+        if self.primaryAddress:
+            Address.objects.filter(
+                primaryAddress=True).update(primaryAddress=False)
+        super(Address, self).save(*args, **kwargs)
 
     # Got the idea from: https://docs.djangoproject.com/en/2.1/ref/models/instances/#get-absolute-url
     def get_absolute_url(self):

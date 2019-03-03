@@ -67,11 +67,17 @@ def profile(request):
 def billingSettings(request):
 
     address_slug = None
+    primaryAddressCheck = False
     # Get user address list
     user_AddressList = Address.objects.all().filter(user__user__username=request.user)
 
+    for address in user_AddressList:
+        if address.primaryAddress == True:
+            primaryAddressCheck = True
+
     context = {
-        'user_AddressList': user_AddressList
+        'user_AddressList': user_AddressList,
+        'primaryAddressCheck': primaryAddressCheck
     }
 
     return render(request, 'users/billing.html', context)

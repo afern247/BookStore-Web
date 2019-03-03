@@ -65,7 +65,7 @@ class NicknameForm(forms.ModelForm):
 class EditAddressForm(forms.ModelForm):
     class Meta:
         model = Address
-        fields = ['name', 'address1', 'address2', 'city', 'state', 'zipcode']
+        fields = ['name', 'address1', 'address2', 'city', 'state', 'zipcode', 'primaryAddress']
 
     def __init__(self, *args, **kwargs):
         super(EditAddressForm, self).__init__(*args, **kwargs)
