@@ -75,16 +75,24 @@
     </style>
 </head>
 <body>
-    <!-- Delete Start --> <!--
+    <!-- Delete Start -->
     <b>Testing:</b>
     <p>Leave this here for testing. Delete later.</p>
-    {% for list in all_lists %}
+    {% for list in myLists %}
         {% if list.user.user.username == user.username %}
-            <p>Username: {{ list.user.user.username }}</p>
+            <p>list.user.user.username: {{ list.user.user.username }}</p>
             <p>list.name: {{ list.name }} list.books.all.count: {{ list.books.all.count }}</p>
-            <p>list.books.name: {{ list.books.name }}</p>
+            <p>list.books.name: {{ list.books.name}}</p>
         {% endif %}
-    {% endfor %} -->
+    {% endfor %}
+    <p>{{ userId }}</p><p>{{ testingList }}</p>
+    <p>Lists.objects.count(): {{ listCount }}</p>
+    <p>all_books: {{ all_books }}</p><p>testingAgain: {{ testingAgain }}</p>
+    <p>libros: {{ libros }}</p>
+    {% for book in libros %}
+        <p>book.name: {{ book.book_name }}</p>
+    {% endfor %}
+    <p>second: {{ second }}</p>
     <!-- Delete Stop -->
     <div class="container">
         <div class="header">

@@ -16,21 +16,29 @@ def create_list(request):
     return render(request, 'wishlist/index.html', {'form': form})
 
 """
-Need to create a way that each page will link to each wishlist. wishlist/1 should be the wishlist
-    for the user. Not just the id 1 for all the wishlists.
-"""
-def detail(request, wishlist_id):
-    return HttpResponse("<h2>Details for Wishlist with ID: " + str(wishlist_id) + "</h2>")
-
-"""
 Need to do testing for the number of lists per user.
     May need to learn how to query for lists attached to a user
 Need to do testing that only the list books shown per list per user is shown.
 """
 @login_required()
 def index(request):
+    userId = request.user.id
+    #testingList = List.objects.filter(user=request.user.profile)
+    listCount = List.objects.filter(books__list__user=request.user.profile).distinct().count()
+    myLists = List.objects.filter(books__list__user=request.user.profile).distinct()
+    testingAgain = List.objects.filter(books__list__user=request.user.profile).values()
+
     all_books = Book.objects.all()
+    firstList = myLists[0]
+
+    myListsValues = myLists.filter(name__contains=firstList.name).values('books')
+    libros = Book.objects.filter(id__in=myListsValues)
+    second = myLists[1]
+    #secondBooks = Book.objects.filter(id__in=second.books)
     all_lists = List.objects.all()
 
     return render(request, 'wishlist/index.html',
-                  {'all_books': all_books, 'all_lists': all_lists})
+                  {'all_books': all_books, 'all_lists': all_lists, 'userId': userId, "myLists": myLists,
+                   'listCount': listCount, 'testingAgain': testingAgain, 'libros': libros, 'second': second,
+                   #'secondBooks': secondBooks
+                })
