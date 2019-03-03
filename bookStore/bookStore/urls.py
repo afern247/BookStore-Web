@@ -3,10 +3,11 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
+
 from users import views as user_views
 
 # Cart imports
-
+# bookDetails imports
 
 urlpatterns = [
     # Administration
@@ -19,10 +20,11 @@ urlpatterns = [
 
     # Navigation
     path('', include('storePage.urls')),            # Home page
-    path('settings/', include('users.urls')),       # user profile, billing, etc. settings page
+    # user profile, billing, etc. settings page
+    path('settings/', include('users.urls', namespace='settings')),    # URL namespaces allow you to uniquely reverse named URL patterns even if different applications use the same URL names.
     path('wishlist/', include('wishlist.urls')),    # Wishlist
     path('books/', include('books.urls')),          # Books data
-    path('cart/', include('cart.urls')),            # Shopping cart
+    path('cart/', include('cart.urls', namespace='cart')),            # Shopping cart
     path('bookDetails/', include('bookDetails.urls', namespace='bookDetails')),  # Raul's bookDetails implementation
 ]
 

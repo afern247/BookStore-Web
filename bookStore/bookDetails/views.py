@@ -3,8 +3,13 @@
 # The views for the books.
 # =====================================================================================================
 
+from django.shortcuts import redirect
 from django.shortcuts import render, get_object_or_404
 
+# Import the Form for adding products from the Cart package
+from cart.forms import AddToCartForm
+from .forms import CommentForm
+# Import the Author and Book models from this package's models.py file
 from .models import Author, Book
 
 
@@ -40,6 +45,9 @@ def book_info(request, book_name, slug):
     # name and slug
     book = get_object_or_404(Book, book_name=book_name, slug=slug)
 
+    # The form for Adding a product To the Cart (Add To Cart = ATC)
+    ATC_product_form = AddToCartForm()
+
     # If we retrieved the book successfully, get its author
     # so we can reference their attributes in the HTML page
     if book:
@@ -47,4 +55,19 @@ def book_info(request, book_name, slug):
         author = get_object_or_404(Author, author_name=author_name)
 
     return render(request, 'bookDetails/book/detail.html', {'book': book,
-                                                            'author': author})
+                                                            'author': author,
+                                                            'ATC_book_form': ATC_product_form})
+
+def add_comment(request, book_name, slug):
+    book = get_object_or_404(Book, book_name=book_name, slug=slug)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            #comment.user = user.username
+            comment.book = book
+            comment.save()
+            return redirect('bookDetails:book_info', book_name=book.book_name, slug=book.slug)
+    else:
+        form = CommentForm()
+        return render(request, 'bookDetails/book/add_comment.html', {'form':form})

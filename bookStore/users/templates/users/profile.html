@@ -25,6 +25,7 @@
                 <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
 
+                    <!-- Personal information section -->
                     <label for="first_name">
                         <h5>First name</h4>
                     </label>
@@ -34,46 +35,35 @@
                     </label>
                     {{ user_ProfileForm.last_name |as_crispy_field }}
 
-
-                    <br>
-                    <div class="form-group row">
+                    <!-- Nickname section -->
+                    <p>
                         <label for="first_name">
-                            <h4>Nick Name (To-do)</h4>
+                            <h5>Nickname</h4>
                         </label>
-                        <br>
-                        <input id="text" placeholder="Nick Name" class="form-control here" type="text">
+                        {{ user_NicknameForm.nick_name |as_crispy_field }}
+                    </p>
+
+                    <!-- Bio section -->
+                    <p>
+                        <label for="first_name">
+                            <h5>Bio</h4>
+                        </label>
+                        {{ user_BioForm.bio |as_crispy_field }}
+                    </p>
+
+                    <div class="form-group">
+                        <button class="btn btn-outline-info" type="submit">Update</button>
                     </div>
-
+                </form>
             </div>
-
-
-            <!-- Address -->
-            <br>
-            <div class="container">
-                <div class="row">
-                    <div class="span8">
-
-                        <br>
-                        {{ user_AddressForm.as_p }}
-                    </div>
-                </div>
-            </div>
-
-
-
-            <br>
-            <label">
-                <h4>Bio</h4></label>
-                {{ user_BioForm.bio |as_crispy_field }}
-
-                <div class="form-group">
-                    <button class="btn btn-outline-info" type="submit">Update</button>
-                </div>
         </div>
-        </form>
     </div>
 </div>
-</div>
+
+
+
+
+
 
 
 {% endblock %}

@@ -15,6 +15,8 @@ from django.db import models
 
 # For use with the get_absolute_url methods
 from django.urls import reverse
+from users.models import Profile
+
 
 # This class models book authors, which have a many-to-many relationship
 # with books: a book can have multiple authors and authors can write multiple
@@ -72,9 +74,7 @@ class Book(models.Model):
     # if there are no image files
     book_cover = models.ImageField(upload_to='books/', blank=True, null=True)
 
-    # The book's author(s). Here we make note of the many-to-many
-    # relationship between the Book and Author classes;
-    #book_author = models.ManyToManyField(Author, related_name='authored')
+    # The book's author
     book_author = models.CharField(max_length=200)
 
     # The bio of the author(s); This can be lengthy, so
@@ -120,3 +120,19 @@ class Book(models.Model):
     # For use when a user searches for a book by name. Returns the URL
     def get_absolute_url(self):
         return reverse('bookDetails:book_info', args=[self.book_name, self.slug])
+
+class Comment(models.Model):
+    book        = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='comment')
+    user        = models.ForeignKey(Profile,on_delete=models.CASCADE)
+    text        = models.TextField(max_length=150)
+    created_on  = models.DateTimeField(auto_now_add=True)
+    approved    = models.BooleanField(default=False)
+
+    def approved(self):
+        self.approved = True
+        self.save()
+    def user(self):
+        return self.user
+    def __str__(self):
+        return self.text
+    #FIXME: will need to know if user has purchased the book

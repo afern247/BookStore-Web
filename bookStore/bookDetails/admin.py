@@ -11,7 +11,7 @@
 from django.contrib import admin
 
 # Importing the Author and Book models from the bookDetails package
-from .models import Author, Book
+from .models import Author, Book, Comment
 
 
 # Registering the models
@@ -44,3 +44,7 @@ class BookAdmin(admin.ModelAdmin):
 # ===============================================================================================
 # RAUL'S CODE ENDS HERE
 # ===============================================================================================
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ['user', 'text']

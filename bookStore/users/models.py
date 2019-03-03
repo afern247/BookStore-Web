@@ -1,24 +1,8 @@
-from django.db import models
+from django.db import models, transaction
 from django.contrib.auth.models import User
 from PIL import Image
-
-
-class Address(models.Model):
-    user = models.ForeignKey('Profile', related_name='address', on_delete=models.CASCADE)
-    name = models.CharField(max_length=30)
-    address = models.CharField(max_length=50)
-    city = models.CharField(max_length=60, default="Miami")
-    state = models.CharField(max_length=30, default="Florida")
-    zipcode = models.CharField(max_length=5, default="33165")
-    country = models.CharField(max_length=50)
-
-    class Meta:
-        verbose_name_plural = 'Address'
-
-    def __str__(self):
-        return self.name
-
-
+from localflavor.us.models import USStateField  # To shows list of US states on address form
+from django.urls import reverse # to return url when clicking on address
 
 
 # All user data is/should be linked to this profile, so when user gets deleted, all data deletes as well
@@ -44,3 +28,33 @@ class Profile(models.Model):
                 img.thumbnail(output_size)
                 img.save(self.image.path)
 
+
+class Address(models.Model):
+    name = models.CharField(max_length=100, blank=False)
+    address1 = models.CharField("Address lines 1", max_length=128)
+    address2 = models.CharField("Address lines 2", max_length=128, blank=True)
+    city = models.CharField("City", max_length=64)
+    state = USStateField("State", default='FL')
+    zipcode = models.CharField("Zipcode", max_length=5)
+    slug = models.SlugField(max_length=150, db_index=True)
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=False)
+    primaryAddress = models.BooleanField()
+
+    class Meta:
+
+        verbose_name = 'Address'            # How we'll refer to a single Address
+        verbose_name_plural = 'Addresses'   # How we'll refer to multiple Address
+
+    def __str__(self):
+        return self.name
+
+    @transaction.atomic
+    def save(self, *args, **kwargs):
+        if self.primaryAddress:
+            Address.objects.filter(
+                primaryAddress=True).update(primaryAddress=False)
+        super(Address, self).save(*args, **kwargs)
+
+    # Got the idea from: https://docs.djangoproject.com/en/2.1/ref/models/instances/#get-absolute-url
+    def get_absolute_url(self):
+        return reverse('settings:edit-address', args=[self.id])
