@@ -67,7 +67,8 @@
                                     {{ address.state }}, {{ address.zipcode }}
                                     <!-- <button class="btn btn-secondary float-right">Button</button> -->
                                     <div class="float-right">
-                                        <a style="color:dimgrey" href="#">Make Primary</a> | <a href="{{ address.get_absolute_url }}">Edit</a> | <a style="color:dimgrey" href="#">Delete</a>
+                                        <a style="color:dimgrey" href="#">Make Primary</a> | <a href="{{ address.get_absolute_url }}">Edit</a>
+                                        | <a style="color:dimgrey" href="#">Delete</a>
                                     </div>
                                 </div>
                             </div>
@@ -77,7 +78,7 @@
                 <br>
                 {% endfor %}
 
-
+                <a type="button" class="btn btn-primary float-left" style="margin-bottom: 10px;" href="{% url 'settings:add-address' %}">Add new address</a>
 
 
 

@@ -35,7 +35,6 @@ class Address(models.Model):
     address2 = models.CharField("Address lines 2", max_length=128, blank=True)
     city = models.CharField("City", max_length=64)
     state = USStateField("State", default='FL')
-    # state = models.CharField("State", max_length=128, default='FL')
     zipcode = models.CharField("Zipcode", max_length=5)
     slug = models.SlugField(max_length=150, db_index=True)
     user = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=False)
@@ -48,5 +47,6 @@ class Address(models.Model):
     def __str__(self):
         return self.name
 
+    # Got the idea from: https://docs.djangoproject.com/en/2.1/ref/models/instances/#get-absolute-url
     def get_absolute_url(self):
         return reverse('settings:edit-address', args=[self.id])

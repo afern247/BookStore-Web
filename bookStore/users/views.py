@@ -66,35 +66,45 @@ def profile(request):
 @login_required
 def billingSettings(request):
 
-    # Since no address is selected first to edit, the value is none, below will be selected
-    selectedAddress = None
     address_slug = None
     # Get user address list
     user_AddressList = Address.objects.all().filter(user__user__username=request.user)
-    # Get user current address to edit
-    currentAddress = Address.objects.all().get(pk=3)
-
-
-
-
-    if address_slug:
-        selectedAddress = get_object_or_404(Address, slug=address_slug)
-        # print(selectedAddress)
-
-    if request.method == 'POST':
-        user_AddressForm = AddressForm(request.POST, instance=currentAddress)
-
-    else:
-        user_AddressForm = AddressForm(instance=currentAddress)
-
 
     context = {
-        'user_AddressForm': user_AddressForm,
-        'user_AddressList': user_AddressList,
-        'selectedAddress': selectedAddress
+        'user_AddressList': user_AddressList
     }
 
     return render(request, 'users/billing.html', context)
+
+
+@login_required
+def addAddress(request):
+
+    address_slug = None
+
+    if request.method == 'POST':
+        user_AddressForm = AddressForm(request.POST)
+
+        if user_AddressForm.is_valid():
+            newaddress = user_AddressForm.save(commit=False)
+            newaddress.user_id = request.user.profile.id
+            newaddress.save()
+
+            messages.success(request, f'Your address has been updated successfully')
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.warning(
+                request, f'There were some errors updating you profile.')
+
+    else:
+        user_AddressForm = AddressForm()
+
+    context = {
+        'user_AddressForm': user_AddressForm
+    }
+
+    return render(request, 'users/addAddress.html', context)
+
 
 # Page to change user Addresses
 @login_required
@@ -107,7 +117,7 @@ def addressChange(request, address_slug):
 
         if user_AddressForm.is_valid():
             user_AddressForm.save()
-            messages.success(request, f'Your profile has been updated successfully')
+            messages.success(request, f'Your address has been updated successfully')
             return HttpResponseRedirect(request.path_info)
         else:
             messages.warning(request, f'There were some errors updating you profile.')
@@ -154,7 +164,7 @@ def securitySettings(request):
             u_Passform.save()
             # update_session_auth_hash(request, u_Passform)
             update_session_auth_hash(request, u_Passform.user)
-            messages.success(request, f'Password has been updated successfully')
+            messages.success(request, f'Your password has been updated successfully')
             return HttpResponseRedirect(request.path_info)
         else:
             messages.warning(request, f'ERROR!')
