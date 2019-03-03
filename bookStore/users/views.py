@@ -73,8 +73,12 @@ def billingSettings(request, address_slug=None):
     # Get user current address to edit
     currentAddress = Address.objects.all().get(pk=3)
 
+    print(selectedAddress)
+
+
     if address_slug:
         selectedAddress = get_object_or_404(Address, slug=address_slug)
+        print(selectedAddress)
 
     if request.method == 'POST':
         user_AddressForm = AddressForm(request.POST, instance=request.user.profile)
@@ -137,10 +141,10 @@ def securitySettings(request):
     return render(request, 'users/security.html', context)
 
 @login_required
-def addressChange(request):
+def addressChange(request, address_slug):
 
 
     context = {
-        # 'u_Passform': u_Passform
+        'address_slug': address_slug
     }
-    return render(request, 'users/security.html', context)
+    return render(request, 'users/addressChange.html', context)
