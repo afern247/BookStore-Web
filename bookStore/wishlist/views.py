@@ -38,6 +38,12 @@ def rename(request, list_id):
     p.name = request.POST.get('newName')
 
     return redirect('wishlist:wishlist-home')
+
+@require_POST
+def moveToCart(request, list_id):
+    #cart:addToCart
+    #wishlist:delete
+    return redirect('wishlist:wishlist-home')
 """
 Need to do testing for the number of lists per user.
     May need to learn how to query for lists attached to a user
