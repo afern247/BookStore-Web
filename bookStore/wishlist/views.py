@@ -24,6 +24,10 @@ def createList(request):
 
     return redirect('wishlist:wishlist-home')
 
+@require_POST
+def deleteList(request, list_id):
+    List.objects.get(id=list_id).delete()
+    return redirect('wishlist:wishlist-home')
 """
 Need to do testing for the number of lists per user.
     May need to learn how to query for lists attached to a user

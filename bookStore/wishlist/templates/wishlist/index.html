@@ -117,7 +117,7 @@
             <div id="listContent" class="lists alignLeft">
                     {% for list in myLists %}
                         <div class="listItem" id="t{{ list.id }}">
-                            <form method="post">
+                            <form action="{% url "wishlist:deleteList" list.id %}" method="post">
                                 {% csrf_token %}
                                 <div class="alignLeft">
                                     <span class="fake-link" id="{{ list.id }}" onclick="showBooks(this.id)">
