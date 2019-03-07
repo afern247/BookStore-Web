@@ -115,16 +115,15 @@
             </div>
             <div id="listContent" class="lists alignLeft">
                     {% for list in myLists %}
-                        <div class="listItem">
+                        <div class="listItem" id="t{{ list.id }}">
                             <form method="post">
                                 {% csrf_token %}
-                                <div>
-                                    <div class="alignLeft">
-                                        <span class="fake-link" id="{{ list.id }}" onclick="showBooks(this.id)">{{ list.name }}</span>
-                                    </div>
-                                    <div class="alignRight" >
-                                        <button type="submit" class="btn btn-danger btn-sm">X</button>
-                                    </div>
+                                <div class="alignLeft">
+                                    <span class="fake-link" id="{{ list.id }}" onclick="showBooks(this.id)">
+                                        {{ list.name }}</span>
+                                </div>
+                                <div class="alignRight" >
+                                    <button type="submit" class="btn btn-danger btn-sm">X</button>
                                 </div>
                             </form>
                         </div>
@@ -296,14 +295,30 @@
             {% endif %}
         }
 
+        function resetColor(){
+            let m;
+            {% for list in myLists %}
+                m = document.getElementById("t"+{{ list.id }});
+                m.style.background = "white";
+            {% endfor %}
+        }
+
+        function selectColor(clicked_id){
+            resetColor();
+            let s = document.getElementById("t"+clicked_id);
+            s.style.background = "darkgrey";
+        }
+
         function hide(idName){
             let c = document.getElementById(idName);
             c.style.display = "none";
         }
 
-        function showBooks(click_id){
+        //gets id of element clicked as a parameter which should be the list's id.
+        function showBooks(clicked_id){
             allBooks();
-            let one = document.getElementsByClassName(click_id);
+            selectColor(clicked_id);
+            let one = document.getElementsByClassName(clicked_id);    //get classes with this idea
             one[0].style.display = "block";
         }
 
@@ -317,8 +332,10 @@
             {% endfor %}
         }
 
+        //If the user has lists then by default the first one should be selected
         {% if myListsCount > 0 %}
             showBooks({{ firstList.id }});
+            selectColor({{ firstList.id }});
         {% endif %}
 
         {% if myListsCount < 3 %}
