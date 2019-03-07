@@ -78,3 +78,14 @@ def cart_info(request):
         )
 
     return render(request, 'cart/info.html', {'userCart': userCart})
+
+
+# This view displays the checkout page
+
+def checkout(request):
+    userCart = Cart(request)
+
+    # Remove all books from the cart
+    userCart.clear()
+
+    return render(request, 'cart/checkout.html', {'userCart': userCart})

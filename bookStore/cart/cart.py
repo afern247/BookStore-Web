@@ -109,6 +109,7 @@ class Cart(object):
             del self.userCart[book_id]
             self.save()
 
+
     # This iterator will be used to iterate (of course) through the
     # books in the cart, i.e. the Book models (instances)
     def __iter__(self):
@@ -156,7 +157,9 @@ class Cart(object):
         # return sum((book.price * book.amount) for book in self.userCart.values())
         return sum((book['price'] * book['amount']) for book in self.userCart.values())
 
-    # "Empties" the cart by deleting the cart from the session
-    def empty(self):
+    # Delete the cart from the session - this is functionally the same
+    # as "emptying" it, since a new empty cart will be created the next time the
+    # user adds a book to their cart
+    def clear(self):
         del self.session[settings.CART_SESSION_ID]
         self.save()

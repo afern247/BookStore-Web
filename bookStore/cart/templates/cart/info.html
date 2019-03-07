@@ -1,5 +1,5 @@
 <!-- Inherit from bookDetails' base.html -->
-{# extends "bookDetails/book/detail.html" %} #}
+{% extends "bookDetails/base.html" %}
 <!-- Load crispy forms functionality -->
 {% load crispy_forms_tags %}
 <!-- Load from static folder -->
@@ -63,14 +63,15 @@
             </tr>
         </tbody>
     </table>
-
+    <br>
     <p>
         <!-- Button that takes you back to the Book List -->
         <a href="{% url "bookDetails:book_list" %}" class="button light">
             Back to Catalog
         </a>
+        <span style="margin-left:4em"></span>
         <!-- CHECKOUT BUTTON -->
-        <a href="#" class="button">Checkout</a>
+        <a href="{% url "cart:checkout" %}" class="button">Checkout</a>
     </p>
 
 {% endblock %}
