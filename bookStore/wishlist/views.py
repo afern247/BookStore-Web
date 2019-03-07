@@ -17,6 +17,7 @@ def getBooksOfList(allMyLists, list):
     listValues = allMyLists.filter(name__contains=list.name).values('books')
     return Book.objects.filter(id__in=listValues)
 
+#function to handle creating a new list.
 @require_POST
 def createList(request):
     userProfile = request.user.profile
@@ -24,9 +25,18 @@ def createList(request):
 
     return redirect('wishlist:wishlist-home')
 
+#function to handle deleting a list.
 @require_POST
 def deleteList(request, list_id):
     List.objects.get(id=list_id).delete()
+    return redirect('wishlist:wishlist-home')
+
+#function to handle renaming a list.
+@require_POST
+def rename(request, list_id):
+    p = List.objects.get(id=list_id)
+    p.name = request.POST.get('newName')
+
     return redirect('wishlist:wishlist-home')
 """
 Need to do testing for the number of lists per user.
