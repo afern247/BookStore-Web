@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from bookDetails.models import Book
 from .models import List
-from users.models import Profile
+from django.views.decorators.http import require_POST
 from .forms import CreateList
 
 allBooks = Book.objects.all()
@@ -17,13 +17,12 @@ def getBooksOfList(allMyLists, list):
     listValues = allMyLists.filter(name__contains=list.name).values('books')
     return Book.objects.filter(id__in=listValues)
 
-def create_list(request):
-    form = CreateList(request.POST)
-    if form.is_valid():
-        post = form.save(commit=False)
-        post.save()
-        return redirect('')
-    return render(request, 'wishlist/index.html', {'form': form})
+@require_POST
+def createList(request):
+    userProfile = request.user.profile
+    p = List.objects.create(name=request.POST.get('listName'), user=userProfile)
+
+    return redirect('wishlist:wishlist-home')
 
 """
 Need to do testing for the number of lists per user.

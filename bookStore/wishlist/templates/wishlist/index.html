@@ -95,10 +95,11 @@
                 <h1>{{ user.username }}'s Wishlists</h1>
             </div>
             <div class="alignRight">
-                <form method="post">
+                <form action="{% url "wishlist:createList" %}" method="post">
                 {% csrf_token %}
                     <div id="newList">
-                        <input id="listName" type="text" placeholder="Enter List Name Here" maxlength="25" required>
+                        <input id="listName" name="listName" type="text" placeholder="Enter List Name Here"
+                               maxlength="25" required>
                         <button type="submit" class="btn btn-outline-success">Create List</button>
                     </div>
                     <div id="noNewList">
