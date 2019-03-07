@@ -25,20 +25,26 @@
             margin-bottom: 5px;
         }
         .content{
-            /*border-left-style: solid;
-            border-left-width: thin;*/
-            width: 80%;
+            width: 72%;
             height: auto;
         }
         .lists{
-            width: 19%;
+            width: 27%;
             text-align: center;
+            padding: 10px;
+            border-bottom-style: solid;
+            border-bottom-width: thin;
+        }
+        .fake-link {
+            color: blue;
+            cursor: pointer;
+        }
+        .fake-link:hover {
+            text-decoration: underline;
         }
 
         /* Book Information */
         .wishlistItem {
-            /*border-bottom-style: solid;
-            border-bottom-width: thin;*/
             padding: 3%;
             overflow: hidden;
         }
@@ -71,25 +77,11 @@
             width: 25%;
             text-align: center;
         }
-
     </style>
 </head>
 <body>
     <!-- Delete Start -->
-    <b>Testing:</b>
-    <p>Leave this here for testing. Delete later.</p>
-    {% for list in myLists %}
-        {% if list.user.user.username == user.username %}
-            <p>list.user.user.username: {{ list.user.user.username }}</p>
-            <p>list.name: {{ list.name }} list.books.all.count: {{ list.books.all.count }}</p>
-        {% endif %}
-    {% endfor %}
-    <p>myLists.count(): {{ listCount }}</p>
-    <p>libros: {{ libros }}</p>
-    {% for book in libros %}
-        <p>book.name: {{ book.book_name }}</p>
-    {% endfor %}
-    <p>second: {{ second }}</p>
+
     <!-- Delete Stop -->
     <div class="container">
         <div class="header">
@@ -110,92 +102,170 @@
             </div>
         </div>
         <div>
+            <!-- LIST INFORMATION -->
             <div id="noLists">
-                <h1>You do not have any wishlists. Please create one.</h1>
+                <br>
+                <h1 align="center">You do not have any wishlists. Please create one.</h1>
             </div>
             <div id="listContent" class="lists alignLeft">
-                <table align="center" cellspacing="10" cellpadding="10" width="80%">
-                    {% for list in all_lists %}
-                           {% if list.user.user.username == user.username %}
-                               <tr>
-                                   <td><a href=""><h3>{{ list.name }}</h3></a></td>
-                               </tr>
-                           {% endif %}
+                    {% for list in myLists %}
+                        <div class="listItem">
+                            <form method="post">
+                                {% csrf_token %}
+                                <div>
+                                    <div class="alignLeft">
+                                        <span class="fake-link" id="{{ list.id }}" onclick="showBooks(this.id)">{{ list.name }}</span>
+                                    </div>
+                                    <div class="alignRight" >
+                                        <button type="submit" class="btn btn-danger btn-sm">X</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     {% endfor %}
-                </table>
             </div>
-            <div class="alignRight content">
-                {% for books in all_books %}
-                    <div class="wishlistItem border-bottom">
-                        <div class="alignLeft bookCover" id="bookImage">
-                            {% if books.book_cover %}
-                                <img src="{{ books.book_cover.url }}">
-                            {% else %}
-                                <img src="http://lgimages.s3.amazonaws.com/nc-md.gif">
-                        {% endif %}
-                        </div>
-                        <div class="bookInfo">
-                            <div class="bookName">
-                                {{ books.book_name }}
+            <!-- BOOKS ASSOCIATED WITH THE LISTS -->
+            <div class="alignRight content" id="content">
+                <div id="firstContent" class="{{ firstList.id }}">
+                    {% if not firstBooks %}
+                        <h2 align="center">This Wishlist is empty.</h2>
+                    {% else %}
+                        {% for books in firstBooks %}
+                            <div class="wishlistItem border-bottom">
+                                <div class="alignLeft bookCover" id="bookImage">
+                                    {% if books.book_cover %}
+                                        <img src="{{ books.book_cover.url }}">
+                                    {% else %}
+                                        <img src="http://lgimages.s3.amazonaws.com/nc-md.gif">
+                                {% endif %}
+                                </div>
+                                <div class="bookInfo">
+                                    <div class="bookName">
+                                        {{ books.book_name }}
+                                    </div>
+                                    <div class="authorName">
+                                        by {{ books.book_author }}
+                                    </div>
+                                    <div class="bookDescription">
+                                        "{{ books.book_description }}"
+                                    </div>
+                                    <div class="rating">
+                                        {{ books.avg_rating }}/5.0
+                                    </div>
+                                    <div class="price">
+                                        ${{ books.price }}
+                                    </div>
+                                </div>
+                                <div class="shopMoveDelete">
+                                    <div class="oneOfThree">
+                                        <a href="">Move to Shopping Cart</a>
+                                    </div>
+                                    <div class="oneOfThree">
+                                        <a href="">Move Wishlist</a>
+                                    </div>
+                                    <div class="oneOfThree">
+                                        <a href="">Delete</a>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="authorName">
-                                by {{ books.book_author }}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div id="secondContent" class="{{ secondList.id }}">
+                    {% if not secondBooks %}
+                        <h2 align="center">This Wishlist is empty.</h2>
+                    {% else %}
+                        {% for books in secondBooks %}
+                            <div class="wishlistItem border-bottom">
+                                <div class="alignLeft bookCover" id="bookImage">
+                                    {% if books.book_cover %}
+                                        <img src="{{ books.book_cover.url }}">
+                                    {% else %}
+                                        <img src="http://lgimages.s3.amazonaws.com/nc-md.gif">
+                                {% endif %}
+                                </div>
+                                <div class="bookInfo">
+                                    <div class="bookName">
+                                        {{ books.book_name }}
+                                    </div>
+                                    <div class="authorName">
+                                        by {{ books.book_author }}
+                                    </div>
+                                    <div class="bookDescription">
+                                        "{{ books.book_description }}"
+                                    </div>
+                                    <div class="rating">
+                                        {{ books.avg_rating }}/5.0
+                                    </div>
+                                    <div class="price">
+                                        ${{ books.price }}
+                                    </div>
+                                </div>
+                                <div class="shopMoveDelete">
+                                    <div class="oneOfThree">
+                                        <a href="">Move to Shopping Cart</a>
+                                    </div>
+                                    <div class="oneOfThree">
+                                        <a href="">Move Wishlist</a>
+                                    </div>
+                                    <div class="oneOfThree">
+                                        <a href="">Delete</a>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="bookDescription">
-                                "{{ books.book_description }}"
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div id="thirdContent" class="{{ thirdList.id }}">
+                    {% if not thirdBooks %}
+                        <h2 align="center">This Wishlist is empty.</h2>
+                    {% else %}
+                        {% for books in thirdBooks %}
+                            <div class="wishlistItem border-bottom">
+                                <div class="alignLeft bookCover" id="bookImage">
+                                    {% if books.book_cover %}
+                                        <img src="{{ books.book_cover.url }}">
+                                    {% else %}
+                                        <img src="http://lgimages.s3.amazonaws.com/nc-md.gif">
+                                {% endif %}
+                                </div>
+                                <div class="bookInfo">
+                                    <div class="bookName">
+                                        {{ books.book_name }}
+                                    </div>
+                                    <div class="authorName">
+                                        by {{ books.book_author }}
+                                    </div>
+                                    <div class="bookDescription">
+                                        "{{ books.book_description }}"
+                                    </div>
+                                    <div class="rating">
+                                        {{ books.avg_rating }}/5.0
+                                    </div>
+                                    <div class="price">
+                                        ${{ books.price }}
+                                    </div>
+                                </div>
+                                <div class="shopMoveDelete">
+                                    <div class="oneOfThree">
+                                        <a href="">Move to Shopping Cart</a>
+                                    </div>
+                                    <div class="oneOfThree">
+                                        <a href="">Move Wishlist</a>
+                                    </div>
+                                    <div class="oneOfThree">
+                                        <a href="">Delete</a>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="rating">
-                                {{ books.avg_rating }}/5.0
-                            </div>
-                            <div class="price">
-                                ${{ books.price }}
-                            </div>
-                        </div>
-                        <div class="shopMoveDelete">
-                            <div class="oneOfThree">
-                                <a href="">Move to Shopping Cart</a>
-                            </div>
-                            <div class="oneOfThree">
-                                <a href="">Move Wishlist</a>
-                            </div>
-                            <div class="oneOfThree">
-                                <a href="">Delete</a>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-                <!-- Old way to display books
-                <table align="center" cellspacing="10" cellpadding="20" width=>
-                     <tr>
-                        <th>Book Name</th>
-                        <th>Author Name</th>
-                        <th>Book Price</th>
-                    </tr>
-                    {# for book in all_books #}
-                        <tr>
-                            <td>{{ book.name }}</td>
-                            <td>{{ book.author_name }}</td>
-                            <td>{{ book.price }}</td>
-                        </tr>
-                    {# endfor #}
-                </table>
-                -->
+                        {% endfor %}
+                    {% endif %}
+                </div>
             </div>
         </div>
-    </div><!--Container closed-->
+    </div> <!--Container closed-->
 </body>
     <script>
-        let countOfUserLists = 0;
-
-        //function to count the number of lists based on the user
-        function checkNumOfLists() {
-            {% for list in all_lists %}
-                {% if list.user.user.username == user.username %}
-                    countOfUserLists++;
-                {% endif %}
-            {% endfor %}
-        }
-
         //function to display the create list button based on how many lists the user has.
         //Also will display a message when no lists exists.
         function createList(){
@@ -203,22 +273,58 @@
             let y = document.getElementById("noNewList");
             let a = document.getElementById("listContent");
             let b = document.getElementById("noLists");
-            if (countOfUserLists == 0){
+            let c = document.getElementById("content")
+            {% if myListsCount == 0 %}{
                 a.style.display = "none";
                 y.style.display = "none";
+                c.style.display = "none";
             }
-            else if (countOfUserLists > 2){
+            {% elif myListsCount > 2 %}{
                 x.style.display = "none";
                 b.style.display = "none";
             }
-            else {
+            {% else %}{
                 y.style.display = "none";
                 b.style.display = "none";
             }
+            {% endif %}
         }
 
-        checkNumOfLists();
+        function hide(idName){
+            let c = document.getElementById(idName);
+            c.style.display = "none";
+        }
+
+        function showBooks(click_id){
+            allBooks();
+            let one = document.getElementsByClassName(click_id);
+            one[0].style.display = "block";
+        }
+
+        function allBooks(){
+            let l;
+            {% for list in myLists %}
+            {
+                l = document.getElementsByClassName({{ list.id }});
+                l[0].style.display = "none";
+            }
+            {% endfor %}
+        }
+
+        {% if myListsCount > 0 %}
+            showBooks({{ firstList.id }});
+        {% endif %}
+
+        {% if myListsCount < 3 %}
+            hide("thirdContent");
+            {% if myListsCount < 2 %}
+                hide("secondContent");
+            {% endif %}
+                {% if myListsCount < 1 %}
+                    hide("firstContent");
+                {% endif %}
+        {% endif %}
+
         createList();
-        console.log('Count of Lists for this User: ' + countOfUserLists);
     </script>
 {% endblock %}

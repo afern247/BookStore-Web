@@ -7,6 +7,16 @@ from .models import List
 from users.models import Profile
 from .forms import CreateList
 
+allBooks = Book.objects.all()
+
+#Function to get lists for user currently on the page.
+def getLists(request):
+    return List.objects.filter(user=request.user.profile).distinct()
+
+def getBooksOfList(allMyLists, list):
+    listValues = allMyLists.filter(name__contains=list.name).values('books')
+    return Book.objects.filter(id__in=listValues)
+
 def create_list(request):
     form = CreateList(request.POST)
     if form.is_valid():
@@ -22,25 +32,28 @@ Need to do testing that only the list books shown per list per user is shown.
 """
 @login_required()
 def index(request):
-    #Gets all the lists associated with the user.
-    myLists = List.objects.filter(books__list__user=request.user.profile).distinct()
+    #Gets all the lists associated with the user and sets it to a variable.
+    myLists = getLists(request)
 
     #Gets the count of all the lists associated with the user.
-    listCount = myLists.count()
+    myListsCount = myLists.count()
 
-    all_books = Book.objects.all()
+    #Values for if no lists exists.
+    firstList = secondList = thirdList = []
+    firstBooks = secondBooks = thirdBooks = []
 
-    #Need to put error checking for when no lists exists and for each amount of list.
-    firstList = myLists[0]
-
-    myListsValues = myLists.filter(name__contains=firstList.name).values('books')
-    libros = Book.objects.filter(id__in=myListsValues)
-    second = myLists[1]
-    #secondBooks = Book.objects.filter(id__in=second.books)
-    all_lists = List.objects.all()
+    if myListsCount > 0:                #first list
+        firstList = myLists[0]
+        firstBooks = getBooksOfList(myLists, firstList)
+        if myListsCount > 1:            #second list
+            secondList = myLists[1]
+            secondBooks = getBooksOfList(myLists, secondList)
+            if myListsCount > 2:        #third list
+                thirdList = myLists[2]
+                thirdBooks = getBooksOfList(myLists, thirdList)
 
     return render(request, 'wishlist/index.html',
-                  {'all_books': all_books, 'all_lists': all_lists, "myLists": myLists,
-                   'listCount': listCount, 'libros': libros, 'second': second,
-                   #'secondBooks': secondBooks
-                })
+                  {'allBooks': allBooks, "myLists": myLists,
+                   'myListsCount': myListsCount, 'firstList': firstList, 'firstBooks': firstBooks,
+                   'secondList': secondList, 'secondBooks': secondBooks,
+                   'thirdList': thirdList, 'thirdBooks': thirdBooks})
