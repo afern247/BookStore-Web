@@ -29,7 +29,7 @@ from .forms import AddToCartForm
 def addToCart(request, book_id):
     userCart = Cart(request)
     # Attempt to get the Book that has the
-    # given book name
+    # given id
     book = get_object_or_404(Book, id=book_id)
 
     # Validate the form for adding the item to the cart
@@ -56,13 +56,44 @@ def removeFromCart(request, book_id):
     # Same as addToCart function
     book = get_object_or_404(Book, id=book_id)
 
-    # Simply remove the Book with the given name
+    # Simply remove the specified Book
     # from the cart
     userCart.remove(book)
 
     # Again, redirect to cart contents page
     return redirect('cart:cart_info')
 
+# This view will handle adding items to
+# the Saved For Later (SFL) list
+
+
+def addToSFL(request, book_id):
+    userCart = Cart(request)
+
+    book = get_object_or_404(Book, id=book_id)
+
+    # Add the specified book to the SFL list
+    userCart.addSFL(book)
+
+    return redirect('cart:cart_info')
+
+# This view will handle adding items back
+# the cart from the SFL List. Note that removing
+# an item from the SFL list is equivalent to removing
+# an item from the cart, so we can just use the regular
+# remove function for that
+
+
+def removeFromSFL(request, book_id):
+    userCart = Cart(request)
+
+    book = get_object_or_404(Book, id=book_id)
+
+    # Remove the specified book from the SFL
+    # list by putting it back in the cart
+    userCart.removeSFL(book)
+
+    return redirect('cart:cart_info')
 
 # This view displays the cart and its contents
 
