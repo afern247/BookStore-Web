@@ -21,9 +21,6 @@
                         <div class="form-group">
                             {{ form|crispy }}
                         </div>
-                        <div class="form-group">
-                            <p class="text-center">By signing up you accept our <a href="#">Terms Of Use</a></p>
-                        </div>
                         <div class="col-md-12 text-center ">
                             <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Login</button>
                         </div>
@@ -33,11 +30,7 @@
                                 <span class="span-or">or</span>
                             </div>
                         </div>
-                        <div class="col-md-12 mb-3">
-                            <p class="text-center">
-                                Login using <a href="#"><i class="fab fa-google"></i></a>
-                            </p>
-                        </div>
+
                         <div class="form-group">
                             <p class="text-center">Don't have account? <a href="{% url 'signup' %}" id="signup">Sign up here</a></p>
                         </div>
