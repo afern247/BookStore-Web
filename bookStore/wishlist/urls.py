@@ -5,6 +5,9 @@ app_name = 'wishlist'
 urlpatterns = [
     path('', views.index, name='wishlist-home'),
     path('create/', views.createList, name="createList"),
-    path('delete/<int:list_id>', views.deleteList, name="deleteList"),
-    path('rename/<int:list_id>', views.rename, name="rename"),
+    path('deleteList/<int:list_id>', views.deleteList, name="deleteList"),
+    path('rename/<int:list_id>', views.rename, name="rename"),  #NOT IMPLEMENTED YET
+    path('deleteBook/<int:list_id>/<int:book_id>', views.deleteBook, name="deleteBook"),
+    path('moveToCart/<int:list_id>/<int:book_id>', views.moveToCart, name="moveToCart"),
+    path('moveBook/<int:list1_id>/<int:list2_id>/<int:book_id>', views.moveBook, name="moveBook"),  #NOT IMPLEMENTED YET
 ]

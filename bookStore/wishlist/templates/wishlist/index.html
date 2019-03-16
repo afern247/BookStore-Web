@@ -41,12 +41,9 @@
             border-bottom-style: solid;
             border-bottom-width: thin;
         }
+        /* Used for making the list names look like links. */
         .fake-link {
-            color: blue;
             cursor: pointer;
-        }
-        .fake-link:hover {
-            text-decoration: underline;
         }
 
         /* Book Information */
@@ -86,9 +83,6 @@
     </style>
 </head>
 <body>
-    <!-- Delete Start -->
-
-    <!-- Delete Stop -->
     <div class="container">
         <div class="header">
             <div class="alignLeft">
@@ -120,7 +114,7 @@
                             <form action="{% url "wishlist:deleteList" list.id %}" method="post">
                                 {% csrf_token %}
                                 <div class="alignLeft">
-                                    <span class="fake-link" id="{{ list.id }}" onclick="showBooks(this.id)">
+                                    <span class="fake-link btn-link" id="{{ list.id }}" onclick="showBooks(this.id)">
                                         {{ list.name }}</span>
                                 </div>
                                 <div class="alignRight" >
@@ -164,16 +158,19 @@
                                 </div>
                                 <div class="shopMoveDelete">
                                     <div class="oneOfThree">
-                                        <a href="">Move to Shopping Cart</a>
-                                        <!-- Use cart:addToCart and then delete from wishlist -->
+                                        <form action="{% url 'wishlist:moveToCart' firstList.id books.id %}" method="post">
+                                            {% csrf_token %}
+                                             <button type="submit" class="btn-link">Move To Cart</button>
+                                        </form>
                                     </div>
                                     <div class="oneOfThree">
                                         <a href="">Move Wishlist</a>
-                                        <!-- Can't do until wishlist:addItem and wishlist:deleteItem are done -->
                                     </div>
                                     <div class="oneOfThree">
-                                        <a href="">Delete</a>
-                                        <!-- Do this first and then do wishlist:addItem -->
+                                        <form action="{% url 'wishlist:deleteBook' firstList.id books.id %}" method="post">
+                                            {% csrf_token %}
+                                             <button type="submit" class="btn-link">Delete</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -212,13 +209,19 @@
                                 </div>
                                 <div class="shopMoveDelete">
                                     <div class="oneOfThree">
-                                        <a href="">Move to Shopping Cart</a>
+                                        <form action="{% url 'wishlist:moveToCart' secondList.id books.id %}" method="post">
+                                            {% csrf_token %}
+                                             <button type="submit" class="btn-link">Move To Cart</button>
+                                        </form>
                                     </div>
                                     <div class="oneOfThree">
                                         <a href="">Move Wishlist</a>
                                     </div>
                                     <div class="oneOfThree">
-                                        <a href="">Delete</a>
+                                        <form action="{% url 'wishlist:deleteBook' secondList.id books.id %}" method="post">
+                                            {% csrf_token %}
+                                             <button type="submit" class="btn-link">Delete</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -257,13 +260,19 @@
                                 </div>
                                 <div class="shopMoveDelete">
                                     <div class="oneOfThree">
-                                        <a href="">Move to Shopping Cart</a>
+                                        <form action="{% url 'wishlist:moveToCart' thirdList.id books.id %}" method="post">
+                                            {% csrf_token %}
+                                             <button type="submit" class="btn-link">Move To Cart</button>
+                                        </form>
                                     </div>
                                     <div class="oneOfThree">
                                         <a href="">Move Wishlist</a>
                                     </div>
                                     <div class="oneOfThree">
-                                        <a href="">Delete</a>
+                                        <form action="{% url 'wishlist:deleteBook' thirdList.id books.id %}" method="post">
+                                            {% csrf_token %}
+                                             <button type="submit" class="btn-link">Delete</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
