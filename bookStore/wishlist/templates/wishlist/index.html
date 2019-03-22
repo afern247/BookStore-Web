@@ -50,6 +50,7 @@
         .wishlistItem {
             padding: 3%;
             overflow: hidden;
+            overflow-y: visible;
         }
         .bookCover {
             width: 140px;
@@ -76,7 +77,7 @@
         /*Use for aligned 3 elements in one line*/
         .oneOfThree {
             float: left;
-            overflow: hidden;
+            /* overflow: hidden;*/
             width: 25%;
             text-align: center;
         }
@@ -108,6 +109,7 @@
                 <br>
                 <h1 align="center">You do not have any wishlists. Please create one.</h1>
             </div>
+            <!-- LISTS CONTENT -->
             <div id="listContent" class="lists alignLeft">
                     {% for list in myLists %}
                         <div class="listItem" id="t{{ list.id }}">
@@ -117,8 +119,12 @@
                                     <span class="fake-link btn-link" id="{{ list.id }}" onclick="showBooks(this.id)">
                                         {{ list.name }}</span>
                                 </div>
+                                <!-- Delete List Button -->
                                 <div class="alignRight" >
-                                    <button type="submit" class="btn btn-danger btn-sm">X</button>
+                                    <!-- <button type="submit" class="btn btn-danger btn-sm">X</button> -->
+                                    <button type="submit" class="close" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -157,15 +163,30 @@
                                     </div>
                                 </div>
                                 <div class="shopMoveDelete">
+                                    <!-- Move to Cart -->
                                     <div class="oneOfThree">
                                         <form action="{% url 'wishlist:moveToCart' firstList.id books.id %}" method="post">
                                             {% csrf_token %}
                                              <button type="submit" class="btn-link">Move To Cart</button>
                                         </form>
                                     </div>
-                                    <div class="oneOfThree">
-                                        <a href="">Move Wishlist</a>
+                                    <!-- Move Book to Different Wishlist -->
+                                    <div class="dropdown oneOfThree">
+                                      <button class="btn-link dropdown-toggle" type="button" data-toggle="dropdown">Move Wishlist
+                                      <span class="caret"></span></button>
+                                      <ul class="dropdown-menu">
+                                          {% for list in myLists %}
+                                              {% if list.id != firstList.id %}
+                                                  <form action="{% url 'wishlist:moveBook' firstList.id list.id books.id %}" method="post">
+                                                    {% csrf_token %}
+                                                    <li><button type="submit" class="btn btn-link btn-anchor"
+                                                          value="{{ list.id }}">{{ list.name }}</button></li>
+                                                  </form>
+                                              {% endif %}
+                                          {% endfor %}
+                                      </ul>
                                     </div>
+                                    <!-- Delete Book -->
                                     <div class="oneOfThree">
                                         <form action="{% url 'wishlist:deleteBook' firstList.id books.id %}" method="post">
                                             {% csrf_token %}
@@ -208,15 +229,30 @@
                                     </div>
                                 </div>
                                 <div class="shopMoveDelete">
+                                    <!-- Move to Cart -->
                                     <div class="oneOfThree">
                                         <form action="{% url 'wishlist:moveToCart' secondList.id books.id %}" method="post">
                                             {% csrf_token %}
                                              <button type="submit" class="btn-link">Move To Cart</button>
                                         </form>
                                     </div>
-                                    <div class="oneOfThree">
-                                        <a href="">Move Wishlist</a>
+                                    <!-- Move Book to Different Wishlist -->
+                                    <div class="dropdown oneOfThree">
+                                      <button class="btn-link dropdown-toggle" type="button" data-toggle="dropdown">Move Wishlist
+                                      <span class="caret"></span></button>
+                                      <ul class="dropdown-menu">
+                                          {% for list in myLists %}
+                                              {% if list.id != secondList.id %}
+                                                  <form action="{% url 'wishlist:moveBook' secondList.id list.id books.id %}" method="post">
+                                                    {% csrf_token %}
+                                                    <li><button type="submit" class="btn btn-link btn-anchor"
+                                                          value="{{ list.id }}">{{ list.name }}</button></li>
+                                                  </form>
+                                              {% endif %}
+                                          {% endfor %}
+                                      </ul>
                                     </div>
+                                    <!-- Delete Book -->
                                     <div class="oneOfThree">
                                         <form action="{% url 'wishlist:deleteBook' secondList.id books.id %}" method="post">
                                             {% csrf_token %}
@@ -259,15 +295,30 @@
                                     </div>
                                 </div>
                                 <div class="shopMoveDelete">
+                                    <!-- Move to Cart -->
                                     <div class="oneOfThree">
                                         <form action="{% url 'wishlist:moveToCart' thirdList.id books.id %}" method="post">
                                             {% csrf_token %}
                                              <button type="submit" class="btn-link">Move To Cart</button>
                                         </form>
                                     </div>
-                                    <div class="oneOfThree">
-                                        <a href="">Move Wishlist</a>
+                                    <!-- Move Book to Different Wishlist -->
+                                    <div class="dropdown oneOfThree">
+                                      <button class="btn-link dropdown-toggle" type="button" data-toggle="dropdown">Move Wishlist
+                                      <span class="caret"></span></button>
+                                      <ul class="dropdown-menu">
+                                          {% for list in myLists %}
+                                              {% if list.id != thirdList.id %}
+                                                  <form action="{% url 'wishlist:moveBook' thirdList.id list.id books.id %}" method="post">
+                                                    {% csrf_token %}
+                                                    <li><button type="submit" class="btn btn-link btn-anchor"
+                                                          value="{{ list.id }}">{{ list.name }}</button></li>
+                                                  </form>
+                                              {% endif %}
+                                          {% endfor %}
+                                      </ul>
                                     </div>
+                                    <!-- Delete Book -->
                                     <div class="oneOfThree">
                                         <form action="{% url 'wishlist:deleteBook' thirdList.id books.id %}" method="post">
                                             {% csrf_token %}
@@ -283,6 +334,7 @@
         </div>
     </div> <!--Container closed-->
 </body>
+    <!-- Javescript used -->
     <script>
         //function to display the create list button based on how many lists the user has.
         //Also will display a message when no lists exists.

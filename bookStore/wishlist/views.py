@@ -43,11 +43,11 @@ def rename(request, list_id):
     return redirect('wishlist:wishlist-home')
 
 
-# function to add book to wishlist. May need to do error checking for more than one book
+# function to add book to wishlist. May need to do error checking for when book already exists in wishlist
 #NOT DONE
 @require_POST
 def addBook(request, list_id, book_id):
-
+    List.objects.get(id=list_id).books.add(Book.objects.get(id=book_id))
     return redirect('wishlist:wishlist-home')
 
 @require_POST
@@ -89,7 +89,7 @@ def moveToCart(request, list_id, book_id):
 @require_POST
 def moveBook(request, listFrom_id, listTo_id, book_id):
     deleteBookNoRedirect(listFrom_id, book_id)
-
+    addBook(request, listTo_id, book_id)
     return redirect('wishlist:wishlist-home')
 
 
