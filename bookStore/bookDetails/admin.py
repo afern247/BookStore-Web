@@ -45,6 +45,6 @@ class BookAdmin(admin.ModelAdmin):
 # RAUL'S CODE ENDS HERE
 # ===============================================================================================
 
-@admin.register(Comment)
-class CommentAdmin(admin.ModelAdmin):
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
     list_display = ['user', 'text']
