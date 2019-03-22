@@ -84,18 +84,26 @@
     </style>
 </head>
 <body>
+    <!-- TESTING AREA
+    <div>
+        <button type="button" class="btn btn-primary btn-sm">
+            <span title="Edit Wishlist Name">&#9998;</span>
+        </button>
+    </div>
+     END OF TESTING AREA -->
     <div class="container">
         <div class="header">
             <div class="alignLeft">
                 <h1>{{ user.username }}'s Wishlists</h1>
             </div>
+            <!-- Create List -->
             <div class="alignRight">
                 <form action="{% url "wishlist:createList" %}" method="post">
                 {% csrf_token %}
                     <div id="newList">
                         <input id="listName" name="listName" type="text" placeholder="Enter List Name Here"
                                maxlength="25" required>
-                        <button type="submit" class="btn btn-outline-success">Create List</button>
+                        <button type="submit" class="btn btn-outline-success" title="Enter Name of Wishlist to Create">Create List</button>
                     </div>
                     <div id="noNewList">
                         <button class="btn btn-outline-secondary" disabled>Create List</button>
@@ -104,25 +112,41 @@
             </div>
         </div>
         <div>
-            <!-- LIST INFORMATION -->
+            <!-- If No Lists Exist -->
             <div id="noLists">
                 <br>
                 <h1 align="center">You do not have any wishlists. Please create one.</h1>
             </div>
-            <!-- LISTS CONTENT -->
+            <!-- Lists Names and editing and list information (excluding books associated with lists) -->
             <div id="listContent" class="lists alignLeft">
                     {% for list in myLists %}
                         <div class="listItem" id="t{{ list.id }}">
                             <form action="{% url "wishlist:deleteList" list.id %}" method="post">
                                 {% csrf_token %}
+                                <!-- Edit List Name -->
+                                <div class="alignLeft" style="padding-right: 5px;">
+                                    <form action="{% url 'wishlist:rename' list.id %}" method="post">
+                                        {% csrf_token %}
+                                        <div id="pencil{{ list.id }}">
+                                            <button type="submit" title="Edit Wishlist Name" class="btn btn-anchor btn-sm">
+                                            &#9998;</button>
+                                        </div> <!-- NEED TO WRITE JAVASCRIPT TO HIDE THIS AND BRING IT BACK WHEN NECESSARY
+                                        <div id="acceptCancel{{ list.id }}">
+                                            <button type="submit" title="Accept" class="btn btn-anchor btn-sm">
+                                            &#10003;</button>
+                                            <button type="button" title="Cancel" class="btn btn-anchor btn-sm">
+                                            &#10007;</button>
+                                        </div> -->
+                                    </form>
+                                </div>
+                                <!-- List Names -->
                                 <div class="alignLeft">
                                     <span class="fake-link btn-link" id="{{ list.id }}" onclick="showBooks(this.id)">
                                         {{ list.name }}</span>
                                 </div>
                                 <!-- Delete List Button -->
                                 <div class="alignRight" >
-                                    <!-- <button type="submit" class="btn btn-danger btn-sm">X</button> -->
-                                    <button type="submit" class="close" aria-label="Close">
+                                    <button type="submit" class="close" aria-label="Close" title="Delete Wishlist">
                                       <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
