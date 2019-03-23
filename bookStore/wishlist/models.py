@@ -12,6 +12,9 @@ class List(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ('user', 'date_created')
+
 """
 class Book(models.Model):
     name = models.CharField(max_length=200)
