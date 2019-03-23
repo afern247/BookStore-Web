@@ -58,16 +58,16 @@ def book_info(request, book_name, slug):
                                                             'author': author,
                                                             'ATC_book_form': ATC_product_form})
 
-def add_comment(request, book_name, slug):
+def add_review(request, book_name, slug):
     book = get_object_or_404(Book, book_name=book_name, slug=slug)
     if request.method == 'POST':
-        form = CommentForm(request.POST)
+        form = ReviewForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
-            #comment.user = user.username
+            comment.user = request.user
             comment.book = book
             comment.save()
             return redirect('bookDetails:book_info', book_name=book.book_name, slug=book.slug)
     else:
-        form = CommentForm()
-        return render(request, 'bookDetails/book/add_comment.html', {'form':form})
+        form = ReviewForm()
+        return render(request, 'bookDetails/book/add_review.html', {'form':form})
