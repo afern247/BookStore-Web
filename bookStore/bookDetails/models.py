@@ -122,7 +122,7 @@ class Book(models.Model):
         return reverse('bookDetails:book_info', args=[self.book_name, self.slug])
 
 class Review(models.Model):
-    book        = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='comment')
+    book        = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='review')
     user        = models.CharField(max_length=50)
     text        = models.TextField(max_length=150)
     rating = models.IntegerField(null=True, blank=True)
