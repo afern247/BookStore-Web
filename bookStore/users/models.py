@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from PIL import Image
 from localflavor.us.models import USStateField  # To shows list of US states on address form
 from django.urls import reverse # to return url when clicking on address
+from .payments import MONTHS, YEARS, JAN, THIS_YEAR
 
 
 # All user data is/should be linked to this profile, so when user gets deleted, all data deletes as well
@@ -58,3 +59,23 @@ class Address(models.Model):
     # Got the idea from: https://docs.djangoproject.com/en/2.1/ref/models/instances/#get-absolute-url
     def get_absolute_url(self):
         return reverse('settings:edit-address', args=[self.id])
+
+
+class CreditCard(models.Model):
+    name = models.CharField(max_length=100, blank=False)
+    number = models.CharField(max_length=16, blank=False, unique=True)
+    expdate_month = models.IntegerField(choices=MONTHS, default=JAN)
+    expdate_year = models.IntegerField(choices=YEARS, default=THIS_YEAR)
+    securitycode = models.IntegerField(blank=False)
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=False)
+
+    class Meta:
+        verbose_name = 'Credit Card'            # How we'll refer to a single Address
+        verbose_name_plural = 'Credit Cards'   # How we'll refer to multiple Address
+
+    def __str__(self):
+        return self.name
+
+    # Got the idea from: https://docs.djangoproject.com/en/2.1/ref/models/instances/#get-absolute-url
+    def get_absolute_url(self):
+        return reverse('settings:edit-creditcard', args=[self.id])
