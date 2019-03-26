@@ -123,19 +123,25 @@
                         <div class="listItem" id="t{{ list.id }}">
                             <!-- Edit List Name -->
                             <div class="alignLeft" style="padding-right: 5px;">
-                                <form action="{% url 'wishlist:rename' list.id %}" method="post">
-                                    {% csrf_token %}
-                                    <div id="pencil{{ list.id }}">
-                                        <button type="submit" title="Edit Wishlist Name" class="btn btn-anchor btn-sm">
-                                            &#9998;</button>
-                                    </div> <!-- NEED TO WRITE JAVASCRIPT TO HIDE THIS AND BRING IT BACK WHEN NECESSARY
-                                    <div id="acceptCancel{{ list.id }}">
+                                <div id="pencil{{ list.id }}">
+                                    <button type="button" title="Edit Wishlist Name" class="btn btn-anchor btn-sm"
+                                    onclick="editListButtons({{ list.id }})">
+                                        &#9998;</button>
+                                </div>
+                                <!-- NEED TO WRITE JAVASCRIPT TO HIDE THIS AND BRING IT BACK WHEN NECESSARY -->
+                                <div id="acceptCancel{{ list.id }}">
+                                    <form action="{% url 'wishlist:rename' list.id %}" method="post">
+                                        {% csrf_token %}
+                                        <div id="newName">
+                                            <input id="newName" name="newName" type="text" placeholder="{{ list.name }}"
+                                            maxlength="25" required>
+                                        </div>
                                         <button type="submit" title="Accept" class="btn btn-anchor btn-sm">
                                         &#10003;</button>
-                                        <button type="button" title="Cancel" class="btn btn-anchor btn-sm">
+                                        <button type="reset" title="Cancel" class="btn btn-anchor btn-sm">
                                         &#10007;</button>
-                                    </div> -->
-                                </form>
+                                    </form>
+                                </div>
                             </div>
                             <!-- List Names -->
                             <div class="alignLeft">
@@ -384,6 +390,20 @@
             {% endif %}
         }
 
+        function showEditListButtons(clicked_id){
+            let e = document.getElementById("acceptCancel"+clicked_id);
+            e.style.display = "none";
+        }
+
+        //function to set all edit buttons to not be shown on page load
+        function allEditListButtons(){
+            let e;
+            {% for list in myLists %}
+                e = document.getElementById("acceptCancel"+{{ list.id }});
+                e.style.display = "none";
+            {% endfor %}
+        }
+
         function resetColor(){
             let m;
             {% for list in myLists %}
@@ -438,5 +458,6 @@
         {% endif %}
 
         createList();
+        allEditListButtons();
     </script>
 {% endblock %}
