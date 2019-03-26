@@ -38,8 +38,7 @@ def deleteList(request, list_id):
 # function to handle renaming a list. NOT DONE
 @require_POST
 def rename(request, list_id):
-    p = List.objects.get(id=list_id)
-    p.name = request.POST.get('newName')
+    List.objects.filter(id=list_id).update(name=request.POST.get('newName'))
     return redirect('wishlist:wishlist-home')
 
 
