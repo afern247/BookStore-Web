@@ -121,12 +121,14 @@ class Book(models.Model):
     def get_absolute_url(self):
         return reverse('bookDetails:book_info', args=[self.book_name, self.slug])
 
-class Comment(models.Model):
-    book        = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='comment')
-    user        = models.ForeignKey(Profile,on_delete=models.CASCADE)
+class Review(models.Model):
+    book        = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='review')
+    user        = models.CharField(max_length=50)
     text        = models.TextField(max_length=150)
+    rating = models.IntegerField(null=True, blank=True)
     created_on  = models.DateTimeField(auto_now_add=True)
     approved    = models.BooleanField(default=False)
+
 
     def approved(self):
         self.approved = True
