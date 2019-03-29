@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponseNotFound
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from bookDetails.models import Book
 from .models import List
 from django.views.decorators.http import require_POST
 from cart.models import Cart
-from cart.forms import AddToCartForm
+#from cart.forms import AddToCartForm
+from wishlist.forms import AddToCartForm
 
 allBooks = Book.objects.all()
 
@@ -72,17 +73,18 @@ def moveToCart(request, list_id, book_id):
 
     # adds to cart
     userCart = Cart(request)
-    book = Book.objects.get(id=book_id)
+    book = get_object_or_404(Book, id=book_id)
     form = AddToCartForm(request.POST)
 
     # Not sure how to do this.
     if form.is_valid():
         data = form.cleaned_data
-        userCart.add(book=book,
-                     amount=data['amount'],
-                     change_amount=data['change_amount'])
-
-    return redirect('wishlist:wishlist-home')
+        userCart.add(book=book, change_amount=data['change_amount'])
+        return redirect('wishlist:wishlist-home')
+    else:
+        return HttpResponseNotFound("moveToCart error ---- form.is_valid(): " + str(form.is_valid())
+                                    + " ---- book: " + str(book) + " ---- from list: " +
+                                    List.objects.get(id=list_id).name)
 
 
 @require_POST
