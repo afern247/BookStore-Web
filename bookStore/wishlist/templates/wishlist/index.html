@@ -199,20 +199,25 @@
                                         </form>
                                     </div>
                                     <!-- Move Book to Different Wishlist -->
-                                    <div class="dropdown oneOfThree">
-                                      <button class="btn-link dropdown-toggle" type="button" data-toggle="dropdown">Move Wishlist
-                                      <span class="caret"></span></button>
-                                      <ul class="dropdown-menu">
-                                          {% for list in myLists %}
-                                              {% if list.id != firstList.id %}
-                                                  <form action="{% url 'wishlist:moveBook' firstList.id list.id books.id %}" method="post">
-                                                    {% csrf_token %}
-                                                    <li><button type="submit" class="btn btn-link btn-anchor"
-                                                          value="{{ list.id }}">{{ list.name }}</button></li>
-                                                  </form>
-                                              {% endif %}
-                                          {% endfor %}
-                                      </ul>
+                                    <div class="dropup oneOfThree">
+                                        {% if myListsCount > 1 %}
+                                            <button class="btn-link dropdown-toggle" type="button" data-toggle="dropdown">Move Wishlist
+                                              <span class="caret"></span></button>
+                                              <ul class="dropdown-menu">
+                                                  {% for list in myLists %}
+                                                      {% if list.id != firstList.id %}
+                                                          <form action="{% url 'wishlist:moveBook' firstList.id list.id books.id %}" method="post">
+                                                            {% csrf_token %}
+                                                            <li><button type="submit" class="btn btn-link btn-anchor"
+                                                                  value="{{ list.id }}">{{ list.name }}</button></li>
+                                                          </form>
+                                                      {% endif %}
+                                                  {% endfor %}
+                                              </ul>
+                                        {% else %}
+                                            <button class="btn-link dropdown-toggle" type="button" data-toggle="dropdown" disabled>Move Wishlist
+                                              <span class="caret"></span></button>
+                                        {% endif %}
                                     </div>
                                     <!-- Delete Book -->
                                     <div class="oneOfThree">
@@ -265,7 +270,7 @@
                                         </form>
                                     </div>
                                     <!-- Move Book to Different Wishlist -->
-                                    <div class="dropdown oneOfThree">
+                                    <div class="dropup oneOfThree">
                                       <button class="btn-link dropdown-toggle" type="button" data-toggle="dropdown">Move Wishlist
                                       <span class="caret"></span></button>
                                       <ul class="dropdown-menu">
@@ -331,7 +336,7 @@
                                         </form>
                                     </div>
                                     <!-- Move Book to Different Wishlist -->
-                                    <div class="dropdown oneOfThree">
+                                    <div class="dropup oneOfThree">
                                       <button class="btn-link dropdown-toggle" type="button" data-toggle="dropdown">Move Wishlist
                                       <span class="caret"></span></button>
                                       <ul class="dropdown-menu">
