@@ -56,6 +56,23 @@
                                         {% csrf_token %}
                                         <input type="submit" value="Add to Cart">
                                     </form>
+                                    <!-- Add to Wishlist -->
+                                    {% if user.is_authenticated %}
+                                    <div class="addToWishlist">
+                                        {% if myLists.count > 0 %}
+                                            Add to Wishlist:
+                                            <form action="{% url 'wishlist:addBookFromBookDetails' book.id %}" method="post">
+                                                {% csrf_token %}
+                                                <select name="selectedList">
+                                                {% for list in myLists %}
+                                                    <option value="{{ list.id }}">{{ list.name }}</option>
+                                                {% endfor %}
+                                                </select>
+                                                <button type="submit">Click me</button>
+                                            </form>
+                                        {% endif %}
+                                    </div>
+                                    {% endif %}
                                     <!-- Submit a Review -->
                                     {% if user.is_authenticated %}
                                         <a href = "{% url 'bookDetails:add_review' book.book_name book.slug %}" class ="btn btn-primary">Create a Customer Review</a>

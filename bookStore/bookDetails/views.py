@@ -11,6 +11,7 @@ from cart.forms import AddToCartForm
 from .forms import ReviewForm
 # Import the Author and Book models from this package's models.py file
 from .models import Author, Book, Review
+from wishlist.models import List
 
 
 # List all the books. Allows one to filter books by author name,
@@ -48,6 +49,9 @@ def book_info(request, book_name, slug):
     # The form for Adding a product To the Cart (Add To Cart = ATC)
     ATC_product_form = AddToCartForm()
 
+    # WISHLIST CODE: Gets the lists that the user has.
+    myLists = getLists(request)
+
     # If we retrieved the book successfully, get its author
     # so we can reference their attributes in the HTML page
     if book:
@@ -56,7 +60,8 @@ def book_info(request, book_name, slug):
 
     return render(request, 'bookDetails/book/detail.html', {'book': book,
                                                             'author': author,
-                                                            'ATC_book_form': ATC_product_form})
+                                                            'ATC_book_form': ATC_product_form,
+                                                            'myLists': myLists})
 
 def add_review(request, book_name, slug):
     book = get_object_or_404(Book, book_name=book_name, slug=slug)
@@ -71,3 +76,7 @@ def add_review(request, book_name, slug):
     else:
         form = ReviewForm()
         return render(request, 'bookDetails/book/add_review.html', {'form':form})
+
+# function to get lists for user currently on the page.
+def getLists(request):
+    return List.objects.filter(user=request.user.profile).distinct()

@@ -44,10 +44,15 @@ def rename(request, list_id):
 
 
 # function to add book to wishlist. May need to do error checking for when book already exists in wishlist
-#NOT DONE
 @require_POST
 def addBook(request, list_id, book_id):
     List.objects.get(id=list_id).books.add(Book.objects.get(id=book_id))
+    return redirect('wishlist:wishlist-home')
+
+# function to add book to wishlist from book details
+@require_POST
+def addBookFromBookDetails(request, book_id):
+    List.objects.get(id=request.POST.get('selectedList')).books.add(Book.objects.get(id=book_id))
     return redirect('wishlist:wishlist-home')
 
 @require_POST

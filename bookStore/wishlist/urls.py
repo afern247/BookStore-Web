@@ -10,4 +10,5 @@ urlpatterns = [
     path('deleteBook/<int:list_id>/<int:book_id>', views.deleteBook, name="deleteBook"),
     path('moveToCart/<int:list_id>/<int:book_id>', views.moveToCart, name="moveToCart"),    # CAN'T ADD TO CART
     path('moveBook/<int:listFrom_id>/<int:listTo_id>/<int:book_id>', views.moveBook, name="moveBook"),
+    path('addBookFromBookDetails/<int:book_id>', views.addBookFromBookDetails, name="addBookFromBookDetails"),
 ]
