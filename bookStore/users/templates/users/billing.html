@@ -4,35 +4,48 @@
 
 
 
-
-<div class="card">
-    <div class="card-body">
+<div class="card style=" margin-bottom: 20px;"">
+    <div class="card-body" style=" padding-bottom: 0px;">
         <div class="row">
             <div class="col-md-12">
                 <h4>Billing overview</h4>
                 <hr>
             </div>
         </div>
-
-
-
         <h6 class="card-title">Primary shipping address</h6>
         <div class="card">
             <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
                 <div class="card-body">
-                    <h6 class="card-subtitle mb-2 text-muted">Arturo Fernandez</h6>
+
+                    {% if primaryAddressCheck is True %}
+                    {% for address in user_AddressList %}
+                    {% if address.primaryAddress is True %}
+                    <h6 class="card-subtitle mb-2 text-muted">{{ address.name }}</h6>
                     <div class="row">
                         <div class="col-lg-12">
-                            12700 SW 122nd Ave
-                            <!-- <button class="btn btn-secondary float-right">Button</button> -->
+                            {{ address.address1 }}
+                            <br>
+                            {{ address.state }}, {{ address.zipcode }}
                             <div class="float-right">
-                                <a href="#">Edit</a>
+                                <a href="{{ address.get_absolute_url }}">Edit</a>
                             </div>
                         </div>
                     </div>
+                    {% endif %}
+                    {% endfor %}
+
+                    {% else %}
+                    No primary address has been set.
+                    {% endif %}
+
                 </div>
             </div>
         </div>
+
+
+
+
+
 
 
         <br>
@@ -53,22 +66,22 @@
             <div class="tab-pane fade show active" id="nav-addresses" role="tabpanel" aria-labelledby="nav-addresses-tab">
                 <br>
 
+                <!-- <h6 class="card-title">Other shipping address</h6> -->
 
-
-
-
-
-                <h6 class="card-title">Other shipping address</h6>
+                {% for address in user_AddressList %}
+                {% if address.primaryAddress is False %}
                 <div class="card">
                     <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
                         <div class="card-body">
-                            <h6 class="card-subtitle mb-2 text-muted">Work</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ address.name }}</h6>
                             <div class="row">
                                 <div class="col-lg-12">
-                                    123 SE 12nd Ave
+                                    {{ address.address1 }}
+                                    <br>
+                                    {{ address.state }}, {{ address.zipcode }}
                                     <!-- <button class="btn btn-secondary float-right">Button</button> -->
                                     <div class="float-right">
-                                        <a href="#">Make Primary</a> | <a href="#">Edit</a> | <a href="#">Delete</a>
+                                        <a href="{{ address.get_absolute_url }}">Edit</a>
                                     </div>
                                 </div>
                             </div>
@@ -76,35 +89,24 @@
                     </div>
                 </div>
                 <br>
-                <div class="card">
-                    <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
-                        <div class="card-body">
-                            <h6 class="card-subtitle mb-2 text-muted">Home</h6>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    1002 NE 34 ST
-                                    <!-- <button class="btn btn-secondary float-right">Button</button> -->
-                                    <div class="float-right">
-                                        <a href="#">Make Primary</a> | <a href="#">Edit</a> | <a href="#">Delete</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {% endif %}
+                {% endfor %}
+
+                <a type="button" class="btn btn-outline-info float-left" style="margin-bottom: 10px;" href="{% url 'settings:add-address' %}">Add
+                    new address</a>
 
 
 
 
 
-
-
+                <!-- ---------------------------------------------------------------------------------------------------------------------------------- -->
 
 
             </div>
             <!-- Payment tab -->
             <div class="tab-pane fade" id="nav-payment" role="tabpanel" aria-labelledby="nav-payment-tab">
                 <ul>
+                    <br>
                     <li>Can manage multiple credit card info</li>
                     <li>Validation on credit card info and passwords must meet security standards (encrypted/hashed
                         password storage, basic

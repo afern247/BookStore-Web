@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'storePage.apps.StorepageConfig',   # Display general views for other apps
     'users.apps.UsersConfig',           # Holds user data and it's views
     'crispy_forms',                    # Module helper for forms
+    'star_ratings',                     #Django star ratings
 
     # Built in
     'django.contrib.admin',

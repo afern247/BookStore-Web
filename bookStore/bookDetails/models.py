@@ -16,7 +16,7 @@ from django.db import models
 # For use with the get_absolute_url methods
 from django.urls import reverse
 from users.models import Profile
-
+from django.db.models import Avg
 
 # This class models book authors, which have a many-to-many relationship
 # with books: a book can have multiple authors and authors can write multiple
@@ -74,9 +74,7 @@ class Book(models.Model):
     # if there are no image files
     book_cover = models.ImageField(upload_to='books/', blank=True, null=True)
 
-    # The book's author(s). Here we make note of the many-to-many
-    # relationship between the Book and Author classes;
-    #book_author = models.ManyToManyField(Author, related_name='authored')
+    # The book's author
     book_author = models.CharField(max_length=200)
 
     # The bio of the author(s); This can be lengthy, so
@@ -124,27 +122,18 @@ class Book(models.Model):
         return reverse('bookDetails:book_info', args=[self.book_name, self.slug])
 
 class Review(models.Model):
-    RATING_CHOICES = (
-        (1, '1'),
-        (2, '2'),
-        (3, '3'),
-        (4, '4'),
-        (5, '5'),
-    )
-
-    book        = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='comment')
-    user        = models.CharField(max_length=50)
-    text        = models.TextField(max_length=150)
-    #book_rating = models.IntegerField(choices=RATING_CHOICES)
+    book        = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='review')
+    name        = models.CharField(max_length=50, default="")
+    rating      = models.IntegerField(default=3)
+    #avg_rating  = models.DecimalField(max_digits=1, decimal_places=1)
+    message     = models.TextField(max_length=150)
     created_on  = models.DateTimeField(auto_now_add=True)
     approved    = models.BooleanField(default=False)
-
 
     def approved(self):
         self.approved = True
         self.save()
-    def user(self):
-        return self.user
     def __str__(self):
-        return self.text
-    #FIXME: will need to know if user has purchased the book
+        return self.message
+    def user(self):
+        return self.name #FIXME: display Bound method of instead of user
