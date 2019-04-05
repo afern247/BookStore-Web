@@ -60,7 +60,7 @@
                                     {% if user.is_authenticated %}
                                     <div class="addToWishlist">
                                         {% if myLists.count > 0 %}
-                                            Add to Wishlist:
+                                            Select Wishlist:
                                             <form action="{% url 'wishlist:addBookFromBookDetails' book.id %}" method="post">
                                                 {% csrf_token %}
                                                 <select name="selectedList">
@@ -68,7 +68,7 @@
                                                     <option value="{{ list.id }}">{{ list.name }}</option>
                                                 {% endfor %}
                                                 </select>
-                                                <button type="submit">Click me</button>
+                                                <button type="submit">Add to Wishlist</button>
                                             </form>
                                         {% endif %}
                                     </div>
