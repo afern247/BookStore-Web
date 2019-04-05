@@ -12,6 +12,7 @@ from .forms import ReviewForm
 # Import the Author and Book models from this package's models.py file
 from .models import Author, Book, Review
 from wishlist.models import List
+from users.models import Profile
 
 
 # List all the books. Allows one to filter books by author name,
