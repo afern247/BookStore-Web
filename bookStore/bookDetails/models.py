@@ -123,18 +123,16 @@ class Book(models.Model):
 
 class Review(models.Model):
     book        = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='review')
-    user        = models.CharField(max_length=50)
-    text        = models.TextField(max_length=150)
-    rating = models.IntegerField(null=True, blank=True)
+    name        = models.CharField(max_length=50, default="")
+    rating      = models.IntegerField(default=3)
+    message     = models.TextField(max_length=150)
     created_on  = models.DateTimeField(auto_now_add=True)
     approved    = models.BooleanField(default=False)
-
 
     def approved(self):
         self.approved = True
         self.save()
-    def user(self):
-        return self.user
     def __str__(self):
-        return self.text
-    #FIXME: will need to know if user has purchased the book
+        return self.message
+    def user(self):
+        return self.name 
