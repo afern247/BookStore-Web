@@ -47,4 +47,4 @@ class BookAdmin(admin.ModelAdmin):
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ['user', 'text']
+    list_display = ['name', 'message']
