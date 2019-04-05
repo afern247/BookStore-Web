@@ -50,7 +50,11 @@ def book_info(request, book_name, slug):
     ATC_product_form = AddToCartForm()
 
     # WISHLIST CODE: Gets the lists that the user has.
-    myLists = getLists(request)
+    if request.user.is_authenticated:
+        myLists = getLists(request)
+    else:
+        myLists = "empty"
+
 
     # If we retrieved the book successfully, get its author
     # so we can reference their attributes in the HTML page
@@ -80,3 +84,4 @@ def add_review(request, book_name, slug):
 # function to get lists for user currently on the page.
 def getLists(request):
     return List.objects.filter(user=request.user.profile).distinct()
+
