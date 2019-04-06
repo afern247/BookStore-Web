@@ -193,20 +193,16 @@
                                 <div class="shopMoveDelete">
                                     <!-- Move to Cart -->
                                     <div class="oneOfThree">
-    <!-- DOES NOT WORK - can create own function that deletes and then uses this cart function -->
+    <!-- DOES NOT WORK - can create own function that deletes and then uses this cart function
                                         <form action="{% url "cart:addToCart" books.id %}" method="post">
                                             {{ ATC_book_form }}
                                             {% csrf_token %}
                                             <input type="submit" value="Add to Cart">
-                                        </form>
-                                        <!--
-                                        <form action="{% url "cart:addToCart" books.id %}" method="post">
-                                            {{ ATC_book_form }}
+                                        </form> -->
+                                        <form action="{% url 'wishlist:moveToCart' firstList.id books.id %}" method="post">
                                             {% csrf_token %}
-                                             <button type="submit" value="Add to Cart" name="{{ firstList.id }}"
-                                                     class="btn-link">Move To Cart</button>
+                                            <input type="submit" value="TAdd to Cart">
                                         </form>
-                                        -->
                                     </div>
                                     <!-- Move Book to Different Wishlist -->
                                     <div class="dropup oneOfThree">
