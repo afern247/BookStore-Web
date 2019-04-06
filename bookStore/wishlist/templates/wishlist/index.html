@@ -193,7 +193,7 @@
                                 <div class="shopMoveDelete">
                                     <!-- Move to Cart -->
                                     <div class="oneOfThree">
-    <!-- DOES NOT WORK -->
+    <!-- DOES NOT WORK - can create own function that deletes and then uses this cart function -->
                                         <form action="{% url "cart:addToCart" books.id %}" method="post">
                                             {{ ATC_book_form }}
                                             {% csrf_token %}
