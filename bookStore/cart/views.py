@@ -25,7 +25,6 @@ from .forms import AddToCartForm
 # This is the view that will handle adding/updating items
 
 
-@require_POST
 def addToCart(request, book_id):
     userCart = Cart(request)
     # Attempt to get the Book that has the
