@@ -59,6 +59,7 @@
         .bookInfo {
             font-size: 15px;
             padding: 20px;
+            height: 225px;
             overflow: hidden;
         }
         .bookName {
@@ -74,10 +75,12 @@
             width: 100%;
             height: auto;
         }
+        .shopMoveDelete {
+
+        }
         /*Use for aligned 3 elements in one line*/
         .oneOfThree {
             float: left;
-            /* overflow: hidden;*/
             width: 25%;
             text-align: center;
         }
@@ -201,7 +204,7 @@
                                         </form> -->
                                         <form action="{% url 'wishlist:moveToCart' firstList.id books.id %}" method="post">
                                             {% csrf_token %}
-                                            <input type="submit" value="TAdd to Cart">
+                                            <input type="submit" value="Add to Cart">
                                         </form>
                                     </div>
                                     <!-- Move Book to Different Wishlist -->
