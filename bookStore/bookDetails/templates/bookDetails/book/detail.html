@@ -56,7 +56,7 @@
                                         {% csrf_token %}
                                         <input type="submit" value="Add to Cart">
                                     </form>
-                                    <!-- Add to Wishlist -->
+                                    <!-- Add to Wish List -->
                                     {% if user.is_authenticated %}
                                     <div class="addToWishlist">
                                         {% if myLists.count > 0 %}
@@ -68,8 +68,11 @@
                                                     <option value="{{ list.id }}">{{ list.name }}</option>
                                                 {% endfor %}
                                                 </select>
-                                                <button type="submit">Add to Wishlist</button>
+                                                <button type="submit">Add to Wish List</button>
                                             </form>
+                                        {% else %}
+                                            You do not have any wish lists. Create one
+                                            <a href="/wishlist/">here</a>.
                                         {% endif %}
                                     </div>
                                     {% endif %}

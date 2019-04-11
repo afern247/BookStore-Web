@@ -87,17 +87,10 @@
     </style>
 </head>
 <body>
-    <!-- TESTING AREA
-    <div>
-        <button type="button" class="btn btn-primary btn-sm">
-            <span title="Edit Wishlist Name">&#9998;</span>
-        </button>
-    </div>
-     END OF TESTING AREA -->
     <div class="container">
         <div class="header">
             <div class="alignLeft">
-                <h1>{{ user.username }}'s Wishlists</h1>
+                <h1>{{ user.username }}'s Wish Lists</h1>
             </div>
             <!-- Create List -->
             <div class="alignRight">
@@ -106,7 +99,7 @@
                     <div id="newList">
                         <input id="listName" name="listName" type="text" placeholder="Enter List Name Here"
                                maxlength="25" required>
-                        <button type="submit" class="btn btn-outline-success" title="Enter Name of Wishlist to Create">Create List</button>
+                        <button type="submit" class="btn btn-outline-success" title="Enter Name of Wish List to Create">Create List</button>
                     </div>
                     <div id="noNewList">
                         <button class="btn btn-outline-secondary" disabled>Create List</button>
@@ -118,7 +111,7 @@
             <!-- If No Lists Exist -->
             <div id="noLists">
                 <br>
-                <h1 align="center">You do not have any wishlists. Please create one.</h1>
+                <h1 align="center">You do not have any wish lists. Please create one.</h1>
             </div>
             <!-- Lists Names and editing and list information (excluding books associated with lists) -->
             <div id="listContent" class="lists alignLeft">
@@ -153,7 +146,7 @@
                             <div class="alignRight" >
                                 <form action="{% url 'wishlist:deleteList' list.id %}" method="post">
                                     {% csrf_token %}
-                                    <button type="submit" class="close" aria-label="Close" title="Delete Wishlist">
+                                    <button type="submit" class="close" aria-label="Close" title="Delete Wish List">
                                       <span aria-hidden="true">&times;</span>
                                     </button>
                                 </form>
@@ -165,7 +158,7 @@
             <div class="alignRight content" id="content">
                 <div id="firstContent" class="{{ firstList.id }}">
                     {% if not firstBooks %}
-                        <h2 align="center">This Wishlist is empty.</h2>
+                        <h2 align="center">This wish list is empty.</h2>
                     {% else %}
                         {% for books in firstBooks %}
                             <div class="wishlistItem border-bottom">
@@ -209,10 +202,10 @@
                                             <button type="submit" class="btn-link">Add To Cart</button>
                                         </form>
                                     </div>
-                                    <!-- Move Book to Different Wishlist -->
+                                    <!-- Move Book to Different Wish List -->
                                     <div class="dropup oneOfThree">
                                         {% if myListsCount > 1 %}
-                                            <button class="btn-link dropdown-toggle" type="button" data-toggle="dropdown">Move Wishlist
+                                            <button class="btn-link dropdown-toggle" type="button" data-toggle="dropdown">Move Wish List
                                               <span class="caret"></span></button>
                                               <ul class="dropdown-menu">
                                                   {% for list in myLists %}
@@ -226,7 +219,7 @@
                                                   {% endfor %}
                                               </ul>
                                         {% else %}
-                                            <button class="btn-link dropdown-toggle" type="button" data-toggle="dropdown" disabled>Move Wishlist
+                                            <button class="btn-link dropdown-toggle" type="button" data-toggle="dropdown" disabled>Move Wish List
                                               <span class="caret"></span></button>
                                         {% endif %}
                                     </div>
@@ -244,7 +237,7 @@
                 </div>
                 <div id="secondContent" class="{{ secondList.id }}">
                     {% if not secondBooks %}
-                        <h2 align="center">This Wishlist is empty.</h2>
+                        <h2 align="center">This wish list is empty.</h2>
                     {% else %}
                         {% for books in secondBooks %}
                             <div class="wishlistItem border-bottom">
@@ -281,9 +274,9 @@
                                             <button type="submit" class="btn-link">Add To Cart</button>
                                         </form>
                                     </div>
-                                    <!-- Move Book to Different Wishlist -->
+                                    <!-- Move Book to Different Wish List -->
                                     <div class="dropup oneOfThree">
-                                      <button class="btn-link dropdown-toggle" type="button" data-toggle="dropdown">Move Wishlist
+                                      <button class="btn-link dropdown-toggle" type="button" data-toggle="dropdown">Move Wish List
                                       <span class="caret"></span></button>
                                       <ul class="dropdown-menu">
                                           {% for list in myLists %}
@@ -311,7 +304,7 @@
                 </div>
                 <div id="thirdContent" class="{{ thirdList.id }}">
                     {% if not thirdBooks %}
-                        <h2 align="center">This Wishlist is empty.</h2>
+                        <h2 align="center">This wish list is empty.</h2>
                     {% else %}
                         {% for books in thirdBooks %}
                             <div class="wishlistItem border-bottom">
@@ -348,9 +341,9 @@
                                             <button type="submit" class="btn-link">Add To Cart</button>
                                         </form>
                                     </div>
-                                    <!-- Move Book to Different Wishlist -->
+                                    <!-- Move Book to Different Wish List -->
                                     <div class="dropup oneOfThree">
-                                      <button class="btn-link dropdown-toggle" type="button" data-toggle="dropdown">Move Wishlist
+                                      <button class="btn-link dropdown-toggle" type="button" data-toggle="dropdown">Move Wish List
                                       <span class="caret"></span></button>
                                       <ul class="dropdown-menu">
                                           {% for list in myLists %}
