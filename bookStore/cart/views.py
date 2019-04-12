@@ -16,7 +16,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 
 # This is the Book model from the bookDetails package I made.
-from bookDetails.models import Book
+from bookDetails.models import Book, Purchase
 # These are the cart and cart forms.
 from .cart import Cart
 from .forms import AddToCartForm
@@ -114,8 +114,6 @@ def cart_info(request):
 
 def checkout(request):
     userCart = Cart(request)
-
-    #purchase = Purchase.objects.create(book= userCart.,user=request.user, has_purchased=True)
 
     # Remove all books from the cart
     userCart.clear()

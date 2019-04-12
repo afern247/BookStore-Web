@@ -125,7 +125,7 @@ class Review(models.Model):
     book        = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='review')
     name        = models.CharField(max_length=50, default="")
     rating      = models.IntegerField(default=3)
-    message     = models.TextField(max_length=150)
+    message     = models.CharField(max_length=150)
     created_on  = models.DateTimeField(auto_now_add=True)
     approved    = models.BooleanField(default=False)
 
@@ -136,9 +136,8 @@ class Review(models.Model):
         return self.message
     def user(self):
         return self.name
-'''
+
 class Purchase(models.Model):
     book            = models.ForeignKey(Book, on_delete=models.CASCADE)
     User            = models.ForeignKey(Profile, on_delete=models.CASCADE)
     has_purchased   = models.BooleanField(default=False, blank=True)
-'''
