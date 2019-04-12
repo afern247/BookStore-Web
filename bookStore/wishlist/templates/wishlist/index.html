@@ -59,6 +59,7 @@
         .bookInfo {
             font-size: 15px;
             padding: 20px;
+            height: 225px;
             overflow: hidden;
         }
         .bookName {
@@ -74,27 +75,22 @@
             width: 100%;
             height: auto;
         }
+        .shopMoveDelete {
+
+        }
         /*Use for aligned 3 elements in one line*/
         .oneOfThree {
             float: left;
-            /* overflow: hidden;*/
             width: 25%;
             text-align: center;
         }
     </style>
 </head>
 <body>
-    <!-- TESTING AREA
-    <div>
-        <button type="button" class="btn btn-primary btn-sm">
-            <span title="Edit Wishlist Name">&#9998;</span>
-        </button>
-    </div>
-     END OF TESTING AREA -->
     <div class="container">
         <div class="header">
             <div class="alignLeft">
-                <h1>{{ user.username }}'s Wishlists</h1>
+                <h1>{{ user.username }}'s Wish Lists</h1>
             </div>
             <!-- Create List -->
             <div class="alignRight">
@@ -103,7 +99,7 @@
                     <div id="newList">
                         <input id="listName" name="listName" type="text" placeholder="Enter List Name Here"
                                maxlength="25" required>
-                        <button type="submit" class="btn btn-outline-success" title="Enter Name of Wishlist to Create">Create List</button>
+                        <button type="submit" class="btn btn-outline-success" title="Enter Name of Wish List to Create">Create List</button>
                     </div>
                     <div id="noNewList">
                         <button class="btn btn-outline-secondary" disabled>Create List</button>
@@ -115,7 +111,7 @@
             <!-- If No Lists Exist -->
             <div id="noLists">
                 <br>
-                <h1 align="center">You do not have any wishlists. Please create one.</h1>
+                <h1 align="center">You do not have any wish lists. Please create one.</h1>
             </div>
             <!-- Lists Names and editing and list information (excluding books associated with lists) -->
             <div id="listContent" class="lists alignLeft">
@@ -150,7 +146,7 @@
                             <div class="alignRight" >
                                 <form action="{% url 'wishlist:deleteList' list.id %}" method="post">
                                     {% csrf_token %}
-                                    <button type="submit" class="close" aria-label="Close" title="Delete Wishlist">
+                                    <button type="submit" class="close" aria-label="Close" title="Delete Wish List">
                                       <span aria-hidden="true">&times;</span>
                                     </button>
                                 </form>
@@ -162,7 +158,7 @@
             <div class="alignRight content" id="content">
                 <div id="firstContent" class="{{ firstList.id }}">
                     {% if not firstBooks %}
-                        <h2 align="center">This Wishlist is empty.</h2>
+                        <h2 align="center">This wish list is empty.</h2>
                     {% else %}
                         {% for books in firstBooks %}
                             <div class="wishlistItem border-bottom">
@@ -191,18 +187,25 @@
                                     </div>
                                 </div>
                                 <div class="shopMoveDelete">
-                                    <!-- Move to Cart -->
                                     <div class="oneOfThree">
+                                    <!-- Move to Cart -->
+                                        <!-- DOES NOT WORK - can create own function that deletes and then uses this cart function
+                                        <form action="{% url "cart:addToCart" books.id %}" method="post">
+                                            {{ ATC_book_form }}
+                                            {% csrf_token %}
+                                            <input type="submit" value="Add to Cart">
+                                        </form>
+                                        -->
                                         <form action="{% url 'wishlist:moveToCart' firstList.id books.id %}" method="post">
                                             {{ ATC_book_form }}
                                             {% csrf_token %}
-                                             <button type="submit" class="btn-link">Move To Cart</button>
+                                            <button type="submit" class="btn-link">Add To Cart</button>
                                         </form>
                                     </div>
-                                    <!-- Move Book to Different Wishlist -->
+                                    <!-- Move Book to Different Wish List -->
                                     <div class="dropup oneOfThree">
                                         {% if myListsCount > 1 %}
-                                            <button class="btn-link dropdown-toggle" type="button" data-toggle="dropdown">Move Wishlist
+                                            <button class="btn-link dropdown-toggle" type="button" data-toggle="dropdown">Move Wish List
                                               <span class="caret"></span></button>
                                               <ul class="dropdown-menu">
                                                   {% for list in myLists %}
@@ -216,7 +219,7 @@
                                                   {% endfor %}
                                               </ul>
                                         {% else %}
-                                            <button class="btn-link dropdown-toggle" type="button" data-toggle="dropdown" disabled>Move Wishlist
+                                            <button class="btn-link dropdown-toggle" type="button" data-toggle="dropdown" disabled>Move Wish List
                                               <span class="caret"></span></button>
                                         {% endif %}
                                     </div>
@@ -234,7 +237,7 @@
                 </div>
                 <div id="secondContent" class="{{ secondList.id }}">
                     {% if not secondBooks %}
-                        <h2 align="center">This Wishlist is empty.</h2>
+                        <h2 align="center">This wish list is empty.</h2>
                     {% else %}
                         {% for books in secondBooks %}
                             <div class="wishlistItem border-bottom">
@@ -266,13 +269,14 @@
                                     <!-- Move to Cart -->
                                     <div class="oneOfThree">
                                         <form action="{% url 'wishlist:moveToCart' secondList.id books.id %}" method="post">
+                                            {{ ATC_book_form }}
                                             {% csrf_token %}
-                                             <button type="submit" class="btn-link">Move To Cart</button>
+                                            <button type="submit" class="btn-link">Add To Cart</button>
                                         </form>
                                     </div>
-                                    <!-- Move Book to Different Wishlist -->
+                                    <!-- Move Book to Different Wish List -->
                                     <div class="dropup oneOfThree">
-                                      <button class="btn-link dropdown-toggle" type="button" data-toggle="dropdown">Move Wishlist
+                                      <button class="btn-link dropdown-toggle" type="button" data-toggle="dropdown">Move Wish List
                                       <span class="caret"></span></button>
                                       <ul class="dropdown-menu">
                                           {% for list in myLists %}
@@ -300,7 +304,7 @@
                 </div>
                 <div id="thirdContent" class="{{ thirdList.id }}">
                     {% if not thirdBooks %}
-                        <h2 align="center">This Wishlist is empty.</h2>
+                        <h2 align="center">This wish list is empty.</h2>
                     {% else %}
                         {% for books in thirdBooks %}
                             <div class="wishlistItem border-bottom">
@@ -332,13 +336,14 @@
                                     <!-- Move to Cart -->
                                     <div class="oneOfThree">
                                         <form action="{% url 'wishlist:moveToCart' thirdList.id books.id %}" method="post">
+                                            {{ ATC_book_form }}
                                             {% csrf_token %}
-                                             <button type="submit" class="btn-link">Move To Cart</button>
+                                            <button type="submit" class="btn-link">Add To Cart</button>
                                         </form>
                                     </div>
-                                    <!-- Move Book to Different Wishlist -->
+                                    <!-- Move Book to Different Wish List -->
                                     <div class="dropup oneOfThree">
-                                      <button class="btn-link dropdown-toggle" type="button" data-toggle="dropdown">Move Wishlist
+                                      <button class="btn-link dropdown-toggle" type="button" data-toggle="dropdown">Move Wish List
                                       <span class="caret"></span></button>
                                       <ul class="dropdown-menu">
                                           {% for list in myLists %}

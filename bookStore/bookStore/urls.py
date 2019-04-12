@@ -3,7 +3,6 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
-from django.conf.urls import url
 
 from users import views as user_views
 
@@ -27,7 +26,6 @@ urlpatterns = [
     path('books/', include('books.urls')),          # Books data
     path('cart/', include('cart.urls', namespace='cart')),            # Shopping cart
     path('bookDetails/', include('bookDetails.urls', namespace='bookDetails')),  # Raul's bookDetails implementation
-    url(r'^ratings/', include('star_ratings.urls', namespace='ratings')),
 ]
 
 if settings.DEBUG:

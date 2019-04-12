@@ -71,6 +71,7 @@ def deleteBookNoRedirect(list_id, book_id):
 
 
 # function to move book to cart. Should delete book from its wishlist and then place it in the shopping cart of the user.
+'''
 @require_POST
 def moveToCart(request, list_id, book_id):
     # deletes book from wishlist
@@ -84,13 +85,20 @@ def moveToCart(request, list_id, book_id):
     # Not sure how to do this.
     if form.is_valid():
         data = form.cleaned_data
-        userCart.add(book=book, change_amount=data['change_amount'])
+        #userCart.add(book=book, change_amount=data['change_amount'])
         return redirect('wishlist:wishlist-home')
     else:
         return HttpResponseNotFound("moveToCart error ---- form.is_valid(): " + str(form.is_valid())
                                     + " ---- book: " + str(book) + " ---- from list: " +
                                     List.objects.get(id=list_id).name)
+'''
 
+# function to delete book from wishlist and add to shopping cart
+# works if i delete the @require_POST on the cart:addToCart
+@require_POST
+def moveToCart(request, list_id, book_id):
+    deleteBookNoRedirect(list_id, book_id)
+    return redirect('cart:addToCart', book_id)
 
 @require_POST
 def moveBook(request, listFrom_id, listTo_id, book_id):

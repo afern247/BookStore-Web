@@ -4,7 +4,6 @@
 # ====================================================================
 
 from django.db import models
-from users.models import Profile
 
 # The actual Cart model class.
 

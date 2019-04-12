@@ -20,12 +20,11 @@ from bookDetails.models import Book
 # These are the cart and cart forms.
 from .cart import Cart
 from .forms import AddToCartForm
-from bookDetails.models import Review
+
 
 # This is the view that will handle adding/updating items
 
 
-@require_POST
 def addToCart(request, book_id):
     userCart = Cart(request)
     # Attempt to get the Book that has the
@@ -115,6 +114,9 @@ def cart_info(request):
 
 def checkout(request):
     userCart = Cart(request)
+
+    #purchase = Purchase.objects.create(book= userCart.,user=request.user, has_purchased=True)
+
     # Remove all books from the cart
     userCart.clear()
 

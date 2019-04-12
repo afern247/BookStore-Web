@@ -16,7 +16,7 @@ from django.db import models
 # For use with the get_absolute_url methods
 from django.urls import reverse
 from users.models import Profile
-from django.db.models import Avg
+
 
 # This class models book authors, which have a many-to-many relationship
 # with books: a book can have multiple authors and authors can write multiple
@@ -125,7 +125,6 @@ class Review(models.Model):
     book        = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='review')
     name        = models.CharField(max_length=50, default="")
     rating      = models.IntegerField(default=3)
-    #avg_rating  = models.DecimalField(max_digits=1, decimal_places=1)
     message     = models.TextField(max_length=150)
     created_on  = models.DateTimeField(auto_now_add=True)
     approved    = models.BooleanField(default=False)
@@ -136,4 +135,10 @@ class Review(models.Model):
     def __str__(self):
         return self.message
     def user(self):
-        return self.name #FIXME: display Bound method of instead of user
+        return self.name
+'''
+class Purchase(models.Model):
+    book            = models.ForeignKey(Book, on_delete=models.CASCADE)
+    User            = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    has_purchased   = models.BooleanField(default=False, blank=True)
+'''

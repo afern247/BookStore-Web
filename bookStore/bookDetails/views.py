@@ -11,8 +11,9 @@ from cart.forms import AddToCartForm
 from .forms import ReviewForm
 # Import the Author and Book models from this package's models.py file
 from .models import Author, Book, Review
-from users.models import Profile
 from wishlist.models import List
+from users.models import Profile
+from django.db.models import Avg
 
 
 # List all the books. Allows one to filter books by author name,
@@ -51,7 +52,9 @@ def book_info(request, book_name, slug):
     ATC_product_form = AddToCartForm()
 
     # WISHLIST CODE: Gets the lists that the user has.
-    myLists = getLists(request)
+    myLists = []
+    if request.user.is_authenticated:
+        myLists = getLists(request)
 
     # If we retrieved the book successfully, get its author
     # so we can reference their attributes in the HTML page
@@ -61,9 +64,10 @@ def book_info(request, book_name, slug):
 
     return render(request, 'bookDetails/book/detail.html', {'book': book,
                                                             'author': author,
-                                                            'ATC_book_form': ATC_product_form})
+                                                            'ATC_book_form': ATC_product_form,
+                                                            'myLists': myLists})
 
-
+#Author: Paul Franco
 def add_review(request, book_name, slug):
     book = get_object_or_404(Book, book_name=book_name, slug=slug) #Obtain book info
     User = get_object_or_404(Profile, user=request.user)           #Obtain user info for comment
@@ -85,17 +89,17 @@ def add_review(request, book_name, slug):
             elif name == "Anonymous":
                 review.name = "Anonymous"
             else:
-                review.name = "Anonymous"
+                review.name = request.user                      #Use username if no option is selected
             review.rating = rating
-            #print("Username Display: " + review.user)          #Testing what username and rating are
-            print("Rating submitted: " + review.rating)
-            review.save()                                       #Save form and then redirect back to book_info page for
+            review.save()                                       #Need to save rating to update the avg_rating of book
+            book.avg_rating = Review.objects.aggregate(Avg('rating')).get('rating__avg') #Get avg_rating of book
+            book.save()
+                                                                #Save form and then redirect back to book_info page for
                                                                 #specific book
             return redirect('bookDetails:book_info', book_name=book.book_name, slug=book.slug)
     else:
         form = ReviewForm()
         return render(request, 'bookDetails/book/add_review.html', {'form':form})
-
 
 # function to get lists for user currently on the page.
 def getLists(request):

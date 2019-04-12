@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'storePage.apps.StorepageConfig',   # Display general views for other apps
     'users.apps.UsersConfig',           # Holds user data and it's views
     'crispy_forms',                    # Module helper for forms
-    'star_ratings',                     #Django star ratings
 
     # Built in
     'django.contrib.admin',
@@ -139,7 +138,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 # Where to redirect user once they log-in
-LOGIN_REDIRECT_URL = 'store-home-page'
+LOGIN_REDIRECT_URL = '/bookDetails/'
 # When somone tries to access a restricted page, it will redirect to the login page. login is the name I gave to the route
 LOGIN_URL = 'login'
 

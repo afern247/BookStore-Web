@@ -65,8 +65,7 @@ class Cart(object):
                                       'publishing_info': book.publishing_info,
                                       'avg_rating': str(book.avg_rating),
                                       'price': str(book.price),
-                                      'SFL': False,
-                                      'purchased': False}
+                                      'SFL': False}
 
         # If change_amount is True, we change the number of the specified
         # book in the cart to the specified amount
@@ -159,18 +158,20 @@ class Cart(object):
     # Returns the total number of items in a user's cart
     def __len__(self):
         return sum(book['amount'] for book in self.userCart.values())
-
     # Calculates the total cost of all the books in the cart that aren't
     # listed as being saved for later
     def get_total_price(self):
         return sum((book['price'] * book['amount']) for book in self.userCart.values() if not book['SFL'])
 
+    '''
+    def getBooks(self):
+        book_ids = book_ids = self.userCart.keys()
+        books = Book.objects.filter(id__in=book_ids)
+        return books.id for book in self.userCart.values()
+    '''
     # Delete the cart from the session - this is functionally the same
     # as "emptying" it, since a new empty cart will be created the next time the
     # user adds a book to their cart
     def clear(self):
-        book_ids = self.userCart.keys()
-        books = Book.objects.get(id__in=book_ids)
-        books.has_purchased = True
         del self.session[settings.CART_SESSION_ID]
         self.save()

@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages # to display alert messages when the form data is valid
-from .forms import UserSignUpForm, ProfileUpdateForm, UserUpdateForm, UserProfileForm, BioForm, NicknameForm, EditAddressForm, DeleteAddressForm
+from .forms import UserSignUpForm, ProfileUpdateForm, UserUpdateForm, UserProfileForm, BioForm, NicknameForm, EditAddressForm, DeleteAddressForm, CreditCardForm, DeleteCreditCardConfirmation
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.http import HttpResponseRedirect
 from django.contrib.auth.forms import PasswordChangeForm
-from .models import Profile, Address
+from .models import Profile, Address, CreditCard
 
 
 # User registration page
@@ -70,6 +70,7 @@ def billingSettings(request):
     primaryAddressCheck = False
     # Get user address list
     user_AddressList = Address.objects.all().filter(user__user__username=request.user)
+    user_creditCards = CreditCard.objects.all().filter(user__user__username=request.user)
 
     for address in user_AddressList:
         if address.primaryAddress == True:
@@ -77,7 +78,8 @@ def billingSettings(request):
 
     context = {
         'user_AddressList': user_AddressList,
-        'primaryAddressCheck': primaryAddressCheck
+        'primaryAddressCheck': primaryAddressCheck,
+        'user_creditCards': user_creditCards,
     }
 
     return render(request, 'users/billing.html', context)
@@ -100,7 +102,7 @@ def addAddress(request):
             return redirect('settings:billing-settings')
         else:
             messages.warning(
-                request, f'There were some errors updating your profile.')
+                request, f'There were some errors updating you profile.')
 
     else:
         user_AddressForm = EditAddressForm()
@@ -140,6 +142,68 @@ def addressChange(request, address_slug):
         'user_AddressForm': user_AddressForm,
     }
     return render(request, 'users/addressChange.html', context)
+
+
+@login_required
+def addCreditCard(request):
+
+    creditcard_slug = None
+
+    if request.method == 'POST':
+        user_CreditCardForm = CreditCardForm(request.POST)
+
+        if user_CreditCardForm.is_valid():
+            newcreditcard = user_CreditCardForm.save(commit=False)
+            newcreditcard.user_id = request.user.profile.id
+            newcreditcard.save()
+
+            messages.success(request, f'New Credit Card added')
+            return redirect('settings:billing-settings')
+        else:
+            messages.warning(
+                request, f'There were some errors updating you Credit Card.')
+
+    else:
+        user_CreditCardForm = CreditCardForm()
+
+    context = {
+        'user_CreditCardForm': user_CreditCardForm
+    }
+
+    return render(request, 'users/addCreditCard.html', context)
+
+
+@login_required
+def creditCardChange(request, creditcard_slug):
+
+    # Gets name of the credit card based on id
+    currentCreditCard = CreditCard.objects.all().get(pk=creditcard_slug)
+
+    if request.method == 'POST':
+        if 'save_changes' in request.POST:  # handle editing form
+            user_CreditCardForm = CreditCardForm(request.POST, instance=currentCreditCard)
+
+            if user_CreditCardForm.is_valid():
+                user_CreditCardForm.save()
+                messages.success(request, f'Your address has been updated successfully')
+                return HttpResponseRedirect(request.path_info)
+
+        elif 'delete' in request.POST:  # handle deleting
+            currentCreditCard.delete()
+            return redirect('settings:billing-settings')
+
+        else:
+            messages.warning(
+                request, f'There were some errors updating you credit card.')
+
+    else:
+        user_CreditCardForm = CreditCardForm(instance=currentCreditCard)
+
+    context = {
+        'creditcard_slug': creditcard_slug,
+        'user_CreditCardForm': user_CreditCardForm,
+    }
+    return render(request, 'users/creditCardChange.html', context)
 
 
 # Username and email form
