@@ -34,7 +34,7 @@ class BookAdmin(admin.ModelAdmin):
     # NOTE: I had to remove book_author from here because apparently, list_display
     # can't contain ManyToMany fields. That results in a SystemCheckError when trying to
     # run the server and make migrations.
-    list_display = ['book_name', 'book_cover', 'author_bio'
+    list_display = ['book_name', 'book_author', 'book_cover', 'author_bio'
                     , 'book_description', 'book_genre', 'publishing_info'
                     , 'avg_rating', 'price']
 
