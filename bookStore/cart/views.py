@@ -112,7 +112,6 @@ def cart_info(request):
     return render(request, 'cart/info.html', {'userCart': userCart})
 
 
-
 # This view displays the checkout page
 
 def checkout(request):

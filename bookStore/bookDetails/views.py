@@ -66,7 +66,7 @@ def book_info(request, book_name, slug):
     if request.user.is_authenticated:
         try:
             User = get_object_or_404(Profile, user=request.user)
-            purchase = Purchase.objects.get(book=book, User=User, has_purchased=True)   #Check if user has purchased book
+            purchase = Purchase.objects.filter(book=book, User=User, has_purchased=True)   #Check if user has purchased book
 
             if purchase: #If purchase exists, pass it through and let user leave a review
                 return render(request, 'bookDetails/book/detail.html', {'book': book,
