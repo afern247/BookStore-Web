@@ -24,7 +24,6 @@ from django.conf import settings
 # Importing my Book class from the bookDetails package I made
 from bookDetails.models import Book
 
-
 # This is the cart class.
 class Cart(object):
     # Constructor method for the class - includes a request parameter
@@ -170,3 +169,4 @@ class Cart(object):
     def clear(self):
         del self.session[settings.CART_SESSION_ID]
         self.save()
+
