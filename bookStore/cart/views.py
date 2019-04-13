@@ -48,7 +48,7 @@ def addToCart(request, book_id):
     elif request.method == 'GET':
         userCart.add(book=book, amount=1, change_amount=False)
         return redirect('cart:cart_info')
-    
+
     # Once finished, the function redirects the user to the page
     # that shows them the contents of their cart
     return redirect('cart:cart_info')
