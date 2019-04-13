@@ -11,7 +11,7 @@
 from django.contrib import admin
 
 # Importing the Author and Book models from the bookDetails package
-from .models import Author, Book, Review
+from .models import Author, Book, Review, Purchase
 
 
 # Registering the models
@@ -48,3 +48,7 @@ class BookAdmin(admin.ModelAdmin):
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ['name', 'message']
+
+@admin.register(Purchase)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ['book', 'User', 'has_purchased']

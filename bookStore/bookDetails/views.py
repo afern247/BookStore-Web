@@ -10,7 +10,7 @@ from django.shortcuts import render, get_object_or_404
 from cart.forms import AddToCartForm
 from .forms import ReviewForm
 # Import the Author and Book models from this package's models.py file
-from .models import Author, Book, Review
+from .models import Author, Book, Review, Purchase
 from wishlist.models import List
 from users.models import Profile
 from django.db.models import Avg
@@ -62,11 +62,24 @@ def book_info(request, book_name, slug):
         author_name = book.book_author
         author = get_object_or_404(Author, author_name=author_name)
 
+    if request.user.is_authenticated:
+        try:
+            User = get_object_or_404(Profile, user=request.user)
+            purchase = Purchase.objects.get(book=book, User=User, has_purchased=True)
+
+            if purchase:
+                return render(request, 'bookDetails/book/detail.html', {'book': book,
+                                                                        'author': author,
+                                                                        'ATC_book_form': ATC_product_form,
+                                                                        'myLists': myLists,
+                                                                        'purchase': purchase})
+        except Purchase.DoesNotExist:
+            purchase = None
+
     return render(request, 'bookDetails/book/detail.html', {'book': book,
                                                             'author': author,
                                                             'ATC_book_form': ATC_product_form,
                                                             'myLists': myLists})
-
 #Author: Paul Franco
 def add_review(request, book_name, slug):
     book = get_object_or_404(Book, book_name=book_name, slug=slug) #Obtain book info
