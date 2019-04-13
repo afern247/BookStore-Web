@@ -44,7 +44,11 @@ def addToCart(request, book_id):
         userCart.add(book=book,
                      amount=data['amount'],
                      change_amount=data['change_amount'])
-
+    # Code for Wish List since I needed to send the data as GET
+    elif request.method == 'GET':
+        userCart.add(book=book, amount=1, change_amount=False)
+        return redirect('cart:cart_info')
+    
     # Once finished, the function redirects the user to the page
     # that shows them the contents of their cart
     return redirect('cart:cart_info')
