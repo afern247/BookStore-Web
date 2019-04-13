@@ -57,7 +57,7 @@ def removeFromCart(request, book_id):
     # Same as addToCart function
     book = get_object_or_404(Book, id=book_id)
     user = get_object_or_404(Profile, user=request.user)
-    purchase = Purchase.objects.filter(book=book, User=user, has_purchased=True).delete()
+    purchase = Purchase.objects.filter(book=book, User=user).delete()
     # Simply remove the specified Book
     # from the cart
     userCart.remove(book)
