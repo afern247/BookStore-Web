@@ -21,6 +21,8 @@ from bookDetails.models import Book
 from .cart import Cart
 from .forms import AddToCartForm
 
+from django.http import HttpResponseNotFound
+
 
 # This is the view that will handle adding/updating items
 
@@ -42,6 +44,8 @@ def addToCart(request, book_id):
         userCart.add(book=book,
                      amount=data['amount'],
                      change_amount=data['change_amount'])
+    else:
+        return HttpResponseNotFound("hello")
 
     # Once finished, the function redirects the user to the page
     # that shows them the contents of their cart

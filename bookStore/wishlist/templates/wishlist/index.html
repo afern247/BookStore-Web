@@ -189,18 +189,20 @@
                                 <div class="shopMoveDelete">
                                     <div class="oneOfThree">
                                     <!-- Move to Cart -->
-                                        <!-- DOES NOT WORK - can create own function that deletes and then uses this cart function
+                                        <!-- DOES NOT WORK - can create own function that deletes and then uses this cart function -->
                                         <form action="{% url "cart:addToCart" books.id %}" method="post">
                                             {{ ATC_book_form }}
                                             {% csrf_token %}
+                                            <input id="amount" name="amount" value="1">
                                             <input type="submit" value="Add to Cart">
                                         </form>
-                                        -->
+                                        <!--
                                         <form action="{% url 'wishlist:moveToCart' firstList.id books.id %}" method="post">
                                             {{ ATC_book_form }}
                                             {% csrf_token %}
+                                            <input id="amount" name="amount" value="1">
                                             <button type="submit" class="btn-link">Add To Cart</button>
-                                        </form>
+                                        </form> -->
                                     </div>
                                     <!-- Move Book to Different Wish List -->
                                     <div class="dropup oneOfThree">
@@ -490,6 +492,12 @@
                 {% endif %}
         {% endif %}
 
+        function hideAmount(){
+            let a = document.getElementsByClassName("amount");
+            a.style.display = "none";
+        }
+
+        hideAmount();
         createList();
         allEditListButtons();
     </script>
