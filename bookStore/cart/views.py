@@ -16,12 +16,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 
 # This is the Book model from the bookDetails package I made.
-from bookDetails.models import Book
+from bookDetails.models import Book, Purchase
 # These are the cart and cart forms.
 from .cart import Cart
 from .forms import AddToCartForm
-
-from django.http import HttpResponseNotFound
+from users.models import Profile
 
 
 # This is the view that will handle adding/updating items
@@ -32,7 +31,8 @@ def addToCart(request, book_id):
     # Attempt to get the Book that has the
     # given id
     book = get_object_or_404(Book, id=book_id)
-
+    user = get_object_or_404(Profile, user=request.user)
+    purchase = Purchase.objects.create(book=book, User=user, has_purchased=True)
     # Validate the form for adding the item to the cart
     form = AddToCartForm(request.POST)
 
@@ -44,10 +44,6 @@ def addToCart(request, book_id):
         userCart.add(book=book,
                      amount=data['amount'],
                      change_amount=data['change_amount'])
-    # Code for Wish List since I needed to send the data as GET
-    elif request.method == 'GET':
-        userCart.add(book=book, amount=1, change_amount=False)
-        return redirect('cart:cart_info')
 
     # Once finished, the function redirects the user to the page
     # that shows them the contents of their cart
@@ -60,7 +56,8 @@ def removeFromCart(request, book_id):
     userCart = Cart(request)
     # Same as addToCart function
     book = get_object_or_404(Book, id=book_id)
-
+    user = get_object_or_404(Profile, user=request.user)
+    purchase = Purchase.objects.filter(book=book, User=user).delete()
     # Simply remove the specified Book
     # from the cart
     userCart.remove(book)
@@ -70,7 +67,6 @@ def removeFromCart(request, book_id):
 
 # This view will handle adding items to
 # the Saved For Later (SFL) list
-
 
 def addToSFL(request, book_id):
     userCart = Cart(request)
