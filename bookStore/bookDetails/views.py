@@ -62,18 +62,19 @@ def book_info(request, book_name, slug):
         author_name = book.book_author
         author = get_object_or_404(Author, author_name=author_name)
 
+
     if request.user.is_authenticated:
         try:
             User = get_object_or_404(Profile, user=request.user)
-            purchase = Purchase.objects.get(book=book, User=User, has_purchased=True)
+            purchase = Purchase.objects.get(book=book, User=User, has_purchased=True)   #Check if user has purchased book
 
-            if purchase:
+            if purchase: #If purchase exists, pass it through and let user leave a review
                 return render(request, 'bookDetails/book/detail.html', {'book': book,
                                                                         'author': author,
                                                                         'ATC_book_form': ATC_product_form,
                                                                         'myLists': myLists,
                                                                         'purchase': purchase})
-        except Purchase.DoesNotExist:
+        except Purchase.DoesNotExist:   #If doesn't exist, don't pass it
             purchase = None
 
     return render(request, 'bookDetails/book/detail.html', {'book': book,
