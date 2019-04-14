@@ -1,7 +1,10 @@
 from django import forms
-from .models import Comment
+from .models import Review
 
-class CommentForm(forms.ModelForm):
+class ReviewForm(forms.ModelForm):
+    message = forms.CharField(max_length=150, widget=forms.Textarea(attrs={ 'placeholder': 'Maximum amount of characters: 150',
+                                                            'cols': 65, 'rows': 5}))
     class Meta:
-        model = Comment
-        fields = ['text']
+        model = Review
+        fields = ['message']
+        exclude = ['rating']

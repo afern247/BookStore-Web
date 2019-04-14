@@ -26,6 +26,13 @@
   <link rel="stylesheet" type="text/css" href="{% static 'css/navBar-Style.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
 
+    <style>
+        .search{
+            padding-left: 25%;
+            width: 50%;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 
 <body>
@@ -44,6 +51,16 @@
         <a class="nav-link" href="#">Pricing</a>
       </li>
     </ul> -->
+
+    <!-- SEARCH BAR
+      <div class="search">
+          <form action="" method="get">
+            <input type="text" maxlength="40" placeholder="Search Bar">
+            <button type="submit" class="btn btn-secondary btn-md">Search</button>
+          </form>
+      </div>
+     END OF SEARCH BAR -->
+
     <ul class="navbar-nav ml-auto nav-flex-icons">
       <li class="nav-item">
         <a class="nav-link" href="{% url "cart:cart_info" %}"><i class="fas fa-shopping-cart"></i></a>
@@ -55,7 +72,10 @@
             <i class="fas fa-user"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
-            <a class="dropdown-item" href="/wishlist/"><i class="fas fa-heart"></i> Wish list</a>
+            <a class="dropdown-item" href="/wishlist/"><i class="fas fa-heart"></i> Wish List</a>
+            {% if user.is_superuser %}
+              <a class="dropdown-item" href="/admin/"><i class="fas fa-users-cog"></i> Admin</a>
+            {% endif %}
             <a class="dropdown-item" href="{% url "settings:profile-settings" %}"><i class="fas fa-cog"></i> Settings</a>
             <a class="dropdown-item" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
           </div>

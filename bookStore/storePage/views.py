@@ -1,9 +1,11 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.shortcuts import redirect
 
 
 def index(request):
-    return render(request, 'storePage/index.html')
+    response = redirect('/bookDetails/')
+    return response
 
 def login(request):
     return HttpResponse("This is the login page")

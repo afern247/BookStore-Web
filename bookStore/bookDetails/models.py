@@ -96,7 +96,7 @@ class Book(models.Model):
 
     # Average book rating, in decimal form. Only 1
     # decimal place, i.e. 4.5 or 3.4
-    avg_rating = models.DecimalField(max_digits=2, decimal_places=1)
+    avg_rating = models.DecimalField(max_digits=2, decimal_places=1, default=0.0, null=True, blank=True)
 
     # The price of each book, specified as taking 2
     # decimal places as they do in real life,
@@ -121,18 +121,23 @@ class Book(models.Model):
     def get_absolute_url(self):
         return reverse('bookDetails:book_info', args=[self.book_name, self.slug])
 
-class Comment(models.Model):
-    book        = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='comment')
-    user        = models.ForeignKey(Profile,on_delete=models.CASCADE)
-    text        = models.TextField(max_length=150)
+class Review(models.Model):
+    book        = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='review')
+    name        = models.CharField(max_length=50, default="")
+    rating      = models.IntegerField(default=3)
+    message     = models.CharField(max_length=150)
     created_on  = models.DateTimeField(auto_now_add=True)
     approved    = models.BooleanField(default=False)
 
     def approved(self):
         self.approved = True
         self.save()
-    def user(self):
-        return self.user
     def __str__(self):
-        return self.text
-    #FIXME: will need to know if user has purchased the book
+        return self.message
+    def user(self):
+        return self.name
+
+class Purchase(models.Model):
+    book            = models.ForeignKey(Book, on_delete=models.CASCADE)
+    User            = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    has_purchased   = models.BooleanField(default=False, blank=True)

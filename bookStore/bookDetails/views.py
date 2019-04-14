@@ -8,9 +8,12 @@ from django.shortcuts import render, get_object_or_404
 
 # Import the Form for adding products from the Cart package
 from cart.forms import AddToCartForm
-from .forms import CommentForm
+from .forms import ReviewForm
 # Import the Author and Book models from this package's models.py file
-from .models import Author, Book
+from .models import Author, Book, Review, Purchase
+from wishlist.models import List
+from users.models import Profile
+from django.db.models import Avg
 
 
 # List all the books. Allows one to filter books by author name,
@@ -48,26 +51,70 @@ def book_info(request, book_name, slug):
     # The form for Adding a product To the Cart (Add To Cart = ATC)
     ATC_product_form = AddToCartForm()
 
+    # WISHLIST CODE: Gets the lists that the user has.
+    myLists = []
+    if request.user.is_authenticated:
+        myLists = getLists(request)
+
     # If we retrieved the book successfully, get its author
     # so we can reference their attributes in the HTML page
     if book:
         author_name = book.book_author
         author = get_object_or_404(Author, author_name=author_name)
 
+
+    if request.user.is_authenticated:
+        try:
+            User = get_object_or_404(Profile, user=request.user)
+            purchase = Purchase.objects.filter(book=book, User=User, has_purchased=True)   #Check if user has purchased book
+
+            if purchase: #If purchase exists, pass it through and let user leave a review
+                return render(request, 'bookDetails/book/detail.html', {'book': book,
+                                                                        'author': author,
+                                                                        'ATC_book_form': ATC_product_form,
+                                                                        'myLists': myLists,
+                                                                        'purchase': purchase})
+        except Purchase.DoesNotExist:   #If doesn't exist, don't pass it
+            purchase = None
+
     return render(request, 'bookDetails/book/detail.html', {'book': book,
                                                             'author': author,
-                                                            'ATC_book_form': ATC_product_form})
+                                                            'ATC_book_form': ATC_product_form,
+                                                            'myLists': myLists})
+#Author: Paul Franco
+def add_review(request, book_name, slug):
+    book = get_object_or_404(Book, book_name=book_name, slug=slug) #Obtain book info
+    User = get_object_or_404(Profile, user=request.user)           #Obtain user info for comment
 
-def add_comment(request, book_name, slug):
-    book = get_object_or_404(Book, book_name=book_name, slug=slug)
     if request.method == 'POST':
-        form = CommentForm(request.POST)
+        form = ReviewForm(request.POST)
         if form.is_valid():
-            comment = form.save(commit=False)
-            #comment.user = user.username
-            comment.book = book
-            comment.save()
+            message     = form.cleaned_data['message']
+            name        = request.POST.get('name_select')       #Get value of name_select from radio buttons
+            rating      = request.POST.get('rating')            #Get rating from stars
+            review      = form.save(commit=False)
+            review.book = book                                  #Get book for which this review is being applied to
+            if name == "Username":                              #Check what user selected from name_select radio buttons
+                review.name = User.user
+            elif name == "Nickname":
+                review.name = User.nick_name
+                if len(review.name) == 0:                       #If nickname is not filled, use username
+                    review.name = User.user
+            elif name == "Anonymous":
+                review.name = "Anonymous"
+            else:
+                review.name = request.user                      #Use username if no option is selected
+            review.rating = rating
+            review.save()                                       #Need to save rating to update the avg_rating of book
+            book.avg_rating = Review.objects.aggregate(Avg('rating')).get('rating__avg') #Get avg_rating of book
+            book.save()
+                                                                #Save form and then redirect back to book_info page for
+                                                                #specific book
             return redirect('bookDetails:book_info', book_name=book.book_name, slug=book.slug)
     else:
-        form = CommentForm()
-        return render(request, 'bookDetails/book/add_comment.html', {'form':form})
+        form = ReviewForm()
+        return render(request, 'bookDetails/book/add_review.html', {'form':form})
+
+# function to get lists for user currently on the page.
+def getLists(request):
+    return List.objects.filter(user=request.user.profile).distinct()
