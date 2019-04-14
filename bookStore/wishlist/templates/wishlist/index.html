@@ -32,7 +32,6 @@
             width: 28%;
             text-align: center;
             padding: 10px;
-
         }
         .listItem{
             width: auto;
@@ -45,7 +44,6 @@
         .fake-link {
             cursor: pointer;
         }
-
         /* Book Information */
         .wishlistItem {
             padding: 3%;
@@ -76,7 +74,6 @@
             height: auto;
         }
         .shopMoveDelete {
-
         }
         /*Use for aligned 3 elements in one line*/
         .oneOfThree {
@@ -180,7 +177,7 @@
                                         "{{ books.book_description }}"
                                     </div>
                                     <div class="rating">
-                                        {{ books.avg_rating }}/5.0
+                                        {{ books.avg_rating }}/5.0 <span class="fa fa-star checked text-warning"></span>
                                     </div>
                                     <div class="price">
                                         ${{ books.price }}
@@ -259,7 +256,7 @@
                                         "{{ books.book_description }}"
                                     </div>
                                     <div class="rating">
-                                        {{ books.avg_rating }}/5.0
+                                        {{ books.avg_rating }}/5.0 <span class="fa fa-star checked text-warning"></span>
                                     </div>
                                     <div class="price">
                                         ${{ books.price }}
@@ -326,7 +323,7 @@
                                         "{{ books.book_description }}"
                                     </div>
                                     <div class="rating">
-                                        {{ books.avg_rating }}/5.0
+                                        {{ books.avg_rating }}/5.0 <span class="fa fa-star checked text-warning"></span>
                                     </div>
                                     <div class="price">
                                         ${{ books.price }}
@@ -398,36 +395,29 @@
             }
             {% endif %}
         }
-
         function showEditListButtons(list_id){
             //show the edit list buttons and input field
             let e = document.getElementById("acceptCancel"+list_id);
             e.style.display = "block";
-
             //hide list name
             let listName = document.getElementById(list_id);
             listName.style.display = "none";
-
             //hide pencil button
             let pencil = document.getElementById("pencil"+list_id);
             pencil.style.display = "none";
         }
-
         //function to hide the list buttons once they have been shown.
         function resetEditListButtons(list_id){
             //hide the edit list buttons and input field
             let e = document.getElementById("acceptCancel"+list_id);
             e.style.display = "none";
-
             //show list name
             let listName = document.getElementById(list_id);
             listName.style.display = "block";
-
             //show pencil button
             let pencil = document.getElementById("pencil"+list_id);
             pencil.style.display = "block";
         }
-
         //function to set all edit buttons to not be shown on page load
         function allEditListButtons(){
             let e;
@@ -436,7 +426,6 @@
                 e.style.display = "none";
             {% endfor %}
         }
-
         function resetColor(){
             let m;
             {% for list in myLists %}
@@ -444,18 +433,15 @@
                 m.style.background = "white";
             {% endfor %}
         }
-
         function selectColor(clicked_id){
             resetColor();
             let s = document.getElementById("t"+clicked_id);
             s.style.background = "darkgrey";
         }
-
         function hide(idName){
             let c = document.getElementById(idName);
             c.style.display = "none";
         }
-
         //gets id of element clicked as a parameter which should be the list's id.
         function showBooks(clicked_id){
             allBooks();
@@ -463,7 +449,6 @@
             let one = document.getElementsByClassName(clicked_id);    //get classes with this idea
             one[0].style.display = "block";
         }
-
         function allBooks(){
             let l;
             {% for list in myLists %}
@@ -473,13 +458,11 @@
             }
             {% endfor %}
         }
-
         //If the user has lists then by default the first one should be selected
         {% if myListsCount > 0 %}
             showBooks({{ firstList.id }});
             selectColor({{ firstList.id }});
         {% endif %}
-
         {% if myListsCount < 3 %}
             hide("thirdContent");
             {% if myListsCount < 2 %}
@@ -489,7 +472,6 @@
                     hide("firstContent");
                 {% endif %}
         {% endif %}
-
         createList();
         allEditListButtons();
     </script>

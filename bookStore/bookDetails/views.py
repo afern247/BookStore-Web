@@ -10,9 +10,10 @@ from django.shortcuts import render, get_object_or_404
 from cart.forms import AddToCartForm
 from .forms import ReviewForm
 # Import the Author and Book models from this package's models.py file
-from .models import Author, Book, Review
+from .models import Author, Book, Review, Purchase
 from wishlist.models import List
 from users.models import Profile
+from django.db.models import Avg
 
 
 # List all the books. Allows one to filter books by author name,
@@ -61,11 +62,26 @@ def book_info(request, book_name, slug):
         author_name = book.book_author
         author = get_object_or_404(Author, author_name=author_name)
 
+
+    if request.user.is_authenticated:
+        try:
+            User = get_object_or_404(Profile, user=request.user)
+            purchase = Purchase.objects.filter(book=book, User=User, has_purchased=True)   #Check if user has purchased book
+
+            if purchase: #If purchase exists, pass it through and let user leave a review
+                return render(request, 'bookDetails/book/detail.html', {'book': book,
+                                                                        'author': author,
+                                                                        'ATC_book_form': ATC_product_form,
+                                                                        'myLists': myLists,
+                                                                        'purchase': purchase})
+        except Purchase.DoesNotExist:   #If doesn't exist, don't pass it
+            purchase = None
+
     return render(request, 'bookDetails/book/detail.html', {'book': book,
                                                             'author': author,
                                                             'ATC_book_form': ATC_product_form,
                                                             'myLists': myLists})
-
+#Author: Paul Franco
 def add_review(request, book_name, slug):
     book = get_object_or_404(Book, book_name=book_name, slug=slug) #Obtain book info
     User = get_object_or_404(Profile, user=request.user)           #Obtain user info for comment
@@ -87,11 +103,12 @@ def add_review(request, book_name, slug):
             elif name == "Anonymous":
                 review.name = "Anonymous"
             else:
-                review.name = "Anonymous"
+                review.name = request.user                      #Use username if no option is selected
             review.rating = rating
-            #print("Username Display: " + review.user)          #Testing what username and rating are
-            print("Rating submitted: " + review.rating)
-            review.save()                                       #Save form and then redirect back to book_info page for
+            review.save()                                       #Need to save rating to update the avg_rating of book
+            book.avg_rating = Review.objects.aggregate(Avg('rating')).get('rating__avg') #Get avg_rating of book
+            book.save()
+                                                                #Save form and then redirect back to book_info page for
                                                                 #specific book
             return redirect('bookDetails:book_info', book_name=book.book_name, slug=book.slug)
     else:

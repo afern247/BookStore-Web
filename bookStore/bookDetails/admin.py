@@ -11,7 +11,7 @@
 from django.contrib import admin
 
 # Importing the Author and Book models from the bookDetails package
-from .models import Author, Book, Review
+from .models import Author, Book, Review, Purchase
 
 
 # Registering the models
@@ -34,7 +34,7 @@ class BookAdmin(admin.ModelAdmin):
     # NOTE: I had to remove book_author from here because apparently, list_display
     # can't contain ManyToMany fields. That results in a SystemCheckError when trying to
     # run the server and make migrations.
-    list_display = ['book_name', 'book_cover', 'author_bio'
+    list_display = ['book_name', 'book_author', 'book_cover', 'author_bio'
                     , 'book_description', 'book_genre', 'publishing_info'
                     , 'avg_rating', 'price']
 
@@ -48,3 +48,7 @@ class BookAdmin(admin.ModelAdmin):
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ['name', 'message']
+
+@admin.register(Purchase)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ['book', 'User', 'has_purchased']
