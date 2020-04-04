@@ -1,5 +1,8 @@
-How to run the dev server:
+# Book Store app
 
+### This app was created during my senior class where I had to colaborate with students and learn about web dev, git, and other technologies.
+
+How to run the dev server:
 
 - Clone the repo
 
